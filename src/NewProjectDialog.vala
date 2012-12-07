@@ -15,32 +15,37 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A dialog box allowing the user to create a new project.
+/**
+ *  A dialog box allowing the user to create a new project.
  *
  *  Instances of this class must be constructed with Gtk.Builder. To complete
  *  construction and create a vaild state, the extract() function must be used.
  */
 public class NewProjectDialog : Gtk.Dialog
 {
-    /** @brief The filename of the XML file containing the UI design.
+    /**
+     *  The filename of the XML file containing the UI design.
      */
     public const string BUILDER_FILENAME = "NewProjectDialog.xml";
 
 
 
-    /** @brief The filename extension for project files
+    /**
+     *  The filename extension for project files
      */
     public const string DEFAULT_PROJECT_NAME = "untitled";
 
 
 
-    /** @brief The filename extension for project files
+    /**
+     *  The filename extension for project files
      */
     public const string FILENAME_EXTENSION = ".xml";
 
 
 
-    /** @brief A widget showing the project folder already exists.
+    /**
+     *  A widget showing the project folder already exists.
      *
      *  Making this widget visible will indicate to the user that the
      *  current project folder already exists.
@@ -49,31 +54,36 @@ public class NewProjectDialog : Gtk.Dialog
 
 
 
-    /** @brief The folder chooser widget containing the parent folder.
+    /**
+     *  The folder chooser widget containing the parent folder.
      */
     private Gtk.FileChooserWidget m_folder_chooser;
 
 
 
-    /** @brief The entry widget containing the design name.
+    /**
+     *  The entry widget containing the design name.
      */
     private Gtk.Entry m_project_name;
 
 
 
-    /** @brief Indicates the project name is valid.
+    /**
+     *  Indicates the project name is valid.
      */
     private bool m_project_name_valid;
 
 
 
-    /** @brief The entry widget containing the design folder name.
+    /**
+     *  The entry widget containing the design folder name.
      */
     private Gtk.Entry m_folder_name;
 
 
 
-    /** @brief Indicates the folder name is valid.
+    /**
+     *  Indicates the folder name is valid.
      *
      *  This boolean value is updated after every change to the text
      *  inside the folder widget.
@@ -82,7 +92,8 @@ public class NewProjectDialog : Gtk.Dialog
 
 
 
-    /** @brief Extract and initialize the dialog from XML builder.
+    /**
+     *  Extract and initialize the dialog from XML builder.
      *
      *  TODO: need to throw exceptions if the dialog does not initialize correctly.
      */
@@ -119,7 +130,8 @@ public class NewProjectDialog : Gtk.Dialog
 
 
 
-    /** @brief Gets the project filename
+    /**
+     *  Gets the project filename
      *
      */
     public string get_project_filename()
@@ -140,7 +152,8 @@ public class NewProjectDialog : Gtk.Dialog
     }
 
 
-    /** @brief Handles when the project name changes.
+    /**
+     *  Handles when the project name changes.
      *
      */
     private void on_notify_folder()
@@ -170,7 +183,8 @@ public class NewProjectDialog : Gtk.Dialog
 
 
 
-    /** @brief Handles when the project name changes.
+    /**
+     *  Handles when the project name changes.
      *
      */
     private void on_notify_name()
@@ -193,7 +207,8 @@ public class NewProjectDialog : Gtk.Dialog
 
 
 
-    /** @brief Handles when the parent folder changes.
+    /**
+     *  Handles when the parent folder changes.
      *
      */
     private void on_selection_change()
@@ -214,7 +229,8 @@ public class NewProjectDialog : Gtk.Dialog
 
 
 
-    /** @brief Updates the sensitivity of the ok button.
+    /**
+     *  Updates the sensitivity of the ok button.
      *
      */
     private void update()

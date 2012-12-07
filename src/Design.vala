@@ -15,7 +15,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
+/*
  *
  *
  *
@@ -23,37 +23,43 @@
  */
 public class Design : ProjectNode
 {
-    /** @brief The subdirectory in the project to store exported BOMs.
+    /**
+     *  The subdirectory in the project to store exported BOMs.
      */
     private const string BOM_SUBDIR = "bom";
 
 
 
-    /** @brief The name of the XML element for the design
+    /**
+     *  The name of the XML element for the design
      */
     private const string ELEMENT_NAME = "Design";
 
 
 
-    /** @brief The subdirectory in the project to store exported netlists.
+    /**
+     *  The subdirectory in the project to store exported netlists.
      */
     private const string NETLIST_SUBDIR = "net";
 
 
 
-    /** @brief The subdirectory in the project to store exported schematics.
+    /**
+     *  The subdirectory in the project to store exported schematics.
      */
     private const string PRINT_SUBDIR = "pdf";
 
 
 
-    /** @brief The name of the XML attribute for the id
+    /**
+     *  The name of the XML attribute for the id
      */
     private const string PROP_NAME_ID = "id";
 
 
 
-    /** @brief The name of the XML attribute for the basename
+    /**
+     *  The name of the XML attribute for the basename
      */
     private const string PROP_NAME_BASENAME = "file";
 
@@ -78,7 +84,7 @@ public class Design : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -127,7 +133,8 @@ public class Design : ProjectNode
 
 
 
-    /** @brief A read only view of the schematics in this design.
+    /**
+     *  A read only view of the schematics in this design.
      */
     public Gee.List<Schematic> schematics
     {
@@ -147,10 +154,11 @@ public class Design : ProjectNode
 
 
 
-    /** @brief
+    /**
+     *  Create a new design
      *
-     *  @param parent
-     *  @param element
+     *  param parent
+     *  param element
      */
     private Design(ProjectNode parent, Xml.Node *element)
 
@@ -174,16 +182,17 @@ public class Design : ProjectNode
 
 
 
-    /** @brief Creates a new design
+    /**
+     *  Creates a new design
      *
      *  The newly created design must be added to the list of children in the
      *  parent project. Similarly, the XML node for the newly created design
      *  must be added as a child to the XML node for the parent project.
      *
-     *  @param parent The parent project.
-     *  @param name The name of the design as it appears to the user.
-     *  @param subdir The subdirectory to store the design files
-     *  @return The created design.
+     *  param parent The parent project.
+     *  param name The name of the design as it appears to the user.
+     *  param subdir The subdirectory to store the design files
+     *  return The created design.
      */
     public static Design create(ProjectNode parent, string name, string subdir)
     {
@@ -198,14 +207,15 @@ public class Design : ProjectNode
 
 
 
-    /** @brief Load a design from an XML node.
+    /**
+     *  Load a design from an XML node.
      *
      *  The newly loaded design must be added to the list of children in the
      *  parent project.
      *
-     *  @param parent The parent project.
-     *  @param element The XML node for the design.
-     *  @return The loaded design.
+     *  param parent The parent project.
+     *  param element The XML node for the design.
+     *  return The loaded design.
      */
     public static Design load(ProjectNode parent, Xml.Node *element) throws Error
 
@@ -244,9 +254,10 @@ public class Design : ProjectNode
 
 
 
-    /** @brief Add and existing schematic to this design.
+    /**
+     *  Add and existing schematic to this design.
      *
-     *  @param filename The absolute path to the schematic file.
+     *  param filename The absolute path to the schematic file.
      */
     public void add_existing_schematic(string filename) throws Error
     {
@@ -276,7 +287,8 @@ public class Design : ProjectNode
 
 
 
-    /** @brief Add this design to a batch operation.
+    /**
+     *  Add this design to a batch operation.
      */
     public override void add_to_batch(Batch batch)
     {
@@ -285,9 +297,10 @@ public class Design : ProjectNode
 
 
 
-    /** @brief Create the subdirectory for storing schematics
+    /**
+     *  Create the subdirectory for storing schematics
      *
-     *  @return The path to the subdirectory for storing schematics
+     *  return The path to the subdirectory for storing schematics
      */
     public string create_bom_subdir() throws Error
     {
@@ -305,9 +318,10 @@ public class Design : ProjectNode
 
 
 
-    /** @brief Create the subdirectory for storing schematics
+    /**
+     *  Create the subdirectory for storing schematics
      *
-     *  @return The path to the subdirectory for storing schematics
+     *  return The path to the subdirectory for storing schematics
      */
     public string create_netlist_subdir() throws Error
     {
@@ -325,9 +339,10 @@ public class Design : ProjectNode
 
 
 
-    /** @brief Create the subdirectory for storing schematics
+    /**
+     *  Create the subdirectory for storing schematics
      *
-     *  @return The path to the subdirectory for storing schematics
+     *  return The path to the subdirectory for storing schematics
      */
     public string create_print_subdir() throws Error
     {
@@ -348,7 +363,7 @@ public class Design : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -360,7 +375,7 @@ public class Design : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -372,7 +387,7 @@ public class Design : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -388,7 +403,7 @@ public class Design : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *

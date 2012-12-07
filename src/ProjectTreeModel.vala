@@ -9,7 +9,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /**
+    /*
      *
      *
      *
@@ -28,7 +28,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /**
+    /*
      *
      *
      *
@@ -81,7 +81,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /**
+    /*
      *
      *
      *
@@ -121,7 +121,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /**
+    /*
      *
      *
      *
@@ -174,7 +174,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /**
+    /*
      *
      *
      *
@@ -230,8 +230,8 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
-     *
+    /*
+
      *
      *
      */
@@ -264,8 +264,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
     }
 
 
-
-    /** brief
+    /*
      *
      *
      *
@@ -289,7 +288,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -301,7 +300,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -317,7 +316,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -332,7 +331,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -359,7 +358,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -371,7 +370,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -401,7 +400,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -438,7 +437,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -453,7 +452,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -506,7 +505,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -562,7 +561,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
     }
 
 
-    /** brief
+    /*
      *
      *  param
      *

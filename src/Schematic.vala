@@ -15,7 +15,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
+/*
  *
  *
  *
@@ -33,10 +33,8 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief
-     *
-     *
-     *
+    /**
+     *  The XML element associated with this node.
      */
     public Xml.Node* element
     {
@@ -46,7 +44,8 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief The name of the node
+    /**
+     *  The name of the node
      *
      *  For schematics, the basename of the file is used as the name.
      */
@@ -60,7 +59,8 @@ public class Schematic : ProjectNode
 
 
 
-    /** @brief The basename for this schematic file.
+    /**
+     *  The basename for this schematic file.
      */
     public string basename
     {
@@ -72,8 +72,8 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief The dirname for this schematic
-     *
+    /**
+     *  The dirname for this schematic
      */
     public override string path
     {
@@ -85,8 +85,8 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief The filename of this schematic
-     *
+    /**
+     *  The filename of this schematic
      */
     public string filename
     {
@@ -102,7 +102,7 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -125,7 +125,7 @@ public class Schematic : ProjectNode
 
 
 
-    /** @brief
+    /*
      *
      *
      *
@@ -141,7 +141,7 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -156,7 +156,7 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *  The schematic has no child nodes, so this function returns 0.
      *
@@ -168,7 +168,7 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *  The schematic has no child nodes, so this function returns null.
      *
@@ -180,7 +180,7 @@ public class Schematic : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *  The schematic has no child nodes, so this function returns false.
      *

@@ -11,7 +11,8 @@ public class DialogFactory
 
 
 
-    /** @brief The package data directory from the GNU autotools.
+    /**
+     *  The package data directory from the GNU autotools.
      *
      *  This string contains the installation directory of the data
      *  files.
@@ -21,7 +22,8 @@ public class DialogFactory
 
 
 
-    /** @brief The subdirectory for the XML GtkBuilder files.
+    /**
+     *  The subdirectory for the XML GtkBuilder files.
      *
      *  This subdir is relative to the PKGDATADIR.
      */
@@ -29,7 +31,8 @@ public class DialogFactory
 
 
 
-    /** @brief The parent window
+    /**
+     *  The parent window
      *
      *  Use as the parent for creating dialog boxes.
      */
@@ -41,9 +44,10 @@ public class DialogFactory
 
 
 
-    /** @brief Create a new DialogFactory
+    /**
+     *  Create a new DialogFactory
      *
-     *  @param parent The parent for creating dialog boxes.
+     *  param parent The parent for creating dialog boxes.
      */
     public DialogFactory(Gtk.Window parent)
     {
@@ -105,7 +109,7 @@ public class DialogFactory
 
 
 
-    /** @brief
+    /*
      *
      *
      *
@@ -129,7 +133,7 @@ public class DialogFactory
 
 
 
-    /** @brief
+    /*
      *
      *
      *
@@ -153,7 +157,7 @@ public class DialogFactory
 
 
 
-    /** @brief
+    /*
      *
      *
      *
@@ -177,7 +181,7 @@ public class DialogFactory
 
 
 
-    /** @brief
+    /*
      *
      *
      *
@@ -201,7 +205,7 @@ public class DialogFactory
 
 
 
-    /** @brief
+    /*
      *
      *
      *

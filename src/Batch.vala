@@ -15,24 +15,28 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A base class for batch operations.
+/**
+ *  A base class for batch operations.
  */
 public abstract class Batch
 {
-    /** @brief The action that triggers this operation.
+    /**
+     *  The action that triggers this operation.
      */
     private Gtk.Action m_action;
 
 
 
-    /** @brief The factory used to create dialog boxes.
+    /**
+     *  The factory used to create dialog boxes.
      *
      */
     protected DialogFactory m_factory;
 
 
 
-    /** @brief
+    /**
+     *  Construct the base class
      */
     public Batch(DialogFactory factory, Gtk.Action action)
     {
@@ -44,7 +48,8 @@ public abstract class Batch
 
 
 
-    /** @brief Add a design to this batch operation.
+    /**
+     *  Add a design to this batch operation.
      */
     public virtual void add_design(Design design)
     {
@@ -52,7 +57,8 @@ public abstract class Batch
 
 
 
-    /** @brief Add a schematic to this batch operation.
+    /**
+     *  Add a schematic to this batch operation.
      */
     public virtual void add_schematic(Schematic schematic)
     {
@@ -60,25 +66,29 @@ public abstract class Batch
 
 
 
-    /** @brief Clear all nodes from this batch operation.
+    /**
+     *  Clear all nodes from this batch operation.
      */
     public abstract void clear();
 
 
 
-    /** @brief Determines if the current batch is editable.
+    /**
+     *  Determines if the current batch is editable.
      */
     public abstract bool enabled();
 
 
 
-    /** @brief Run the batch operation.
+    /**
+     *  Run the batch operation.
      */
     public abstract void run() throws Error;
 
 
 
-    /** @brief Update the sensitivity of the action.
+    /**
+     *  Update the sensitivity of the action.
      */
     public void update()
 
@@ -89,7 +99,8 @@ public abstract class Batch
     }
 
 
-    /** @brief Called when this operation is triggered.
+    /**
+     *  Called when this operation is triggered.
      */
     private void on_activate(Gtk.Action sender)
 

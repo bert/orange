@@ -15,26 +15,30 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A dialog box allowing the user to create a new design.
+/**
+ *  A dialog box allowing the user to create a new design.
  *
  *  Instances of this class must be constructed with Gtk.Builder. See
  *  the extract() method.
  */
 public class NewDesignDialog : Gtk.Dialog
 {
-    /** @brief The filename of the XML file containing the UI design.
+    /**
+     *  The filename of the XML file containing the UI design.
      */
     public const string BUILDER_FILENAME = "NewDesignDialog.xml";
 
 
 
-    /** @brief The entry widget containing the design name.
+    /**
+     *  The entry widget containing the design name.
      */
     private Gtk.Entry m_design_name;
 
 
 
-    /** @brief The entry widget containing the design folder name.
+    /**
+     *  The entry widget containing the design folder name.
      */
     private Gtk.Entry m_folder_name;
 
@@ -53,7 +57,7 @@ public class NewDesignDialog : Gtk.Dialog
     private bool m_design_name_valid;
     private bool m_folder_name_valid;
 
-    /** @brief
+    /*
      *
      */
     public static NewDesignDialog extract(Gtk.Builder builder, Project project)

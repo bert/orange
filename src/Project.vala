@@ -85,7 +85,7 @@ public class Project : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      */
@@ -104,7 +104,7 @@ public class Project : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -122,7 +122,7 @@ public class Project : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -174,7 +174,8 @@ public class Project : ProjectNode
 
 
 
-    /** @brief Create a new design and add it to this project.
+    /**
+     *  Create a new design and add it to this project.
      */
     public void create_design(string name, string subdir) throws Error
 
@@ -206,7 +207,8 @@ public class Project : ProjectNode
 
 
 
-    /** @brief Save the project
+    /**
+     *  Save the project
      *
      *
      *
@@ -288,7 +290,7 @@ public class Project : ProjectNode
     }
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -312,7 +314,7 @@ public class Project : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *
@@ -336,7 +338,7 @@ public class Project : ProjectNode
 
 
 
-    /** brief
+    /*
      *
      *
      *

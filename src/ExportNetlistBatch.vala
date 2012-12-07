@@ -15,23 +15,27 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A batch operation to export netlists in the project tree.
+/**
+ *  A batch operation to export netlists in the project tree.
  */
 public class ExportNetlistBatch : Batch
 {
-    /** @brief The default output filename.
+    /**
+     *  The default output filename.
      */
     private const string DEFAULT_NETLIST_FILENAME = "output.net";
 
 
 
-    /** @brief The command line application to generate netlists.
+    /**
+     *  The command line application to generate netlists.
      */
     private const string NETLIST_COMMAND = "gnetlist";
 
 
 
-    /** @brief A set of all the designs in the batch operation.
+    /**
+     *  A set of all the designs in the batch operation.
      *
      *  The operation uses a set to eliminate duplicates.
      */
@@ -39,7 +43,8 @@ public class ExportNetlistBatch : Batch
 
 
 
-    /** @brief Create a new, empty batch operation.
+    /**
+     *  Create a new, empty batch operation.
      */
     public ExportNetlistBatch(DialogFactory factory, Gtk.Action action)
     {
@@ -52,7 +57,8 @@ public class ExportNetlistBatch : Batch
 
 
 
-    /** @brief Add a schematic to the batch operation.
+    /**
+     *  Add a schematic to the batch operation.
      */
     public override void add_design(Design design)
     {
@@ -61,7 +67,8 @@ public class ExportNetlistBatch : Batch
 
 
 
-    /** @brief Clear all nodes from the batch operation.
+    /**
+     *  Clear all nodes from the batch operation.
      */
     public override void clear()
     {
@@ -70,7 +77,8 @@ public class ExportNetlistBatch : Batch
 
 
 
-    /** @brief Determines if the current batch is editable.
+    /**
+     *  Determines if the current batch is editable.
      */
     public override bool enabled()
     {
@@ -79,7 +87,8 @@ public class ExportNetlistBatch : Batch
 
 
 
-    /** @brief Run the batch operation.
+    /**
+     *  Run the batch operation.
      */
     public override void run() throws Error
     {

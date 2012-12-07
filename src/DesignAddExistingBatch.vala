@@ -15,11 +15,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A batch operation to add an existing schematic to a design.
+/**
+ *  A batch operation to add an existing schematic to a design.
  */
 public class DesignAddExistingBatch : Batch
 {
-    /** @brief A set of all the designs in the batch operation.
+    /**
+     *  A set of all the designs in the batch operation.
      *
      *  The operation uses a set to eliminate duplicates.
      */
@@ -27,7 +29,8 @@ public class DesignAddExistingBatch : Batch
 
 
 
-    /** @brief Create a new, empty batch operation.
+    /**
+     *  Create a new, empty batch operation.
      */
     public DesignAddExistingBatch(DialogFactory factory, Gtk.Action action)
     {
@@ -38,7 +41,8 @@ public class DesignAddExistingBatch : Batch
 
 
 
-    /** @brief Add a schematic to the batch operation.
+    /**
+     *  Add a schematic to the batch operation.
      */
     public override void add_design(Design design)
     {
@@ -47,7 +51,8 @@ public class DesignAddExistingBatch : Batch
 
 
 
-    /** @brief Clear all nodes from the batch operation.
+    /**
+     *  Clear all nodes from the batch operation.
      */
     public override void clear()
     {
@@ -56,7 +61,8 @@ public class DesignAddExistingBatch : Batch
 
 
 
-    /** @brief Determines if the current batch is editable.
+    /**
+     *  Determines if the current batch is editable.
      */
     public override bool enabled()
     {
@@ -65,7 +71,8 @@ public class DesignAddExistingBatch : Batch
 
 
 
-    /** @brief Run the batch operation.
+    /**
+     *  Run the batch operation.
      */
     public override void run() throws Error
     {

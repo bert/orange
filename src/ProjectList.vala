@@ -4,7 +4,8 @@
 public class ProjectList : ProjectNode
 {
 
-    /** @brief Returns the name of the root node.
+    /**
+     *  Returns the name of the root node.
      *
      *  The root node will not appear in the tree.
      */
@@ -22,7 +23,8 @@ public class ProjectList : ProjectNode
 
 
 
-    /** @brief The current project
+    /**
+     *  The current project
      *
      *  A null indicates no project is currently open.
      *
@@ -75,7 +77,8 @@ public class ProjectList : ProjectNode
 
 
 
-    /** brief Create a new project list.
+    /**
+     *  Create a new project list.
      *
      *  Create an empty project list.
      */
@@ -88,7 +91,8 @@ public class ProjectList : ProjectNode
 
 
 
-    /** brief Close the current project
+    /**
+     *  Close the current project
      *
      *  This function closes the current project, if any. All unsaved changes will be lost.
      */
@@ -100,7 +104,8 @@ public class ProjectList : ProjectNode
 
 
 
-    /** brief Create a new project
+    /**
+     *  Create a new project
      *
      *  This function creates a new project. The current project will be
      *  discarded. All unsaved changes will be lost.
@@ -137,12 +142,13 @@ public class ProjectList : ProjectNode
 
 
 
-    /** brief Load a project from the filesystem
+    /**
+     *  Load a project from the filesystem
      *
      *  This function loads an existing project from the filesystem. The
      *  current project will be discarded. All unsaved changes will be lost.
      *
-     *  @param filename The filename of the project to load
+     *  param filename The filename of the project to load
      */
     public void load(string filename) throws Error
     {
@@ -152,7 +158,7 @@ public class ProjectList : ProjectNode
 
     // TODO: Do something
 
-    /**
+    /*
      *
      *
      *

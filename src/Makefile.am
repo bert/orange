@@ -41,3 +41,7 @@ xml_DATA = \
 	NewProjectDialog.xml \
 	Program.xml
 
+# Needs improvement
+
+documentation:
+	valadoc --vapidir=/usr/share/vala-0.14/vapi -o ../doc $(AM_VALAFLAGS) $(orange_SOURCES)

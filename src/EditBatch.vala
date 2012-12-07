@@ -15,17 +15,20 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A batch operation to edit nodes in the project tree.
+/**
+ *  A batch operation to edit nodes in the project tree.
  */
 public class EditBatch : Batch
 {
-    /** @brief The command line application to edit schematics.
+    /**
+     *  The command line application to edit schematics.
      */
     private const string EDIT_SCHEMATIC_COMMAND = "gschem";
 
 
 
-    /** @brief A set of all the schematics in the batch operation.
+    /**
+     *  A set of all the schematics in the batch operation.
      *
      *  The operation uses a set to eliminate duplicates.
      */
@@ -33,7 +36,8 @@ public class EditBatch : Batch
 
 
 
-    /** @brief Create a new, empty batch operation.
+    /**
+     *  Create a new, empty batch operation.
      */
     public EditBatch(DialogFactory factory, Gtk.Action action)
     {
@@ -46,7 +50,8 @@ public class EditBatch : Batch
 
 
 
-    /** @brief Add a schematic to the batch operation.
+    /**
+     *  Add a schematic to the batch operation.
      */
     public override void add_schematic(Schematic schematic)
 
@@ -58,7 +63,8 @@ public class EditBatch : Batch
 
 
 
-    /** @brief Clear all nodes from the batch operation.
+    /**
+     *  Clear all nodes from the batch operation.
      */
     public override void clear()
 
@@ -70,7 +76,8 @@ public class EditBatch : Batch
 
 
 
-    /** @brief Determines if the current batch is editable.
+    /**
+     *  Determines if the current batch is editable.
      */
     public override bool enabled()
 
@@ -82,7 +89,8 @@ public class EditBatch : Batch
 
 
 
-    /** @brief Run the batch operation.
+    /**
+     *  Run the batch operation.
      *
      *  This batch operation launches a separate schematic editor per design,
      *  so each instance can have the correct working directory for each

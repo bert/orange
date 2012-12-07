@@ -15,29 +15,34 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A program for managing projects.
+/**
+ *  A program for managing projects.
  */
 public class Program
 {
-    /** @brief The XML builder file used to construct the main UI.
+    /**
+     *  The XML builder file used to construct the main UI.
      */
     private const string BUILDER_FILENAME = "Program.xml";
 
 
 
-    /** @brief The name of the program as it appears in the title bar.
+    /**
+     *  The name of the program as it appears in the title bar.
      */
     private const string PROGRAM_TITLE = "Orange";
 
 
 
-    /** @brief The name of an untitled document as it appears in the title bar.
+    /**
+     *  The name of an untitled document as it appears in the title bar.
      */
     private const string UNTITLED_NAME = "Untitled";
 
 
 
-    /** @brief A controller for common operations.
+    /**
+     *  A controller for common operations.
      *
      *  The batch controller handles common operations on groups of project
      *  nodes. Common operations include edit, print, etc...
@@ -46,7 +51,8 @@ public class Program
 
 
 
-    /** @brief A controller to handle operations on the project.
+    /**
+     *  A controller to handle operations on the project.
      *
      *  The project controller handles operations such as new,
      *  load, save, etc...
@@ -55,7 +61,8 @@ public class Program
 
 
 
-    /** @brief A list of the (0 or 1) projects loaded.
+    /**
+     * A list of the (0 or 1) projects loaded.
      *
      *  This object persists across creation and destruction of projects
      *  and provides signals to the application for changes in the
@@ -65,25 +72,29 @@ public class Program
 
 
 
-    /** @brief The TreeModel for the project list.
+    /**
+     *  The TreeModel for the project list.
      */
     private ProjectTreeModel m_project_model;
 
 
 
-    /** @brief The TreeView for the project list.
+    /**
+     *  The TreeView for the project list.
      */
     private Gtk.TreeView m_project_view;
 
 
 
-    /** @brief The application's main window.
+    /**
+     *  The application's main window.
      */
     private Gtk.Window m_window;
 
 
 
-    /** @brief Construct the program
+    /**
+     *  Construct the program
      */
     public Program() throws Error
     {
@@ -122,7 +133,8 @@ public class Program
 
 
 
-    /** @brief Construct the program and initialize with command line arguments
+    /**
+     *  Construct the program and initialize with command line arguments
      */
     public Program.with_args(string[] args) throws Error
     {
@@ -162,8 +174,8 @@ public class Program
 
 
 
-    /** @brief An event handler when the user selects quit from the menu.
-     *
+    /**
+     *  An event handler when the user selects quit from the menu.
      */
     private void on_action_quit(Gtk.Action sender)
 
@@ -178,10 +190,11 @@ public class Program
 
 
 
-    /** @brief An event handler when the user selects the delete button.
+    /**
+     *  An event handler when the user selects the delete button.
      *
-     * @return true Abort the destruction process
-     * @return false Continue with the destruction process
+     *  @return true Abort the destruction process
+     *  @return false Continue with the destruction process
      */
     private bool on_delete_event(Gdk.Event event)
 
@@ -193,7 +206,8 @@ public class Program
 
 
 
-    /** @brief An event handler to respond to selection changes.
+    /**
+     *  An event handler to respond to selection changes.
      *
      *  This event handler responds to changes in selected project nodes
      *  and updates the controllers with the new selection. The controllers
@@ -216,7 +230,8 @@ public class Program
 
 
 
-    /** @brief Update the projet name in the titlebar
+    /**
+     *  Update the projet name in the titlebar
      */
     private void on_notify(ParamSpec parameter)
 
@@ -251,7 +266,8 @@ public class Program
 
 
 
-    /** @brief An event handler for project change notifications.
+    /**
+     *  An event handler for project change notifications.
      *
      *  Expands the root project node so the user can see all the designs.
      */
@@ -271,7 +287,8 @@ public class Program
 
 
 
-    /** @brief Starts the UI
+    /**
+     *  Starts the UI
      *
      *  Providing the run as an instance method keeps the object from being freed
      *  during execution.
@@ -287,7 +304,8 @@ public class Program
 
 
 
-    /** @brief The program entry point.
+    /**
+     *  The program entry point.
      */
     public static void main(string[] args)
     {

@@ -15,7 +15,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/** @brief A dialog box allowing the user to create a new design.
+/**
+ *  A dialog box allowing the user to create a new design.
  *
  *  Instances of this class must be constructed with Gtk.Builder.
  *
@@ -23,13 +24,15 @@
  */
 public class ExportNetlistDialog : Gtk.FileChooserDialog
 {
-    /** @brief The filename of the XML file containing the UI design.
+    /**
+     *  The filename of the XML file containing the UI design.
      */
     public const string BUILDER_FILENAME = "ExportNetlistDialog.xml";
 
 
 
-    /** @brief The combo box containing the netlist format.
+    /**
+     *  The combo box containing the netlist format.
      */
     private Gtk.ComboBox m_combo;
 
@@ -37,7 +40,7 @@ public class ExportNetlistDialog : Gtk.FileChooserDialog
     private Gtk.ListStore m_formats;
 
 
-    /** @brief
+    /*
      *
      */
     public static ExportNetlistDialog extract(Gtk.Builder builder)
@@ -51,8 +54,8 @@ public class ExportNetlistDialog : Gtk.FileChooserDialog
     }
 
 
-    /** @brief
-     *
+    /**
+     *  Get the netlist format
      */
     public string? get_netlist_format()
     {
