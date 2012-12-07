@@ -1,13 +1,33 @@
-
-
-
+/*
+ *  Copyright (C) 2012 Edward Hennessy
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+/*
+ *
+ *
+ *
+ *
+ */
 public class ProjectList : ProjectNode
 {
 
     /**
-     *  Returns the name of the root node.
+     * Returns the name of the root node.
      *
-     *  The root node will not appear in the tree.
+     * The root node will not appear in the tree.
      */
     public override string name
     {
@@ -24,12 +44,12 @@ public class ProjectList : ProjectNode
 
 
     /**
-     *  The current project
+     * The current project
      *
-     *  A null indicates no project is currently open.
+     * A null indicates no project is currently open.
      *
-     *  Because this is the root node, the toggled signal does not need to be
-     *  emitted.
+     * Because this is the root node, the toggled signal does not need to be
+     * emitted.
      */
     public Project? current
     {
@@ -78,9 +98,9 @@ public class ProjectList : ProjectNode
 
 
     /**
-     *  Create a new project list.
+     * Create a new project list.
      *
-     *  Create an empty project list.
+     * Create an empty project list.
      */
     public ProjectList()
     {
@@ -92,9 +112,9 @@ public class ProjectList : ProjectNode
 
 
     /**
-     *  Close the current project
+     * Close the current project
      *
-     *  This function closes the current project, if any. All unsaved changes will be lost.
+     * This function closes the current project, if any. All unsaved changes will be lost.
      */
     public void close()
     {
@@ -105,10 +125,10 @@ public class ProjectList : ProjectNode
 
 
     /**
-     *  Create a new project
+     * Create a new project
      *
-     *  This function creates a new project. The current project will be
-     *  discarded. All unsaved changes will be lost.
+     * This function creates a new project. The current project will be
+     * discarded. All unsaved changes will be lost.
      */
     public void create(string filename) throws Error
     {
@@ -143,12 +163,12 @@ public class ProjectList : ProjectNode
 
 
     /**
-     *  Load a project from the filesystem
+     * Load a project from the filesystem
      *
-     *  This function loads an existing project from the filesystem. The
-     *  current project will be discarded. All unsaved changes will be lost.
+     * This function loads an existing project from the filesystem. The
+     * current project will be discarded. All unsaved changes will be lost.
      *
-     *  param filename The filename of the project to load
+     * param filename The filename of the project to load
      */
     public void load(string filename) throws Error
     {

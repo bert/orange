@@ -16,50 +16,50 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 /**
- *  The base class for all nodes in the project tree.
+ * The base class for all nodes in the project tree.
  */
 public abstract class ProjectNode : GLib.Object
 {
     /**
-     *  Signals changes in a node.
+     * Signals changes in a node.
      *
-     *  This signal is emitted when a node gets changed. This signal is
-     *  roughly equivalent to the property change notification, but for
-     *  properties visible in the view.
+     * This signal is emitted when a node gets changed. This signal is
+     * roughly equivalent to the property change notification, but for
+     * properties visible in the view.
      *
-     *  param node The node that was changed.
+     * param node The node that was changed.
      */
     public signal void changed(ProjectNode node);
 
     /**
-     *  Signals a node deleted from the project
+     * Signals a node deleted from the project
      *
-     *  This signal is emitted when a node gets deleted. The signal should
-     *  be emitted after the node is removed from the model.
+     * This signal is emitted when a node gets deleted. The signal should
+     * be emitted after the node is removed from the model.
      *
-     *  param node The parent of the node that was deleted.
-     *  param index The index where the node was formerly located.
+     * param node The parent of the node that was deleted.
+     * param index The index where the node was formerly located.
      */
     public signal void deleted(ProjectNode parent, int index);
 
     /**
-     *  Signals a node inserted into the project
+     * Signals a node inserted into the project
      *
-     *  This signal is emitted when a node gets inserted. The signal should
-     *  be emitted after the node is inserted into the model.
+     * This signal is emitted when a node gets inserted. The signal should
+     * be emitted after the node is inserted into the model.
      *
-     *  param node The node that was inserted.
+     * param node The node that was inserted.
      */
     public signal void inserted(ProjectNode node);
 
     /**
-     *  Signals a change in the "has children" property
+     * Signals a change in the "has children" property
      *
-     *  This signal is emitted when a node either gains the first child, or
-     *  loses the last child. This signal is essentially a property change
-     *  notification for a "bool has_child" property.
+     * This signal is emitted when a node either gains the first child, or
+     * loses the last child. This signal is essentially a property change
+     * notification for a "bool has_child" property.
      *
-     *  param node The node that gained or lost a child.
+     * param node The node that gained or lost a child.
      */
     public signal void toggled(ProjectNode node);
 
@@ -89,9 +89,9 @@ public abstract class ProjectNode : GLib.Object
 
 
     /**
-     *  The design associated with this node.
+     * The design associated with this node.
      *
-     *  If no design is associated with this node, this property is null.
+     * If no design is associated with this node, this property is null.
      */
     public virtual Design? design
     {
@@ -111,10 +111,10 @@ public abstract class ProjectNode : GLib.Object
 
 
     /**
-     *  The parent node
+     * The parent node
      *
-     *  All nodes must have a parent except for the root. The parent is
-     *  immutable after construction.
+     * All nodes must have a parent except for the root. The parent is
+     * immutable after construction.
      */
     public ProjectNode? parent
     {
@@ -125,7 +125,7 @@ public abstract class ProjectNode : GLib.Object
 
 
     /**
-     *  The project associated with this node.
+     * The project associated with this node.
      */
     public virtual Project? project
     {
@@ -155,7 +155,7 @@ public abstract class ProjectNode : GLib.Object
 
 
     /**
-     *  Add this node to a batch operation.
+     * Add this node to a batch operation.
      */
     public virtual void add_to_batch(Batch batch)
     {

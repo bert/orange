@@ -34,7 +34,7 @@ public class Schematic : ProjectNode
 
 
     /**
-     *  The XML element associated with this node.
+     * The XML element associated with this node.
      */
     public Xml.Node* element
     {
@@ -45,9 +45,9 @@ public class Schematic : ProjectNode
 
 
     /**
-     *  The name of the node
+     * The name of the node
      *
-     *  For schematics, the basename of the file is used as the name.
+     * For schematics, the basename of the file is used as the name.
      */
     public override string name
     {
@@ -60,7 +60,7 @@ public class Schematic : ProjectNode
 
 
     /**
-     *  The basename for this schematic file.
+     * The basename for this schematic file.
      */
     public string basename
     {
@@ -73,7 +73,7 @@ public class Schematic : ProjectNode
 
 
     /**
-     *  The dirname for this schematic
+     * The dirname for this schematic
      */
     public override string path
     {
@@ -86,7 +86,7 @@ public class Schematic : ProjectNode
 
 
     /**
-     *  The filename of this schematic
+     * The filename of this schematic
      */
     public string filename
     {

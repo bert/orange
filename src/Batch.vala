@@ -16,27 +16,26 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 /**
- *  A base class for batch operations.
+ * A base class for batch operations.
  */
 public abstract class Batch
 {
     /**
-     *  The action that triggers this operation.
+     * The action that triggers this operation.
      */
     private Gtk.Action m_action;
 
 
 
     /**
-     *  The factory used to create dialog boxes.
-     *
+     * The factory used to create dialog boxes.
      */
     protected DialogFactory m_factory;
 
 
 
     /**
-     *  Construct the base class
+     * Construct the base class
      */
     public Batch(DialogFactory factory, Gtk.Action action)
     {
@@ -49,7 +48,7 @@ public abstract class Batch
 
 
     /**
-     *  Add a design to this batch operation.
+     * Add a design to this batch operation.
      */
     public virtual void add_design(Design design)
     {
@@ -58,7 +57,7 @@ public abstract class Batch
 
 
     /**
-     *  Add a schematic to this batch operation.
+     * Add a schematic to this batch operation.
      */
     public virtual void add_schematic(Schematic schematic)
     {
@@ -67,28 +66,28 @@ public abstract class Batch
 
 
     /**
-     *  Clear all nodes from this batch operation.
+     * Clear all nodes from this batch operation.
      */
     public abstract void clear();
 
 
 
     /**
-     *  Determines if the current batch is editable.
+     * Determines if the current batch is editable.
      */
     public abstract bool enabled();
 
 
 
     /**
-     *  Run the batch operation.
+     * Run the batch operation.
      */
     public abstract void run() throws Error;
 
 
 
     /**
-     *  Update the sensitivity of the action.
+     * Update the sensitivity of the action.
      */
     public void update()
 
@@ -100,7 +99,7 @@ public abstract class Batch
 
 
     /**
-     *  Called when this operation is triggered.
+     * Called when this operation is triggered.
      */
     private void on_activate(Gtk.Action sender)
 

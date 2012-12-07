@@ -16,23 +16,21 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 /**
- *  A dialog box allowing the user to create a new design.
+ * A dialog box allowing the user to export a bill of material.
  *
- *  Instances of this class must be constructed with Gtk.Builder.
- *
- *
+ * Instances of this class must be constructed with Gtk.Builder.
  */
 public class ExportBOMDialog : Gtk.FileChooserDialog
 {
     /**
-     *  The filename of the XML file containing the UI design.
+     * The filename of the XML file containing the UI design.
      */
     public const string BUILDER_FILENAME = "ExportBOMDialog.xml";
 
 
 
     /**
-     *  The combo box containing the netlist format.
+     * The combo box containing the BOM format.
      */
     private Gtk.ComboBox m_combo;
 
@@ -42,7 +40,7 @@ public class ExportBOMDialog : Gtk.FileChooserDialog
 
 
     /**
-     *  Extract references to the dialog from Gtk.Builder
+     * Extract references to the dialog from Gtk.Builder
      */
     public static ExportBOMDialog extract(Gtk.Builder builder)
     {
@@ -57,7 +55,7 @@ public class ExportBOMDialog : Gtk.FileChooserDialog
 
 
     /**
-     *  Gets the name of the BOM format
+     * Gets the name of the BOM format
      */
     public string? get_bom_format()
     {

@@ -16,23 +16,21 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 /**
- *  A dialog box allowing the user to create a new design.
+ * A dialog box allowing the user to create a new design.
  *
- *  Instances of this class must be constructed with Gtk.Builder.
- *
- *
+ * Instances of this class must be constructed with Gtk.Builder.
  */
 public class ExportNetlistDialog : Gtk.FileChooserDialog
 {
     /**
-     *  The filename of the XML file containing the UI design.
+     * The filename of the XML file containing the UI design.
      */
     public const string BUILDER_FILENAME = "ExportNetlistDialog.xml";
 
 
 
     /**
-     *  The combo box containing the netlist format.
+     * The combo box containing the netlist format.
      */
     private Gtk.ComboBox m_combo;
 
@@ -55,7 +53,7 @@ public class ExportNetlistDialog : Gtk.FileChooserDialog
 
 
     /**
-     *  Get the netlist format
+     * Get the netlist format
      */
     public string? get_netlist_format()
     {

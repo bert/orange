@@ -16,46 +16,46 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 /**
- *  A program for managing projects.
+ * A program for managing projects.
  */
 public class Program
 {
     /**
-     *  The XML builder file used to construct the main UI.
+     * The XML builder file used to construct the main UI.
      */
     private const string BUILDER_FILENAME = "Program.xml";
 
 
 
     /**
-     *  The name of the program as it appears in the title bar.
+     * The name of the program as it appears in the title bar.
      */
     private const string PROGRAM_TITLE = "Orange";
 
 
 
     /**
-     *  The name of an untitled document as it appears in the title bar.
+     * The name of an untitled document as it appears in the title bar.
      */
     private const string UNTITLED_NAME = "Untitled";
 
 
 
     /**
-     *  A controller for common operations.
+     * A controller for common operations.
      *
-     *  The batch controller handles common operations on groups of project
-     *  nodes. Common operations include edit, print, etc...
+     * The batch controller handles common operations on groups of project
+     * nodes. Common operations include edit, print, etc...
      */
     private BatchController m_batch_controller;
 
 
 
     /**
-     *  A controller to handle operations on the project.
+     * A controller to handle operations on the project.
      *
-     *  The project controller handles operations such as new,
-     *  load, save, etc...
+     * The project controller handles operations such as new,
+     * load, save, etc...
      */
     private ProjectController m_project_controller;
 
@@ -64,37 +64,37 @@ public class Program
     /**
      * A list of the (0 or 1) projects loaded.
      *
-     *  This object persists across creation and destruction of projects
-     *  and provides signals to the application for changes in the
-     *  project state.
+     * This object persists across creation and destruction of projects
+     * and provides signals to the application for changes in the
+     * project state.
      */
     private ProjectList m_project_list;
 
 
 
     /**
-     *  The TreeModel for the project list.
+     * The TreeModel for the project list.
      */
     private ProjectTreeModel m_project_model;
 
 
 
     /**
-     *  The TreeView for the project list.
+     * The TreeView for the project list.
      */
     private Gtk.TreeView m_project_view;
 
 
 
     /**
-     *  The application's main window.
+     * The application's main window.
      */
     private Gtk.Window m_window;
 
 
 
     /**
-     *  Construct the program
+     * Construct the program
      */
     public Program() throws Error
     {
@@ -134,7 +134,7 @@ public class Program
 
 
     /**
-     *  Construct the program and initialize with command line arguments
+     * Construct the program and initialize with command line arguments
      */
     public Program.with_args(string[] args) throws Error
     {
@@ -175,7 +175,7 @@ public class Program
 
 
     /**
-     *  An event handler when the user selects quit from the menu.
+     * An event handler when the user selects quit from the menu.
      */
     private void on_action_quit(Gtk.Action sender)
 
@@ -191,10 +191,10 @@ public class Program
 
 
     /**
-     *  An event handler when the user selects the delete button.
+     * An event handler when the user selects the delete button.
      *
-     *  @return true Abort the destruction process
-     *  @return false Continue with the destruction process
+     * return true Abort the destruction process
+     * return false Continue with the destruction process
      */
     private bool on_delete_event(Gdk.Event event)
 
@@ -207,12 +207,12 @@ public class Program
 
 
     /**
-     *  An event handler to respond to selection changes.
+     * An event handler to respond to selection changes.
      *
-     *  This event handler responds to changes in selected project nodes
-     *  and updates the controllers with the new selection. The controllers
-     *  update the user interface, such as changing the sensitivity of the
-     *  buttons.
+     * This event handler responds to changes in selected project nodes
+     * and updates the controllers with the new selection. The controllers
+     * update the user interface, such as changing the sensitivity of the
+     * buttons.
      */
     private void on_selection_change()
 
@@ -231,7 +231,7 @@ public class Program
 
 
     /**
-     *  Update the projet name in the titlebar
+     * Update the projet name in the titlebar
      */
     private void on_notify(ParamSpec parameter)
 
@@ -267,9 +267,9 @@ public class Program
 
 
     /**
-     *  An event handler for project change notifications.
+     * An event handler for project change notifications.
      *
-     *  Expands the root project node so the user can see all the designs.
+     * Expands the root project node so the user can see all the designs.
      */
     private void on_notify_current(ParamSpec parameter)
     
@@ -288,10 +288,10 @@ public class Program
 
 
     /**
-     *  Starts the UI
+     * Starts the UI
      *
-     *  Providing the run as an instance method keeps the object from being freed
-     *  during execution.
+     * Providing the run as an instance method keeps the object from being freed
+     * during execution.
      */
     public void run()
 
@@ -305,7 +305,7 @@ public class Program
 
 
     /**
-     *  The program entry point.
+     * The program entry point.
      */
     public static void main(string[] args)
     {

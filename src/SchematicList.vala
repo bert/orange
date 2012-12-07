@@ -16,19 +16,19 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 /**
- *  A container for schematics in the project tree
+ * A container for schematics in the project tree
  */
 public class SchematicList : ProjectNode
 {
     /**
-     *  A continer to store the list of schematics.
+     * A continer to store the list of schematics.
      */
     private Gee.ArrayList<Schematic> m_schematics;
 
 
 
     /**
-     *  A name, visible to the user, for this node in the project tree.
+     * A name, visible to the user, for this node in the project tree.
      */
     public override string name
     {
@@ -63,9 +63,9 @@ public class SchematicList : ProjectNode
 
 
     /**
-     *  Create a container for schematics
+     * Create a container for schematics
      *
-     *  @param parent The parent node for this container.
+     * param parent The parent node for this container.
      */
     private SchematicList(ProjectNode parent)
     {
@@ -76,10 +76,10 @@ public class SchematicList : ProjectNode
 
 
     /**
-     *  Add the schematic list to the batch operation.
+     * Add the schematic list to the batch operation.
      *
-     *  Selecting the schematic list in the project tree is the
-     *  same as selecting all the schematics within.
+     * Selecting the schematic list in the project tree is the
+     * same as selecting all the schematics within.
      */
     public override void add_to_batch(Batch batch)
 
@@ -94,9 +94,9 @@ public class SchematicList : ProjectNode
 
 
     /**
-     *  Create a container for schematics
+     * Create a container for schematics
      *
-     *  param parent The parent node for this container.
+     * param parent The parent node for this container.
      */
     public static SchematicList create(ProjectNode parent)
     {
@@ -106,10 +106,10 @@ public class SchematicList : ProjectNode
 
 
     /**
-     *  Add a schematic to the list
+     * Add a schematic to the list
      *
-     *  param node The XML node representing the schematic. This node must
-     *  be attached to the XML tree.
+     * param node The XML node representing the schematic. This node must
+     * be attached to the XML tree.
      */
     public void add_with_node(Xml.Node* node)
 
@@ -134,7 +134,7 @@ public class SchematicList : ProjectNode
 
 
     /**
-     *  Get the number of schematics in the container.
+     * Get the number of schematics in the container.
      */
     public override int get_child_count()
     {

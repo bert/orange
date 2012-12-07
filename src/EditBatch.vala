@@ -16,28 +16,28 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 /**
- *  A batch operation to edit nodes in the project tree.
+ * A batch operation to edit nodes in the project tree.
  */
 public class EditBatch : Batch
 {
     /**
-     *  The command line application to edit schematics.
+     * The command line application to edit schematics.
      */
     private const string EDIT_SCHEMATIC_COMMAND = "gschem";
 
 
 
     /**
-     *  A set of all the schematics in the batch operation.
+     * A set of all the schematics in the batch operation.
      *
-     *  The operation uses a set to eliminate duplicates.
+     * The operation uses a set to eliminate duplicates.
      */
     private Gee.HashSet<Schematic> m_schematics;
 
 
 
     /**
-     *  Create a new, empty batch operation.
+     * Create a new, empty batch operation.
      */
     public EditBatch(DialogFactory factory, Gtk.Action action)
     {
@@ -51,7 +51,7 @@ public class EditBatch : Batch
 
 
     /**
-     *  Add a schematic to the batch operation.
+     * Add a schematic to the batch operation.
      */
     public override void add_schematic(Schematic schematic)
 
@@ -64,7 +64,7 @@ public class EditBatch : Batch
 
 
     /**
-     *  Clear all nodes from the batch operation.
+     * Clear all nodes from the batch operation.
      */
     public override void clear()
 
@@ -77,7 +77,7 @@ public class EditBatch : Batch
 
 
     /**
-     *  Determines if the current batch is editable.
+     * Determines if the current batch is editable.
      */
     public override bool enabled()
 
@@ -90,12 +90,12 @@ public class EditBatch : Batch
 
 
     /**
-     *  Run the batch operation.
+     * Run the batch operation.
      *
-     *  This batch operation launches a separate schematic editor per design,
-     *  so each instance can have the correct working directory for each
-     *  set of schematics. This operation also orders the schematics on the
-     *  command line in the same order that they appear in the project tree.
+     * This batch operation launches a separate schematic editor per design,
+     * so each instance can have the correct working directory for each
+     * set of schematics. This operation also orders the schematics on the
+     * command line in the same order that they appear in the project tree.
      */
     public override void run() throws Error
 
