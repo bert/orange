@@ -277,6 +277,7 @@ public class Project : ProjectNode
 
             inserted(design);
             toggled(design);
+            changed(this);
         }
         else
         {
@@ -290,6 +291,7 @@ public class Project : ProjectNode
             inserted(design);
             toggled(design);
             toggled(this);
+            changed(this);
         }
     }
 
