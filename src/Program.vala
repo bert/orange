@@ -1,0 +1,305 @@
+/*
+ *  Copyright (C) 2012 Edward Hennessy
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+/** @brief A program for managing projects.
+ */
+public class Program
+{
+    /** @brief The XML builder file used to construct the main UI.
+     */
+    private const string BUILDER_FILENAME = "Program.xml";
+
+
+
+    /** @brief The name of the program as it appears in the title bar.
+     */
+    private const string PROGRAM_TITLE = "Orange";
+
+
+
+    /** @brief The name of an untitled document as it appears in the title bar.
+     */
+    private const string UNTITLED_NAME = "Untitled";
+
+
+
+    /** @brief A controller for common operations.
+     *
+     *  The batch controller handles common operations on groups of project
+     *  nodes. Common operations include edit, print, etc...
+     */
+    private BatchController m_batch_controller;
+
+
+
+    /** @brief A controller to handle operations on the project.
+     *
+     *  The project controller handles operations such as new,
+     *  load, save, etc...
+     */
+    private ProjectController m_project_controller;
+
+
+
+    /** @brief A list of the (0 or 1) projects loaded.
+     *
+     *  This object persists across creation and destruction of projects
+     *  and provides signals to the application for changes in the
+     *  project state.
+     */
+    private ProjectList m_project_list;
+
+
+
+    /** @brief The TreeModel for the project list.
+     */
+    private ProjectTreeModel m_project_model;
+
+
+
+    /** @brief The TreeView for the project list.
+     */
+    private Gtk.TreeView m_project_view;
+
+
+
+    /** @brief The application's main window.
+     */
+    private Gtk.Window m_window;
+
+
+
+    /** @brief Construct the program
+     */
+    public Program() throws Error
+    {
+        m_project_list = new ProjectList();
+        m_project_list.notify.connect(on_notify);
+        m_project_list.notify["current"].connect(on_notify_current);
+
+        Gtk.Builder builder = new Gtk.Builder();
+        builder.add_from_file(Path.build_filename(
+            DialogFactory.PKGDATADIR,
+            DialogFactory.XML_SUBDIR,
+            BUILDER_FILENAME
+            ));
+
+        m_window = builder.get_object("main") as Gtk.Window;
+
+        (builder.get_object("file-quit") as Gtk.Action).activate.connect(this.on_action_quit);
+
+        DialogFactory factory = new DialogFactory(m_window);
+
+        m_project_controller = new ProjectController(factory, builder);
+        m_project_controller.project_list = m_project_list;
+        m_project_controller.notify.connect(this.on_notify);
+
+        m_batch_controller = new BatchController(factory, builder);
+
+        m_project_model = new ProjectTreeModel(m_project_list);
+
+        m_project_view = builder.get_object("main-project-tree") as Gtk.TreeView;
+        m_project_view.set_model(m_project_model);
+        m_project_view.get_selection().changed.connect(this.on_selection_change);
+
+        m_window.delete_event.connect(this.on_delete_event);
+        m_window.destroy.connect(Gtk.main_quit);
+    }
+
+
+
+    /** @brief Construct the program and initialize with command line arguments
+     */
+    public Program.with_args(string[] args) throws Error
+    {
+        this();
+
+        int param;
+
+        OptionEntry[] options =
+        {
+            OptionEntry()
+            {
+                long_name = "version",
+                short_name = 0,
+                flags = 0,
+                arg = OptionArg.NONE,
+                arg_data = &param,
+                description = "Show program version information and exit.",
+                arg_description = null
+            },
+            OptionEntry()
+        };
+
+        OptionContext context = new OptionContext("[FILENAME]");
+
+        context.add_main_entries(options, null);
+        context.set_help_enabled(true);
+
+        context.parse(ref args);
+
+        /* first unparsed option is loaded as the project */
+
+        if (args.length > 1)
+        {
+            m_project_list.load(args[1]);
+        }
+    }
+
+
+
+    /** @brief An event handler when the user selects quit from the menu.
+     *
+     */
+    private void on_action_quit(Gtk.Action sender)
+
+        requires(m_project_controller != null)
+
+    {
+        if (m_project_controller.allow_program_exit())
+        {
+            m_window.destroy();
+        }
+    }
+
+
+
+    /** @brief An event handler when the user selects the delete button.
+     *
+     * @return true Abort the destruction process
+     * @return false Continue with the destruction process
+     */
+    private bool on_delete_event(Gdk.Event event)
+
+        requires(m_project_controller != null)
+
+    {
+        return !m_project_controller.allow_program_exit();
+    }
+
+
+
+    /** @brief An event handler to respond to selection changes.
+     *
+     *  This event handler responds to changes in selected project nodes
+     *  and updates the controllers with the new selection. The controllers
+     *  update the user interface, such as changing the sensitivity of the
+     *  buttons.
+     */
+    private void on_selection_change()
+
+        requires(m_batch_controller != null)
+        requires(m_project_model != null)
+        requires(m_project_view != null)
+
+    {
+        List<Gtk.TreePath> paths = m_project_view.get_selection().get_selected_rows(null);
+
+        List<ProjectNode> nodes = m_project_model.convert(paths);
+        
+        m_batch_controller.set_selection(nodes);
+    }
+
+
+
+    /** @brief Update the projet name in the titlebar
+     */
+    private void on_notify(ParamSpec parameter)
+
+        requires(m_project_list != null)
+        requires(m_project_view != null)
+        requires(m_window != null)
+
+    {
+
+        Project current = m_project_list.current;
+
+        if (current == null)
+        {
+            m_window.set_title(PROGRAM_TITLE);
+        }
+        else
+        {
+            string modified = m_project_list.has_changes ? "*" : "";
+
+            string filename = current.filename;
+
+            if (filename == null)
+            {
+                m_window.set_title("%s%s - %s".printf(UNTITLED_NAME, modified, PROGRAM_TITLE));
+            }
+            else
+            {
+                m_window.set_title("%s%s - %s".printf(Path.get_basename(filename), modified, PROGRAM_TITLE));
+            }
+        }
+    }
+
+
+
+    /** @brief An event handler for project change notifications.
+     *
+     *  Expands the root project node so the user can see all the designs.
+     */
+    private void on_notify_current(ParamSpec parameter)
+    
+        requires(m_project_list != null)
+        requires(m_project_view != null)
+
+    {
+        Project current = m_project_list.current;
+
+        if (current != null)
+        {
+            m_project_view.expand_row(new Gtk.TreePath.first(), false);
+        }
+    }
+
+
+
+    /** @brief Starts the UI
+     *
+     *  Providing the run as an instance method keeps the object from being freed
+     *  during execution.
+     */
+    public void run()
+
+        requires(m_window != null)
+
+    {
+        m_window.show_all();
+        Gtk.main();
+    }
+
+
+
+    /** @brief The program entry point.
+     */
+    public static void main(string[] args)
+    {
+        try
+        {
+            Gtk.init(ref args);
+
+            new Program.with_args(args).run();
+        }
+        catch (Error error)
+        {
+            stderr.printf("%s\n", error.message);
+        }
+    }
+}

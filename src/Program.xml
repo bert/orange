@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+    <object class="GtkUIManager" id="uimanager">
+        <child>
+            <object class="GtkActionGroup" id="main-actions">
+                <child>
+                    <object class="GtkAction" id="file">
+                        <property name="name">file</property>
+                        <property name="label">_File</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-new">
+                        <property name="name">file-new</property>
+                        <property name="label">New</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-new-project">
+                        <property name="name">file-new-project</property>
+                        <property name="label">Project...</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-open">
+                        <property name="name">file-open</property>
+                        <property name="label">Open...</property>
+                        <property name="stock-id">gtk-open</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-save">
+                        <property name="name">file-save</property>
+                        <property name="label">Save</property>
+                        <property name="stock-id">gtk-save</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-export">
+                        <property name="name">file-export</property>
+                        <property name="label">Export</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-export-bom">
+                        <property name="name">file-export-bom</property>
+                        <property name="label">BOM...</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-export-netlist">
+                        <property name="name">file-export-netlist</property>
+                        <property name="label">Netlist...</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-export-pdf">
+                        <property name="name">file-export-pdf</property>
+                        <property name="label">PDF...</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-close">
+                        <property name="name">file-close</property>
+                        <property name="label">Close</property>
+                        <property name="stock-id">gtk-close</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="file-quit">
+                        <property name="name">file-quit</property>
+                        <property name="label">Quit</property>
+                        <property name="stock-id">gtk-quit</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="help">
+                        <property name="name">help</property>
+                        <property name="label">_Help</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="project">
+                        <property name="name">project</property>
+                        <property name="label">_Project</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="project-add">
+                        <property name="name">project-add</property>
+                        <property name="label">Add</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="project-add-design">
+                        <property name="name">project-add-design</property>
+                        <property name="label">Design...</property>
+                        <property name="stock-id">gtk-add</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="design">
+                        <property name="name">design</property>
+                        <property name="label">Design</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="design-add">
+                        <property name="name">design-add</property>
+                        <property name="label">Add</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="design-add-schematic">
+                        <property name="name">design-add-schematic</property>
+                        <property name="label">Schematic...</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="edit-edit">
+                        <property name="name">edit-edit</property>
+                        <property name="label">Edit</property>
+                        <property name="stock-id">gtk-edit</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <ui>
+            <menubar name="main-menubar">
+                <menu action="file">
+                    <menu action="file-new">
+                        <menuitem action="file-new-project"/>
+                    </menu>
+                    <menuitem action="file-open"/>
+                    <separator/>
+                    <menuitem action="file-save"/>
+                    <separator/>
+                    <menu action="file-export">
+                        <menuitem action="file-export-bom"/>
+                        <menuitem action="file-export-netlist"/>
+                        <menuitem action="file-export-pdf"/>
+                    </menu>
+                    <separator/>
+                    <menuitem action="file-close"/>
+                    <menuitem action="file-quit"/>
+                </menu>
+                <menu action="project">
+                    <menu action="project-add">
+                        <menuitem action="project-add-design"/>
+                    </menu>
+                </menu>
+                <menu action="design">
+                    <menu action="project-add">
+                        <menuitem action="design-add-schematic"/>
+                    </menu>
+                </menu>
+                <menu action="help">
+                </menu>
+            </menubar>
+            <toolbar name="main-toolbar">
+                <toolitem action="file-save"/>
+                <separator/>
+                <toolitem action="edit-edit"/>
+                <separator/>
+                <toolitem action="project-add-design"/>
+            </toolbar>
+        </ui>
+    </object>
+
+    <object class="GtkTreeStore" id="test-data">
+        <columns>
+            <column type="gchararray"/>
+        </columns>
+    </object>
+
+    <object class="GtkWindow" id="main">
+        <property name="title">Orange</property>
+        <property name="height-request">600</property>
+        <property name="width-request">800</property>
+        <child>
+            <object class="GtkVBox" id="main-vbox">
+                <child>
+                    <object class="GtkMenuBar" id="main-menubar" constructor="uimanager">
+                    </object>
+                    <packing>
+                        <property name="expand">FALSE</property>
+                        <property name="fill">FALSE</property>
+                    </packing>
+                </child>
+                <child>
+                    <object class="GtkToolbar" id="main-toolbar" constructor="uimanager">
+                    </object>
+                    <packing>
+                        <property name="expand">FALSE</property>
+                        <property name="fill">FALSE</property>
+                    </packing>
+                </child>
+                <child>
+                    <object class="GtkTreeView" id="main-project-tree">
+                        <property name="model">test-data</property>
+                        <child>
+                            <object class="GtkTreeViewColumn" id="column-1">
+                                <property name="title">Name</property>
+                                <child>
+                                    <object class="GtkCellRendererText" id="column-1-renderer">
+                                    </object>
+                                    <attributes>
+                                        <attribute name="text">0</attribute>
+                                    </attributes>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkTreeViewColumn" id="column-2">
+                                <property name="title">Description</property>
+                                <child>
+                                    <object class="GtkCellRendererText" id="column-2-renderer">
+                                    </object>
+                                    <attributes>
+                                        <attribute name="text">1</attribute>
+                                    </attributes>
+                                </child>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </object>
+</interface>

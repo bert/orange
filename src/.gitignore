@@ -1,0 +1,6 @@
+*.o
+*.c
+orange
+orange_vala.stamp
+Makefile
+Makefile.in
