@@ -37,6 +37,8 @@ public class DesignAddExistingBatch : Batch
         base(factory, action);
 
         m_designs = new Gee.HashSet<Design>();
+
+        update();
     }
 
 
@@ -87,7 +89,10 @@ public class DesignAddExistingBatch : Batch
 
             if (status == Gtk.ResponseType.OK)
             {
-                design.add_existing_schematic(dialog.get_filename());
+                foreach (string filename in dialog.get_filenames())
+                {
+                    design.add_existing_schematic(filename);
+                }
             }
 
         }
@@ -107,9 +112,9 @@ public class DesignAddExistingBatch : Batch
             );
 
         dialog.set_current_folder(dirname);
+        dialog.set_select_multiple(true);
 
         return dialog;
     }
 
 }
-
