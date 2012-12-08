@@ -53,6 +53,12 @@ public class BatchController
             factory,
             builder.get_object("file-export-pdf") as Gtk.Action
             ));
+
+        m_batches.add(new RenumberRefdes(
+            factory,
+            builder.get_object("design-renumber-refdes") as Gtk.Action
+            ));
+
     }
 
 

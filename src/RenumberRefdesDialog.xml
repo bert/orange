@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+  <object class="RenumberRefdesDialog" id="dialog">
+    <property name="title">Renumber REFDES</property>
+    <property name="border-width">15</property>
+    <property name="width-request">640</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="content">
+        <property name="spacing">10</property>
+        <property name="visible">TRUE</property>
+        <child>
+          <object class="GtkCheckButton" id="check-force">
+            <property name="label">Force renumbering of all components.</property>
+            <property name="visible">TRUE</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkFrame" id="frame-digits">
+            <property name="visible">TRUE</property>
+            <child type="label">
+              <object class="GtkCheckButton" id="check-digits">
+                <property name="label">Include page number in the REFDES.</property>
+                <property name="visible">TRUE</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkHBox" id="digits-hbox">
+                <property name="border-width">10</property>
+                <property name="spacing">10</property>
+                <property name="visible">TRUE</property>
+                <child>
+                  <object class="GtkLabel" id="label-digits">
+                    <property name="label">Number of digits to use for component number</property>
+                    <property name="visible">TRUE</property>
+                  </object>
+                  <packing>
+                      <property name="expand">FALSE</property>
+                      <property name="fill">FALSE</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="spin-digits">
+                    <property name="value">2</property>
+                    <property name="visible">TRUE</property>
+                  </object>
+                  <packing>
+                      <property name="expand">FALSE</property>
+                      <property name="fill">FALSE</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child internal-child="action_area">
+      <object class="GtkHButtonBox" id="buttons">
+        <property name="visible">TRUE</property>
+        <child>
+          <object class="GtkButton" id="button-cancel">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-cancel</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button-ok">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-ok</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button-cancel</action-widget>
+      <action-widget response="-5">button-ok</action-widget>
+    </action-widgets>
+  </object>
+</interface>
+

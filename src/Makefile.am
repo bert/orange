@@ -25,6 +25,8 @@ orange_SOURCES = \
 	ProjectList.vala \
 	ProjectTreeModel.vala \
 	Program.vala \
+	RenumberRefdes.vala \
+	RenumberRefdesDialog.vala \
 	Schematic.vala \
 	SchematicList.vala
 
@@ -39,7 +41,8 @@ xml_DATA = \
 	ExportNetlistDialog.xml \
 	NewDesignDialog.xml \
 	NewProjectDialog.xml \
-	Program.xml
+	Program.xml \
+	RenumberRefdesDialog.xml
 
 # Needs improvement
 
