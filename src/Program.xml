@@ -117,6 +117,12 @@
                     </object>
                 </child>
                 <child>
+                    <object class="GtkAction" id="design-archive-schematics">
+                        <property name="name">design-archive-schematics</property>
+                        <property name="label">Archive Schematics...</property>
+                    </object>
+                </child>
+                <child>
                     <object class="GtkAction" id="design-renumber-refdes">
                         <property name="name">design-renumber-refdes</property>
                         <property name="label">Renumber REFDES...</property>
@@ -161,6 +167,8 @@
                     </menu>
                     <separator/>
                     <menuitem action="design-renumber-refdes"/>
+                    <separator/>
+                    <menuitem action="design-archive-schematics"/>
                 </menu>
                 <menu action="help">
                 </menu>

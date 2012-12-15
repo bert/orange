@@ -26,6 +26,13 @@ public class Design : ProjectNode
     /**
      * The subdirectory in the project to store exported BOMs.
      */
+    private const string BACKUP_SUBDIR = "bak";
+
+
+
+    /**
+     * The subdirectory in the project to store exported BOMs.
+     */
     private const string BOM_SUBDIR = "bom";
 
 
@@ -298,6 +305,27 @@ public class Design : ProjectNode
 
 
     /**
+     * Create the subdirectory for storing backups
+     *
+     * return The path to the subdirectory for storing backups
+     */
+    public string create_backup_subdir() throws Error
+    {
+        string dirname = Path.build_filename(path, BACKUP_SUBDIR);
+
+        int status = DirUtils.create(dirname, 0775);
+
+        if (status != 0)
+        {
+            // throw something
+        }
+
+        return dirname;
+    }
+
+
+
+    /**
      * Create the subdirectory for storing schematics
      *
      * return The path to the subdirectory for storing schematics
@@ -360,7 +388,44 @@ public class Design : ProjectNode
 
 
 
+    /**
+     * Create an backup archive of the schematics in this design
+     *
+     * This function will need to move elsewhere.
+     */
+    public void archive_schematics(string filename) throws Error
+    {
+        Gee.ArrayList<string?> arguments = new Gee.ArrayList<string?>();
 
+        arguments.add("tar");
+        arguments.add("-czf");
+        arguments.add(filename);
+
+        foreach (Schematic schematic in design.schematics)
+        {
+            arguments.add(schematic.basename);
+        }
+
+        arguments.add(null);
+
+        int status;
+
+        Process.spawn_sync(
+            design.path,
+            arguments.to_array(),
+            null,
+            SpawnFlags.SEARCH_PATH,
+            null,
+            null,
+            null,
+            out status
+            );
+
+        if (status != 0)
+        {
+            // throw something
+        }
+    }
 
 
     /*

@@ -59,6 +59,10 @@ public class BatchController
             builder.get_object("design-renumber-refdes") as Gtk.Action
             ));
 
+        m_batches.add(new ArchiveSchematics(
+            factory,
+            builder.get_object("design-archive-schematics") as Gtk.Action
+            ));
     }
 
 

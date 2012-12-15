@@ -5,6 +5,8 @@ AM_VALAFLAGS = --pkg gee-1.0 --pkg gtk+-2.0 --pkg libxml-2.0
 bin_PROGRAMS = orange
 
 orange_SOURCES = \
+	ArchiveSchematics.vala \
+	ArchiveSchematicsDialog.vala \
 	Batch.vala \
 	BatchController.vala \
 	Design.vala \
@@ -37,6 +39,7 @@ orange_LDADD = $(DEPS_LIBS)
 xmldir = $(pkgdatadir)/xml
 
 xml_DATA = \
+	ArchiveSchematicsDialog.xml \
 	ExportBOMDialog.xml \
 	ExportNetlistDialog.xml \
 	NewDesignDialog.xml \

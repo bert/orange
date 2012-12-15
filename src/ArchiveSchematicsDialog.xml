@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+  <object class="ArchiveSchematicsDialog" id="dialog">
+    <property name="title">Archive Schematics</property>
+    <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
+    <property name="border-width">15</property>
+    <property name="width-request">640</property>
+    <property name="height-request">480</property>
+    <property name="do-overwrite-confirmation">TRUE</property>
+    <child internal-child="action_area">
+      <object class="GtkHButtonBox" id="buttons">
+        <property name="visible">TRUE</property>
+        <child>
+          <object class="GtkButton" id="button-cancel">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-cancel</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button-ok">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-ok</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button-cancel</action-widget>
+      <action-widget response="-5">button-ok</action-widget>
+    </action-widgets>
+  </object>
+</interface>
+
