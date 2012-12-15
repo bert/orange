@@ -63,6 +63,11 @@ public class BatchController
             factory,
             builder.get_object("design-archive-schematics") as Gtk.Action
             ));
+
+        m_batches.add(new BackannotateRefdes(
+            factory,
+            builder.get_object("design-backannotate-refdes") as Gtk.Action
+            ));
     }
 
 

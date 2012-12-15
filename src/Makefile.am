@@ -7,6 +7,8 @@ bin_PROGRAMS = orange
 orange_SOURCES = \
 	ArchiveSchematics.vala \
 	ArchiveSchematicsDialog.vala \
+	BackannotateRefdes.vala \
+	BackannotateRefdesDialog.vala \
 	Batch.vala \
 	BatchController.vala \
 	Design.vala \
@@ -40,6 +42,7 @@ xmldir = $(pkgdatadir)/xml
 
 xml_DATA = \
 	ArchiveSchematicsDialog.xml \
+	BackannotateRefdesDialog.xml \
 	ExportBOMDialog.xml \
 	ExportNetlistDialog.xml \
 	NewDesignDialog.xml \

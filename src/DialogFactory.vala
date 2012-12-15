@@ -64,6 +64,7 @@ public class DialogFactory
         stdout.printf("Registering %s\n", typeof(NewDesignDialog).name());
         stdout.printf("Registering %s\n", typeof(NewProjectDialog).name());
         stdout.printf("Registering %s\n", typeof(RenumberRefdesDialog).name());
+        stdout.printf("Registering %s\n", typeof(BackannotateRefdesDialog).name());
     }
 
 
@@ -129,6 +130,33 @@ public class DialogFactory
             ));
 
         ArchiveSchematicsDialog dialog = ArchiveSchematicsDialog.extract(builder);
+
+        dialog.set_transient_for(Parent);
+
+        return dialog;
+    }
+
+
+
+    /*
+     *
+     *
+     *
+     */
+    public BackannotateRefdesDialog create_backannotate_refdes_dialog() throws Error
+
+        ensures(result != null)
+
+    {
+        Gtk.Builder builder = new Gtk.Builder();
+
+        builder.add_from_file(Path.build_filename(
+            DialogFactory.PKGDATADIR,
+            DialogFactory.XML_SUBDIR,
+            BackannotateRefdesDialog.BUILDER_FILENAME
+            ));
+
+        BackannotateRefdesDialog dialog = BackannotateRefdesDialog.extract(builder);
 
         dialog.set_transient_for(Parent);
 
