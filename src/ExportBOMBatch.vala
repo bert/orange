@@ -138,12 +138,38 @@ public class ExportBOMBatch : Batch
 
         arguments.add(null);
 
+        /*  Ensure the environment variables OLDPWD and PWD match the
+         *  working directory passed into Process.spawn_async(). Some
+         *  Scheme scripts use getenv() to determine the current
+         *  working directory.
+         */
+
+        var environment = new Gee.ArrayList<string?>();
+
+        foreach (string variable in Environment.list_variables())
+        {
+            if (variable == "OLDPWD")
+            {
+                environment.add("%s=%s".printf(variable, Environment.get_current_dir()));
+            }
+            else if (variable == "PWD")
+            {
+                environment.add("%s=%s".printf(variable, design.path));
+            }
+            else
+            {
+                environment.add("%s=%s".printf(variable, Environment.get_variable(variable)));
+            }
+        }
+
+        environment.add(null);
+
         int status;
 
         Process.spawn_sync(
             design.path,
             arguments.to_array(),
-            null,
+            environment.to_array(),
             SpawnFlags.SEARCH_PATH,
             null,
             null,

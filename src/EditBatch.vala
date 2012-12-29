@@ -15,6 +15,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+using GLib;
+
 /**
  * A batch operation to edit nodes in the project tree.
  */
@@ -111,7 +114,7 @@ public class EditBatch : Batch
 
         foreach (var design in designs)
         {
-            var arguments = new Gee.ArrayList<string>();
+            var arguments = new Gee.ArrayList<string?>();
 
             arguments.add(EDIT_SCHEMATIC_COMMAND);
 
@@ -123,10 +126,38 @@ public class EditBatch : Batch
                 }
             }
 
+            arguments.add(null);
+
+            /*  Ensure the environment variables OLDPWD and PWD match the
+             *  working directory passed into Process.spawn_async(). Some
+             *  Scheme scripts use getenv() to determine the current
+             *  working directory.
+             */
+
+            var environment = new Gee.ArrayList<string?>();
+
+            foreach (string variable in Environment.list_variables())
+            {
+                if (variable == "OLDPWD")
+                {
+                    environment.add("%s=%s".printf(variable, Environment.get_current_dir()));
+                }
+                else if (variable == "PWD")
+                {
+                    environment.add("%s=%s".printf(variable, design.path));
+                }
+                else
+                {
+                    environment.add("%s=%s".printf(variable, Environment.get_variable(variable)));
+                }
+            }
+
+            environment.add(null);
+
             Process.spawn_async(
                 design.path,
                 arguments.to_array(),
-                null,
+                environment.to_array(),
                 SpawnFlags.SEARCH_PATH,
                 null,
                 null
