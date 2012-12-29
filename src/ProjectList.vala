@@ -172,6 +172,13 @@ public class ProjectList : ProjectNode
      */
     public void load(string filename) throws Error
     {
+        if (!Path.is_absolute(filename))
+        {
+            string message = "Requires an absolute path '%s'".printf(filename);
+
+            throw new ProjectError.UNABLE_TO_CREATE(message);
+        }
+
         current = Project.load(this, filename);
         has_changes = false;
     }

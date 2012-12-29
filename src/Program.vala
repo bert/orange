@@ -142,8 +142,21 @@ public class Program
 
         int param;
 
+        /* string[]? filenames = null; */
+
         OptionEntry[] options =
         {
+            /* Remaining does not seem to work correctly. */
+            //OptionEntry()
+            //{
+            //    long_name = "",    /* G_OPTION_REMAINING */
+            //    short_name = 0,
+            //    flags = 0,
+            //    arg = OptionArg.FILENAME_ARRAY,
+            //    arg_data = &filenames,
+            //    description = null,
+            //    arg_description = null
+            //},
             OptionEntry()
             {
                 long_name = "version",
@@ -168,7 +181,17 @@ public class Program
 
         if (args.length > 1)
         {
-            m_project_list.load(args[1]);
+            string filename = args[1];
+
+            if (!Path.is_absolute(filename))
+            {
+                filename = Path.build_filename(
+                    Environment.get_current_dir(),
+                    filename
+                    );
+            }
+
+            m_project_list.load(filename);
         }
     }
 
