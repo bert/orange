@@ -119,9 +119,6 @@ public class NewDesignDialog : Gtk.Dialog
 
     private void on_change()
     {
-        stdout.printf("on_notify\n");
-        stdout.flush();
-
         update();
     }
 
@@ -129,6 +126,10 @@ public class NewDesignDialog : Gtk.Dialog
 
 
     private void on_notify_design(ParamSpec parameter)
+
+        requires(m_design_name != null)
+        requires(m_project != null)
+
     {
         if (m_design_name.text.length > 0)
         {
@@ -151,6 +152,10 @@ public class NewDesignDialog : Gtk.Dialog
 
 
     private void on_notify_folder(ParamSpec parameter)
+
+        requires(m_folder_name != null)
+        requires(m_project != null)
+
     {
         if (m_folder_name.text.length > 0)
         {

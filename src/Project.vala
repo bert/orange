@@ -299,11 +299,14 @@ public class Project : ProjectNode
 
     public Design? get_design(string name)
     {
-        foreach (var design in m_designs)
+        if (m_designs != null)
         {
-            if (design.name == name)
+            foreach (var design in m_designs)
             {
-                return design;
+                if (design.name == name)
+                {
+                    return design;
+                }
             }
         }
 
