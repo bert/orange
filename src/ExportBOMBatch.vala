@@ -121,7 +121,7 @@ public class ExportBOMBatch : Batch
 
     private void create_bom_file(Design design, string filename, string format) throws Error
     {
-        var arguments = new Gee.ArrayList<string>();
+        var arguments = new Gee.ArrayList<string?>();
 
         arguments.add(NETLIST_COMMAND);
 

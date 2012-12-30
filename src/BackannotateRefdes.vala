@@ -110,7 +110,7 @@ public class BackannotateRefdes : Batch
 
     private void backannotate(Design design, string filename) throws Error
     {
-        var arguments = new Gee.ArrayList<string>();
+        var arguments = new Gee.ArrayList<string?>();
 
         arguments.add(BACKANNOTATE_COMMAND);
 

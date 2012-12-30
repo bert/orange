@@ -149,7 +149,7 @@ public class ExportPrintBatch : Batch
 
     private void create_print_file(Design design, string filename) throws Error
     {
-        var arguments = new Gee.ArrayList<string>();
+        var arguments = new Gee.ArrayList<string?>();
 
         arguments.add(PRINT_SCHEMATIC_COMMAND);
         arguments.add(PRINT_SCHEMATIC_SUBCOMMAND);
