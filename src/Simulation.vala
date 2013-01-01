@@ -400,34 +400,42 @@ public class Simulation : ProjectNode
             }
         }
 
+        foreach (var variable in environment)
+        {
+            stdout.printf("%s\n", variable);
+        }
+
+        stdout.flush();
+
         environment.add(null);
 
-        int status;
-
-        Process.spawn_sync(
+        Process.spawn_async(
             path,
             arguments.to_array(),
             environment.to_array(),
             SpawnFlags.SEARCH_PATH,
             null,
-            null,
-            null,
-            out status
+            null
             );
-
-        if (status != 0)
-        {
-            // throw something
-        }
     }
 
 
 
+    /**
+     * Build command arguments for invoking ngspice
+     *
+     * When invoking ngspice directly, the program cannot locate the display. The
+     * current fix is to launch it in interactive mode in its own xterm.
+     */
     Gee.ArrayList<string?> create_arguments_ngspice()
     {
         var arguments = new Gee.ArrayList<string?>();
 
+        arguments.add("xterm");
+        arguments.add("-e");
+
         arguments.add("ngspice");
+        arguments.add("-i");
 
         arguments.add(Path.build_filename(path, circuit));
 

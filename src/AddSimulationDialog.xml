@@ -19,7 +19,7 @@
     <data>
       <row>
         <col id="0">gtk-preferences</col>
-        <col id="1">&lt;b&gt;&lt;big&gt;Ngspice&lt;/big&gt;&lt;/b&gt;&#13;Circuit Simulation using &lt;i&gt;ngspice&lt;/i&gt;.</col>
+        <col id="1">&lt;b&gt;&lt;big&gt;Ngspice&lt;/big&gt;&lt;/b&gt;&#13;Circuit Simulation using &lt;i&gt;ngspice&lt;/i&gt; in interactive mode.</col>
         <col id="2">ngspice</col>
         <col id="3">spice-sdb</col>
       </row>
