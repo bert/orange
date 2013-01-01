@@ -5,6 +5,8 @@ AM_VALAFLAGS = --pkg gee-1.0 --pkg gtk+-2.0 --pkg libxml-2.0
 bin_PROGRAMS = orange
 
 orange_SOURCES = \
+	AddSimulation.vala \
+	AddSimulationDialog.vala \
 	ArchiveSchematics.vala \
 	ArchiveSchematicsDialog.vala \
 	BackannotateRefdes.vala \
@@ -31,8 +33,11 @@ orange_SOURCES = \
 	Program.vala \
 	RenumberRefdes.vala \
 	RenumberRefdesDialog.vala \
+	RunSimulation.vala \
 	Schematic.vala \
-	SchematicList.vala
+	SchematicList.vala \
+	Simulation.vala \
+	SimulationList.vala
 
 orange_LDADD = $(DEPS_LIBS)
 
@@ -41,6 +46,7 @@ orange_LDADD = $(DEPS_LIBS)
 xmldir = $(pkgdatadir)/xml
 
 xml_DATA = \
+	AddSimulationDialog.xml \
 	ArchiveSchematicsDialog.xml \
 	BackannotateRefdesDialog.xml \
 	ExportBOMDialog.xml \

@@ -141,6 +141,27 @@ public class Design : ProjectNode
 
 
     /**
+     * A read only view of the simulations in this design.
+     */
+    public Gee.List<Simulation> simulations
+    {
+        owned get
+        {
+            return simulation_list.simulations;
+        }
+    }
+
+
+
+    public SimulationList simulation_list
+    {
+        get;
+        private set;
+    }
+
+
+
+    /**
      * A read only view of the schematics in this design.
      */
     public Gee.List<Schematic> schematics
@@ -180,10 +201,12 @@ public class Design : ProjectNode
         m_parent = parent;
         this.element = element;
 
+        simulation_list = SimulationList.create(this);
         schematic_list = SchematicList.create(this);
 
         m_children = new Gee.ArrayList<ProjectNode>();
 
+        add(simulation_list);
         add(schematic_list);
     }
 
@@ -248,6 +271,11 @@ public class Design : ProjectNode
                 continue;
             }
 
+            if (child->name == Simulation.ELEMENT_NAME)
+            {
+                design.simulation_list.add_with_node(child);
+            }
+
             if (child->name == Schematic.ELEMENT_NAME)
             {
                 design.schematic_list.add_with_node(child);
@@ -303,6 +331,15 @@ public class Design : ProjectNode
     }
 
 
+
+    public Simulation create_simulation(string subdir) throws Error
+    {
+        Simulation simulation = simulation_list.create_simulation(subdir);
+
+        element->add_child(simulation.element);
+
+        return simulation;
+    }
 
     /**
      * Create the subdirectory for storing backups
@@ -387,6 +424,22 @@ public class Design : ProjectNode
     }
 
 
+
+    /**
+     * Get a simulation in this design by name.
+     */
+     public Simulation? get_simulation(string name)
+     {
+        foreach (var simulation in simulations)
+        {
+            if (simulation.name == name)
+            {
+                return simulation;
+            }
+        }
+
+        return null;
+     }
 
     /**
      * Create an backup archive of the schematics in this design

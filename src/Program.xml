@@ -117,6 +117,12 @@
                     </object>
                 </child>
                 <child>
+                    <object class="GtkAction" id="design-add-simulation">
+                        <property name="name">design-add-simulation</property>
+                        <property name="label">Simulation...</property>
+                    </object>
+                </child>
+                <child>
                     <object class="GtkAction" id="design-backannotate-refdes">
                         <property name="name">design-backannotate-refdes</property>
                         <property name="label">Backannotate REFDES...</property>
@@ -132,6 +138,13 @@
                     <object class="GtkAction" id="design-renumber-refdes">
                         <property name="name">design-renumber-refdes</property>
                         <property name="label">Renumber REFDES...</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="design-run-simulation">
+                        <property name="name">design-run-simulation</property>
+                        <property name="label">Run Simulation</property>
+                        <property name="stock-id">gtk-execute</property>
                     </object>
                 </child>
                 <child>
@@ -170,12 +183,15 @@
                 <menu action="design">
                     <menu action="project-add">
                         <menuitem action="design-add-schematic"/>
+                        <menuitem action="design-add-simulation"/>
                     </menu>
                     <separator/>
                     <menuitem action="design-renumber-refdes"/>
                     <menuitem action="design-backannotate-refdes"/>
                     <separator/>
                     <menuitem action="design-archive-schematics"/>
+                    <separator/>
+                    <menuitem action="design-run-simulation"/>
                 </menu>
                 <menu action="help">
                 </menu>
@@ -186,6 +202,8 @@
                 <toolitem action="edit-edit"/>
                 <separator/>
                 <toolitem action="project-add-design"/>
+                <separator/>
+                <toolitem action="design-run-simulation"/>
             </toolbar>
         </ui>
     </object>

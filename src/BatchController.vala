@@ -68,6 +68,16 @@ public class BatchController
             factory,
             builder.get_object("design-backannotate-refdes") as Gtk.Action
             ));
+
+        m_batches.add(new AddSimulation(
+            factory,
+            builder.get_object("design-add-simulation") as Gtk.Action
+            ));
+
+        m_batches.add(new RunSimulation(
+            factory,
+            builder.get_object("design-run-simulation") as Gtk.Action
+            ));
     }
 
 

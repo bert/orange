@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+
+  <object class="GtkListStore" id="types-list">
+    <columns>
+      <column type="gchararray"/>
+      <column type="gchararray"/>
+      <column type="gchararray"/> <!-- The name of the circuit simulation engine -->
+      <column type="gchararray"/> <!-- The default gnetlist backend to use for this simulation -->
+    </columns>
+    <data>
+      <row>
+        <col id="0">gtk-preferences</col>
+        <col id="1">&lt;b&gt;&lt;big&gt;GnuCap&lt;/big&gt;&lt;/b&gt;&#13;Circuit Simulation using &lt;i&gt;gnucap&lt;/i&gt;.</col>
+        <col id="2">gnucap</col>
+        <col id="3">spice-sdb</col>
+      </row>
+    </data>
+    <data>
+      <row>
+        <col id="0">gtk-preferences</col>
+        <col id="1">&lt;b&gt;&lt;big&gt;Ngspice&lt;/big&gt;&lt;/b&gt;&#13;Circuit Simulation using &lt;i&gt;ngspice&lt;/i&gt;.</col>
+        <col id="2">ngspice</col>
+        <col id="3">spice-sdb</col>
+      </row>
+    </data>
+  </object>
+
+  <object class="AddSimulationDialog" id="dialog">
+    <property name="title">New Simulation</property>
+    <property name="border-width">15</property>
+    <property name="width-request">640</property>
+    <property name="height-request">480</property>    
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="content">
+        <property name="visible">TRUE</property>
+        <property name="spacing">10</property>
+        <child>
+          <object class="GtkTreeView" id="types-tree">
+            <property name="headers-visible">FALSE</property>
+            <property name="visible">TRUE</property>
+            <property name="model">types-list</property>
+            <child>
+              <object class="GtkTreeViewColumn" id="types-tree-column-1">
+                <property name="title">Design Type</property>
+                <child>
+                  <object class="GtkCellRendererPixbuf" id="types-tree-column-1-renderer-0">
+                    <property name="stock-size">5</property>
+                  </object>
+                  <attributes>
+                    <attribute name="stock-id">0</attribute>
+                  </attributes>
+                </child>
+                <child>
+                  <object class="GtkCellRendererText" id="types-tree-column-1-renderer-1">
+                  </object>
+                  <attributes>
+                    <attribute name="markup">1</attribute>
+                  </attributes>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkHBox" id="name-hbox">
+            <property name="visible">TRUE</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkLabel" id="name-label">
+                <property name="visible">TRUE</property>
+                <property name="label">Simulation Subdirectory</property>
+                <property name="xalign">0.0</property>
+              </object>
+              <packing>
+                <property name="expand">FALSE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="name-entry">
+                <property name="visible">TRUE</property>
+              </object>
+              <packing>
+                <property name="expand">TRUE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">FALSE</property>
+            <property name="fill">TRUE</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox-error-design-exists">
+            <property name="visible">TRUE</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkImage" id="image-error-design-exists">
+                <property name="visible">TRUE</property>
+                <property name="stock">gtk-dialog-error</property>
+              </object>
+              <packing>
+                <property name="expand">FALSE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label-error-design-exists">
+                <property name="visible">TRUE</property>
+                <property name="label">A design with that name already exists in the project.</property>
+                <property name="xalign">0.0</property>
+              </object>
+              <packing>
+                <property name="expand">TRUE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">FALSE</property>
+            <property name="fill">TRUE</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox-error-folder-exists">
+            <property name="visible">TRUE</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkImage" id="image-error-folder-exists">
+                <property name="visible">TRUE</property>
+                <property name="stock">gtk-dialog-error</property>
+              </object>
+              <packing>
+                <property name="expand">FALSE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label-error-folder-exists">
+                <property name="visible">TRUE</property>
+                <property name="label">A folder with that name already exists.</property>
+                <property name="xalign">0.0</property>
+              </object>
+              <packing>
+                <property name="expand">TRUE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">FALSE</property>
+            <property name="fill">TRUE</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child internal-child="action_area">
+      <object class="GtkHButtonBox" id="buttons">
+        <property name="visible">TRUE</property>
+        <child>
+          <object class="GtkButton" id="button-cancel">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-cancel</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button-ok">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-ok</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button-cancel</action-widget>
+      <action-widget response="-5">button-ok</action-widget>
+    </action-widgets>
+  </object>
+</interface>
+

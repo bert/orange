@@ -66,6 +66,15 @@ public abstract class Batch
 
 
     /**
+     * Add a schematic to this batch operation.
+     */
+    public virtual void add_simulation(Simulation simulation)
+    {
+    }
+
+
+
+    /**
      * Clear all nodes from this batch operation.
      */
     public abstract void clear();
