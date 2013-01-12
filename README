@@ -1,0 +1,14 @@
+Dependencies
+------------
+
+The following pacakges are required for building from source:
+
+    Package         Version
+    --------------  ----------
+    libgee-dev      >= 0.6.4
+    libglib2.0-dev  >= 2.32.3
+    libgtk2.0-dev   >= 2.24.10
+    libxml2-dev     >= 2.7.8
+    valac            = 0.14
+
+
