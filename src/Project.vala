@@ -25,6 +25,22 @@ public class Project : ProjectNode
 {
     private const string PROJECT_NAME = "Project";
 
+
+
+    /**
+     * The filename for the gafrc file.
+     */
+    private const string GAFRC_FILENAME = "gafrc";
+
+
+
+    /**
+     * The filename for the gschemrc file.
+     */
+    private const string GSCHEMRC_FILENAME = "gschemrc";
+
+
+
     private string m_name;
     private string m_path;
     private string m_filename;
@@ -195,26 +211,71 @@ public class Project : ProjectNode
 
     /**
      * Create a new design and add it to this project.
+     *
+     * param name The name of the design as it appears to the user.
+     * param subdir The basename of the design directory.
      */
     public void create_design(string name, string subdir) throws Error
 
         requires(element != null)
 
     {
-        string project_dir = Path.build_filename(path, subdir, null);
+        string design_dir = Path.build_filename(path, subdir, null);
 
-        if (FileUtils.test(project_dir, FileTest.EXISTS))
+        if (FileUtils.test(design_dir, FileTest.EXISTS))
         {
-            string message = "Directory '%s' already exists".printf(project_dir);
+            string message = "Directory '%s' already exists".printf(design_dir);
 
             throw new ProjectError.UNABLE_TO_CREATE(message);
         }
 
-        if (DirUtils.create(project_dir, 0775) != 0)
+        if (DirUtils.create(design_dir, 0775) != 0)
         {
-            string message = "Cannot create directory '%s'".printf(project_dir);
+            string message = "Cannot create directory '%s'".printf(design_dir);
 
             throw new ProjectError.UNABLE_TO_CREATE(message);
+        }
+
+        /* Copy a default gafrc to the design directory */
+
+        string gafrc_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", GAFRC_FILENAME, null);
+
+        File gafrc_file = File.new_for_path(gafrc_path);
+
+        try
+        {
+            string destinaion_path = Path.build_filename(design_dir, GAFRC_FILENAME, null);
+
+            File destination_file = File.new_for_path(destinaion_path);
+
+            gafrc_file.copy(destination_file, 0, null, null);
+        }
+        catch
+        {
+            string message = "Cannot copy file '%s'".printf(gafrc_path);
+
+            throw new ProjectError.UNABLE_TO_COPY(message);
+        }
+
+        /* Copy a default gschemrc to the design directory */
+
+        string gschemrc_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", GSCHEMRC_FILENAME, null);
+
+        File gschemrc_file = File.new_for_path(gschemrc_path);
+
+        try
+        {
+            string destinaion_path = Path.build_filename(design_dir, GSCHEMRC_FILENAME, null);
+
+            File destination_file = File.new_for_path(destinaion_path);
+
+            gschemrc_file.copy(destination_file, 0, null, null);
+        }
+        catch
+        {
+            string message = "Cannot copy file '%s'".printf(gschemrc_path);
+
+            throw new ProjectError.UNABLE_TO_COPY(message);
         }
 
         Design design = Design.create(this, name, subdir);

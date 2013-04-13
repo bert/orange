@@ -1,0 +1,6 @@
+(text-size 10)						; Default text size
+(undo-levels 50)
+
+; default titleblock for new schematics
+(define default-titleblock "title-block.sym")
+
