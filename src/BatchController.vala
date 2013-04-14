@@ -29,9 +29,14 @@ public class BatchController
     {
         m_batches = new Gee.ArrayList<Batch>();
 
+        m_batches.add(new DesignAddNewBatch(
+            factory,
+            builder.get_object("design-add-schematic-new") as Gtk.Action
+            ));
+
         m_batches.add(new DesignAddExistingBatch(
             factory,
-            builder.get_object("design-add-schematic") as Gtk.Action
+            builder.get_object("design-add-schematic-existing") as Gtk.Action
             ));
 
         m_batches.add(new EditBatch(

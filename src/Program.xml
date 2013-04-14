@@ -111,9 +111,15 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkAction" id="design-add-schematic">
-                        <property name="name">design-add-schematic</property>
-                        <property name="label">Schematic...</property>
+                    <object class="GtkAction" id="design-add-schematic-new">
+                        <property name="name">design-add-schematic-new</property>
+                        <property name="label">New Schematic...</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="design-add-schematic-existing">
+                        <property name="name">design-add-schematic-existing</property>
+                        <property name="label">Existing Schematic...</property>
                     </object>
                 </child>
                 <child>
@@ -182,7 +188,8 @@
                 </menu>
                 <menu action="design">
                     <menu action="project-add">
-                        <menuitem action="design-add-schematic"/>
+                        <menuitem action="design-add-schematic-new"/>
+                        <menuitem action="design-add-schematic-existing"/>
                         <menuitem action="design-add-simulation"/>
                     </menu>
                     <separator/>

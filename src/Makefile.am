@@ -15,6 +15,7 @@ orange_SOURCES = \
 	BatchController.vala \
 	Design.vala \
 	DesignAddExistingBatch.vala \
+	DesignAddNewBatch.vala \
 	DialogFactory.vala \
 	EditBatch.vala \
 	ExportBOMBatch.vala \

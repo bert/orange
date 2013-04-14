@@ -4,5 +4,6 @@ data1dir = $(pkgdatadir)/data
 
 data1_DATA = \
 	gafrc \
-	gschemrc
+	gschemrc \
+	template.sch
 
