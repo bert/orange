@@ -106,6 +106,37 @@
             <property name="fill">TRUE</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkHBox" id="hbox-error-not-absolute">
+            <property name="visible">TRUE</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkImage" id="image-error-not_absolute">
+                <property name="visible">TRUE</property>
+                <property name="stock">gtk-dialog-error</property>
+              </object>
+              <packing>
+                <property name="expand">FALSE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label-error-not-absolute">
+                <property name="visible">TRUE</property>
+                <property name="label">The folder path must be absolute.</property>
+                <property name="xalign">0.0</property>
+              </object>
+              <packing>
+                <property name="expand">TRUE</property>
+                <property name="fill">TRUE</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">FALSE</property>
+            <property name="fill">TRUE</property>
+          </packing>
+        </child>
       </object>
     </child>
     <child internal-child="action_area">

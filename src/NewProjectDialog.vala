@@ -55,6 +55,16 @@ public class NewProjectDialog : Gtk.Dialog
 
 
     /**
+     * A widget showing the project folder path is not absolute.
+     *
+     * Making this widget visible will indicate to the user that the
+     * current project folder path is not absolute.
+     */
+    private Gtk.Widget m_error_not_absolute;
+
+
+
+    /**
      * The folder chooser widget containing the parent folder.
      */
     private Gtk.FileChooserWidget m_folder_chooser;
@@ -99,6 +109,8 @@ public class NewProjectDialog : Gtk.Dialog
      */
     public static NewProjectDialog extract(Gtk.Builder builder) throws Error
 
+        ensures(result.m_error_folder_exists != null)
+        ensures(result.m_error_not_absolute != null)
         ensures(result.m_folder_chooser != null)
         ensures(result.m_folder_name != null)
         ensures(result.m_project_name != null)
@@ -116,6 +128,7 @@ public class NewProjectDialog : Gtk.Dialog
         dialog.m_project_name.notify["text"].connect(dialog.on_notify_name);
 
         dialog.m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
+        dialog.m_error_not_absolute = builder.get_object("hbox-error-not-absolute") as Gtk.Widget;
 
         /* set up initial values */
 
@@ -139,6 +152,7 @@ public class NewProjectDialog : Gtk.Dialog
         requires(m_folder_name != null)
         requires(m_project_name != null)
         ensures(result != null)
+        ensures(Path.is_absolute(result))
 
     {
         return GLib.Path.build_filename(
@@ -146,7 +160,6 @@ public class NewProjectDialog : Gtk.Dialog
             m_project_name.text + FILENAME_EXTENSION,
             null
             );
-
     }
 
 
@@ -155,6 +168,8 @@ public class NewProjectDialog : Gtk.Dialog
      */
     private void on_notify_folder()
 
+        requires(m_error_folder_exists != null)
+        requires(m_error_not_absolute != null)
         requires(m_folder_chooser != null)
         requires(m_folder_name != null)
         requires(m_project_name != null)
@@ -163,14 +178,17 @@ public class NewProjectDialog : Gtk.Dialog
         if (m_folder_name.text.length > 0)
         {
             bool folder_exists = FileUtils.test(m_folder_name.text, FileTest.EXISTS);
-
             m_error_folder_exists.set_visible(folder_exists);
 
-            m_folder_name_valid = !folder_exists;
+            bool not_absolute = !Path.is_absolute(m_folder_name.text);
+            m_error_not_absolute.set_visible(not_absolute);
+
+            m_folder_name_valid = !folder_exists && !not_absolute;
         }
         else
         {
             m_error_folder_exists.set_visible(false);
+            m_error_not_absolute.set_visible(false);
 
             m_folder_name_valid = false;
         }
