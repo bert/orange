@@ -142,8 +142,7 @@ public class NewProjectDialog : Gtk.Dialog
 
     {
         return GLib.Path.build_filename(
-            m_folder_chooser.get_filename(),
-            m_project_name.text,
+            m_folder_name.text,
             m_project_name.text + FILENAME_EXTENSION,
             null
             );
