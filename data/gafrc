@@ -1,6 +1,6 @@
 ; gafrc for a self contained repo of a geda project.
 ; All symbols should be embedded in the schematic, or local to this folder.
-(reset-component-library)
+;(reset-component-library)
 ;(reset-source-library)
 
 ; Allow to source symbols from the current working directory
