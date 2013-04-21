@@ -42,6 +42,13 @@ public class Program
 
 
     /**
+     * The context menu for the project view wiget.
+     */
+    private Gtk.Menu m_context_menu;
+
+
+
+    /**
      * A controller for common operations.
      *
      * The batch controller handles common operations on groups of project
@@ -127,6 +134,14 @@ public class Program
         m_project_view.set_model(m_project_model);
         m_project_view.get_selection().changed.connect(this.on_selection_change);
 
+        /* For the context menu */
+        Gtk.UIManager uimanager = builder.get_object("uimanager") as Gtk.UIManager;
+        m_context_menu = uimanager.get_widget("ui/context-menu") as Gtk.Menu;
+        //Gdk.EventMask event_mask = m_project_view.window.get_events();
+        //event_mask |= Gdk.EventMask.BUTTON_PRESS_MASK;
+        //m_project_view.window.set_events(event_mask);
+        m_project_view.button_press_event.connect(this.on_button_press);
+
         m_window.delete_event.connect(this.on_delete_event);
         m_window.destroy.connect(Gtk.main_quit);
     }
@@ -209,6 +224,28 @@ public class Program
         {
             m_window.destroy();
         }
+    }
+
+
+
+    /**
+     * An event handler for when the user presses a button in the project view
+     *
+     *
+     */
+    private bool on_button_press(Gdk.EventButton event)
+
+        requires(m_context_menu != null)
+
+    {
+        if ((event.type == Gdk.EventType.BUTTON_PRESS) && (event.button == 3))
+        {
+            stdout.printf("on_button_press\n");
+
+            m_context_menu.popup(null, null, null, event.button, event.time);
+        }
+
+        return false;
     }
 
 

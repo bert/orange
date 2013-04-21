@@ -212,6 +212,10 @@
                 <separator/>
                 <toolitem action="design-run-simulation"/>
             </toolbar>
+            <popup name="context-menu">
+                <menuitem action="design-add-schematic-new"/>
+                <menuitem action="design-add-schematic-existing"/>
+            </popup>
         </ui>
     </object>
 
