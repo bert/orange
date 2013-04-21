@@ -215,6 +215,8 @@
             <popup name="context-menu">
                 <menuitem action="design-add-schematic-new"/>
                 <menuitem action="design-add-schematic-existing"/>
+                <separator/>
+                <menuitem action="edit-edit"/>
             </popup>
         </ui>
     </object>
