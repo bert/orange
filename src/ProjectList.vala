@@ -15,15 +15,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/*
+/**
+ * Stores a list of the current projects
  *
- *
- *
- *
+ * This class stores current open projects, which is either zero or one. This
+ * class is designed to persist across opening and closing projects.
  */
 public class ProjectList : ProjectNode
 {
-
     /**
      * Returns the name of the root node.
      *
@@ -38,7 +37,13 @@ public class ProjectList : ProjectNode
     }
 
 
-    // backing store for the project
+
+    /**
+     * The backing store for the current project
+     *
+     * To keep the signal handler connections in sync, only the property
+     * getter and setter should access this backing store.
+     */
     private Project? m_current;
 
 
@@ -89,6 +94,9 @@ public class ProjectList : ProjectNode
 
 
 
+    /**
+     * Indicates changes have occured to the current project
+     */
     public bool has_changes
     {
         get;
@@ -98,9 +106,7 @@ public class ProjectList : ProjectNode
 
 
     /**
-     * Create a new project list.
-     *
-     * Create an empty project list.
+     * Create a new, empty project list.
      */
     public ProjectList()
     {
@@ -129,6 +135,8 @@ public class ProjectList : ProjectNode
      *
      * This function creates a new project. The current project will be
      * discarded. All unsaved changes will be lost.
+     *
+     * param filename The absolute path of the project file.
      */
     public void create(string filename) throws Error
     {
@@ -168,7 +176,7 @@ public class ProjectList : ProjectNode
      * This function loads an existing project from the filesystem. The
      * current project will be discarded. All unsaved changes will be lost.
      *
-     * param filename The filename of the project to load
+     * param filename The absolute path of the project file to load
      */
     public void load(string filename) throws Error
     {
@@ -183,13 +191,10 @@ public class ProjectList : ProjectNode
         has_changes = false;
     }
 
-    // TODO: Do something
 
-    /*
-     *
-     *
-     *
-     *
+
+    /**
+     * Saves the current project
      */
     public void save() throws ProjectError
 
@@ -230,5 +235,4 @@ public class ProjectList : ProjectNode
          base.on_changed(node);
          has_changes = true;
      }
-
 }
