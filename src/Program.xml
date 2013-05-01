@@ -160,6 +160,13 @@
                         <property name="stock-id">gtk-edit</property>
                     </object>
                 </child>
+                <child>
+                    <object class="GtkAction" id="help-about">
+                        <property name="name">help-about</property>
+                        <property name="label">About...</property>
+                        <property name="stock-id">gtk-about</property>
+                    </object>
+                </child>
             </object>
         </child>
         <ui>
@@ -201,6 +208,7 @@
                     <menuitem action="design-run-simulation"/>
                 </menu>
                 <menu action="help">
+                    <menuitem action = "help-about"/>
                 </menu>
             </menubar>
             <toolbar name="main-toolbar">

@@ -1,10 +1,11 @@
 
-AM_CPPFLAGS = $(DEPS_CFLAGS) -DPKGDATADIR=\"$(pkgdatadir)\"
+AM_CPPFLAGS = $(DEPS_CFLAGS) -DPKGDATADIR=\"$(pkgdatadir)\" -include config.h
 AM_VALAFLAGS = --pkg gee-1.0 --pkg gtk+-2.0 --pkg libxml-2.0
 
 bin_PROGRAMS = orange
 
 orange_SOURCES = \
+	AboutDialog.vala \
 	AddSimulation.vala \
 	AddSimulationDialog.vala \
 	ArchiveSchematics.vala \
@@ -47,6 +48,7 @@ orange_LDADD = $(DEPS_LIBS)
 xmldir = $(pkgdatadir)/xml
 
 xml_DATA = \
+	AboutDialog.xml \
 	AddSimulationDialog.xml \
 	ArchiveSchematicsDialog.xml \
 	BackannotateRefdesDialog.xml \

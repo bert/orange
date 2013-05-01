@@ -1,4 +1,5 @@
-AC_INIT([orange],[0.0])
+AC_INIT([Orange],[0.0],[],[orange],[http://geda-project.org])
+AC_PREREQ([2.64])
 
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE
@@ -8,6 +9,7 @@ AM_PROG_VALAC([0.14.0])
 AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
+	src/AboutDialog.xml
 	src/Makefile
 	])
 

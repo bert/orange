@@ -58,6 +58,7 @@ public class DialogFactory
          * to ensure the calls to typeof() are not optimized out.
          */
 
+        stdout.printf("Registering %s\n", typeof(AboutDialog).name());
         stdout.printf("Registering %s\n", typeof(AddSimulationDialog).name());
         stdout.printf("Registering %s\n", typeof(ArchiveSchematicsDialog).name());
         stdout.printf("Registering %s\n", typeof(ExportBOMDialog).name());
@@ -112,6 +113,31 @@ public class DialogFactory
     }
 
 
+
+    /*
+     *
+     *
+     *
+     */
+    public AboutDialog create_about_dialog() throws Error
+
+        ensures(result != null)
+
+    {
+        Gtk.Builder builder = new Gtk.Builder();
+
+        builder.add_from_file(Path.build_filename(
+            DialogFactory.PKGDATADIR,
+            DialogFactory.XML_SUBDIR,
+            AboutDialog.BUILDER_FILENAME
+            ));
+
+        AboutDialog dialog = AboutDialog.extract(builder);
+
+        dialog.set_transient_for(Parent);
+
+        return dialog;
+    }
 
     /*
      *

@@ -58,6 +58,10 @@ public class Program
 
 
 
+    private Gtk.Dialog m_help_about;
+
+
+
     /**
      * A controller to handle operations on the project.
      *
@@ -141,6 +145,9 @@ public class Program
         //event_mask |= Gdk.EventMask.BUTTON_PRESS_MASK;
         //m_project_view.window.set_events(event_mask);
         m_project_view.button_press_event.connect(this.on_button_press);
+
+        m_help_about = factory.create_about_dialog();
+        (builder.get_object("help-about") as Gtk.Action).activate.connect(this.on_help_about);
 
         m_window.delete_event.connect(this.on_delete_event);
         m_window.destroy.connect(Gtk.main_quit);
@@ -265,6 +272,18 @@ public class Program
     }
 
 
+
+    /**
+     * An event handler for the about dialog
+     */
+    private void on_help_about()
+
+        requires(m_help_about != null)
+
+    {
+        m_help_about.run();
+        m_help_about.hide();
+    }
 
     /**
      * An event handler to respond to selection changes.
