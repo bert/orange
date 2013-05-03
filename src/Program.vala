@@ -30,7 +30,8 @@ public class Program
     /**
      * The name of the program as it appears in the title bar.
      */
-    private const string PROGRAM_TITLE = "Orange";
+    [CCode(cname = "PACKAGE_NAME")]
+    private static extern const string PROGRAM_TITLE;
 
 
 
