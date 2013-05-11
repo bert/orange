@@ -14,6 +14,7 @@ orange_SOURCES = \
 	BackannotateRefdesDialog.vala \
 	Batch.vala \
 	BatchController.vala \
+	DeleteBatch.vala \
 	Design.vala \
 	DesignAddExistingBatch.vala \
 	DesignAddNewBatch.vala \

@@ -39,6 +39,11 @@ public class BatchController
             builder.get_object("design-add-schematic-existing") as Gtk.Action
             ));
 
+        m_batches.add(new DeleteBatch(
+            factory,
+            builder.get_object("edit-delete") as Gtk.Action
+            ));
+
         m_batches.add(new EditBatch(
             factory,
             builder.get_object("edit-edit") as Gtk.Action

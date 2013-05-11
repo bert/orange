@@ -290,31 +290,33 @@ public class Design : ProjectNode
 
 
     /**
-     * Add and existing schematic to this design.
+     * Add an existing schematic to this design.
      *
      * param filename The absolute path to the schematic file.
      */
     public void add_existing_schematic(string filename) throws Error
     {
-        File schematic_filename = File.new_for_path(filename);
+        File schematic_file = File.new_for_path(filename);
 
-        File design_filename = File.new_for_path(path);
-
-        string? relative = design_filename.get_relative_path(schematic_filename);
-
-        if (relative == null)
+        if (!schematic_file.query_exists())
         {
-            // throw something;
-            return;
+            string message = "Cannot locate file '%s'".printf(filename);
+
+            throw new ProjectError.UNKNOWN(message);
         }
 
-        Xml.Node* schematic_element = Schematic.create(relative);
+        File design_dir = File.new_for_path(path);
 
-        if (schematic_element == null)
+        string? relative_path = design_dir.get_relative_path(schematic_file);
+
+        if (relative_path == null)
         {
-            // throw something;
-            return;
+            string message = "No relative path for '%s'".printf(filename);
+
+            throw new ProjectError.UNKNOWN(message);
         }
+
+        Xml.Node* schematic_element = Schematic.create(relative_path);
 
         element->add_child(schematic_element);
         schematic_list.add_with_node(schematic_element);
@@ -423,6 +425,18 @@ public class Design : ProjectNode
         return dirname;
     }
 
+
+
+    /**
+     * Delete a schematic
+     */
+    public void delete_schematic(Schematic schematic)
+    {
+        schematic_list.remove(schematic);
+
+        schematic.element->unlink();
+        delete schematic.element;
+    }
 
 
     /**

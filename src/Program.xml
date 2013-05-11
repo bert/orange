@@ -4,6 +4,25 @@
         <child>
             <object class="GtkActionGroup" id="main-actions">
                 <child>
+                    <object class="GtkAction" id="edit">
+                        <property name="name">edit</property>
+                        <property name="label">_Edit</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="edit-delete">
+                        <property name="name">edit-delete</property>
+                        <property name="label">Delete</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkAction" id="edit-edit">
+                        <property name="name">edit-edit</property>
+                        <property name="label">Edit</property>
+                        <property name="stock-id">gtk-edit</property>
+                    </object>
+                </child>
+                <child>
                     <object class="GtkAction" id="file">
                         <property name="name">file</property>
                         <property name="label">_File</property>
@@ -154,13 +173,6 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkAction" id="edit-edit">
-                        <property name="name">edit-edit</property>
-                        <property name="label">Edit</property>
-                        <property name="stock-id">gtk-edit</property>
-                    </object>
-                </child>
-                <child>
                     <object class="GtkAction" id="help-about">
                         <property name="name">help-about</property>
                         <property name="label">About...</property>
@@ -187,6 +199,10 @@
                     <separator/>
                     <menuitem action="file-close"/>
                     <menuitem action="file-quit"/>
+                </menu>
+                <menu action="edit">
+                    <menuitem action="edit-delete"/>
+                    <menuitem action="edit-edit"/>
                 </menu>
                 <menu action="project">
                     <menu action="project-add">
@@ -224,6 +240,7 @@
                 <menuitem action="design-add-schematic-new"/>
                 <menuitem action="design-add-schematic-existing"/>
                 <separator/>
+                <menuitem action="edit-delete"/>
                 <menuitem action="edit-edit"/>
             </popup>
         </ui>

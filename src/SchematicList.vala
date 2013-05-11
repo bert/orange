@@ -134,6 +134,31 @@ public class SchematicList : ProjectNode
 
 
     /**
+     * Remove a schematic from the list
+     *
+     * param schematic The schematic to remove from the list. The XML node
+     * must be disconnected from the XML tree.
+     */
+    public void remove(Schematic schematic)
+    {
+        int index = m_schematics.index_of(schematic);
+
+        if (index >= 0)
+        {
+            schematic.changed.disconnect(on_changed);
+            schematic.deleted.disconnect(on_deleted);
+            schematic.inserted.disconnect(on_inserted);
+            schematic.toggled.disconnect(on_toggled);
+
+            m_schematics.remove_at(index);
+
+            deleted(this, index);
+            changed(this);
+        }
+    }
+
+
+    /**
      * Get the number of schematics in the container.
      */
     public override int get_child_count()
