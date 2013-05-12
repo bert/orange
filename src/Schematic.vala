@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Edward Hennessy
+ *  Copyright (C) 2012, 2013 Edward Hennessy
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -15,20 +15,35 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/*
- *
- *
- *
- *
+/**
+ * Represents a schematic in the project tree
  */
 public class Schematic : ProjectNode
 {
+    /**
+     * The element name of the XML node representing schematics
+     */
     public const string ELEMENT_NAME = "sch";
 
+
+
+    /**
+     * The element name of the XML node representing schematics
+     */
     private const string PROP_NAME_BASENAME = "file";
 
 
+
+    /**
+     * Backing store for the basename of the schematic file
+     */
     private string m_basename;
+
+
+
+    /**
+     * Backing store for the full path of the schematic file
+     */
     private string m_filename;
 
 
@@ -102,10 +117,11 @@ public class Schematic : ProjectNode
 
 
 
-    /*
+    /**
+     * Create a schematic project node
      *
-     *
-     *
+     * param parent The parent node in the project tree
+     * param element The XML node for the schematic
      */
     private Schematic(ProjectNode parent, Xml.Node* element)
 
@@ -118,6 +134,9 @@ public class Schematic : ProjectNode
 
 
 
+    /**
+     * Add this schematic to a batch operation.
+     */
     public override void add_to_batch(Batch batch)
     {
         batch.add_schematic(this);
@@ -125,26 +144,27 @@ public class Schematic : ProjectNode
 
 
 
-    /*
+    /**
+     * Create an XML node for a schematic
      *
-     *
-     *
+     * param filename the basename of the schematic file.
      */
-    public static Xml.Node* create(string filename)
+    public static Xml.Node* create(string basename)
     {
         Xml.Node* element = new Xml.Node(null, ELEMENT_NAME);
 
-        element->set_prop(PROP_NAME_BASENAME, filename);
+        element->set_prop(PROP_NAME_BASENAME, basename);
 
         return element;
     }
 
 
 
-    /*
+    /**
+     * Create a schematic project node from an existing XML node
      *
-     *
-     *
+     * param parent The parent node in the project tree
+     * param element The XML node for the schematic
      */
     public static Schematic load(ProjectNode parent, Xml.Node* element)
 

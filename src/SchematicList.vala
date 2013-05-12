@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Edward Hennessy
+ *  Copyright (C) 2012, 2013 Edward Hennessy
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -40,9 +40,12 @@ public class SchematicList : ProjectNode
 
 
 
-
-
-
+    /**
+     * The path to the directory storing the schematics. Schematics
+     * are stored in the design directory, so they are in the same
+     * directory as the gafrc and gschemrc. So, the SchematicList path
+     * used the design (parent) path.
+     */
     public override string path
     {
         get
@@ -53,6 +56,9 @@ public class SchematicList : ProjectNode
 
 
 
+    /**
+     * A read ony view of the schematics in this container.
+     */
     public Gee.List<Schematic> schematics
     {
         owned get
@@ -60,6 +66,7 @@ public class SchematicList : ProjectNode
             return m_schematics.read_only_view;
         }
     }
+
 
 
     /**
@@ -91,6 +98,7 @@ public class SchematicList : ProjectNode
             batch.add_schematic(schematic);
         }
     }
+
 
 
     /**
@@ -158,8 +166,9 @@ public class SchematicList : ProjectNode
     }
 
 
+
     /**
-     * Get the number of schematics in the container.
+     * Get the number of schematics in this container.
      */
     public override int get_child_count()
     {
