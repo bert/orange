@@ -278,6 +278,21 @@ public class Project : ProjectNode
             throw new ProjectError.UNABLE_TO_COPY(message);
         }
 
+        /* Create the symbol subdirectory
+         *
+         * The symbol subdirectory is created upfront rather than on demand, like other subdirectories.
+         * The gafrc file references the symbol subdirectory, so other tools require its presence.
+         */
+
+        string symbol_dirname = Path.build_filename(path, subdir, Design.SYMBOL_SUBDIR);
+
+        if (DirUtils.create(symbol_dirname, 0775) != 0)
+        {
+            string message = "Cannot create directory '%s'".printf(symbol_dirname);
+
+            throw new ProjectError.UNABLE_TO_CREATE(message);
+        }
+
         Design design = Design.create(this, name, subdir);
 
         element->add_child(design.element);

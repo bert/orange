@@ -72,6 +72,14 @@ public class Design : ProjectNode
 
 
 
+    /**
+     * The subdirectory in the project to store symbols.
+     */
+    public static const string SYMBOL_SUBDIR = "sym";
+
+
+
+
     private string m_name;
     private ProjectNode m_parent;
     private Gee.ArrayList<ProjectNode> m_children;
