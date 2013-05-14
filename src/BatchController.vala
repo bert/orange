@@ -49,6 +49,11 @@ public class BatchController
             builder.get_object("edit-edit") as Gtk.Action
             ));
 
+        m_batches.add(new OpenDirectory(
+            factory,
+            builder.get_object("edit-open-directory") as Gtk.Action
+            ));
+
         m_batches.add(new ExportBOMBatch(
             factory,
             builder.get_object("file-export-bom") as Gtk.Action

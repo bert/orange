@@ -27,6 +27,7 @@ orange_SOURCES = \
 	ExportPrintBatch.vala \
 	NewDesignDialog.vala \
 	NewProjectDialog.vala \
+	OpenDirectory.vala \
 	Project.vala \
 	ProjectController.vala \
 	ProjectError.vala \

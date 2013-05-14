@@ -23,6 +23,12 @@
                     </object>
                 </child>
                 <child>
+                    <object class="GtkAction" id="edit-open-directory">
+                        <property name="name">edit-open-directory</property>
+                        <property name="label">Open Directory</property>
+                    </object>
+                </child>
+                <child>
                     <object class="GtkAction" id="file">
                         <property name="name">file</property>
                         <property name="label">_File</property>
@@ -237,6 +243,8 @@
                 <toolitem action="design-run-simulation"/>
             </toolbar>
             <popup name="context-menu">
+                <menuitem action="edit-open-directory"/>
+                <separator/>
                 <menuitem action="design-add-schematic-new"/>
                 <menuitem action="design-add-schematic-existing"/>
                 <separator/>
