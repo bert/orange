@@ -541,7 +541,7 @@ public class ProjectTreeModel : GLib.Object, Gtk.TreeModel
         switch (column)
         {
             case 0:
-                value = node.name;
+                value = node.icon;
                 break;
 
             case 1:

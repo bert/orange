@@ -196,7 +196,7 @@ public class Design : ProjectNode
      * param parent
      * param element
      */
-    private Design(ProjectNode parent, Xml.Node *element)
+    private Design(PixbufCache pixbufs, ProjectNode parent, Xml.Node *element)
 
         requires(element != null)
         requires(element->type == Xml.ElementType.ELEMENT_NODE)
@@ -204,13 +204,13 @@ public class Design : ProjectNode
         requires(element->get_prop(PROP_NAME_BASENAME) != null)
 
     {
-        base(parent);
+        base(pixbufs, parent);
 
         m_parent = parent;
         this.element = element;
 
-        simulation_list = SimulationList.create(this);
-        schematic_list = SchematicList.create(this);
+        simulation_list = SimulationList.create(pixbufs, this);
+        schematic_list = SchematicList.create(pixbufs, this);
 
         m_children = new Gee.ArrayList<ProjectNode>();
 
@@ -232,7 +232,7 @@ public class Design : ProjectNode
      * param subdir The subdirectory to store the design files
      * return The created design.
      */
-    public static Design create(ProjectNode parent, string name, string subdir)
+    public static Design create(PixbufCache pixbufs, ProjectNode parent, string name, string subdir)
     {
         Xml.Node* element = new Xml.Node(null, ELEMENT_NAME);
 
@@ -240,7 +240,7 @@ public class Design : ProjectNode
 
         element->set_prop(PROP_NAME_BASENAME, subdir);
 
-        return new Design(parent, element);
+        return new Design(pixbufs, parent, element);
     }
 
 
@@ -255,7 +255,7 @@ public class Design : ProjectNode
      * param element The XML node for the design.
      * return The loaded design.
      */
-    public static Design load(ProjectNode parent, Xml.Node *element) throws Error
+    public static Design load(PixbufCache pixbufs, ProjectNode parent, Xml.Node *element) throws Error
 
         requires(element != null)
         requires(element->type == Xml.ElementType.ELEMENT_NODE)
@@ -267,7 +267,7 @@ public class Design : ProjectNode
             throw new ProjectError.UNABLE_TO_LOAD("Design node does not have a basename.");
         }
 
-        Design design = new Design(parent, element);
+        Design design = new Design(pixbufs, parent, element);
 
         Xml.Node* child = element->children;
 

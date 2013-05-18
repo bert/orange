@@ -222,12 +222,12 @@ public class Simulation : ProjectNode
      *
      *
      */
-    private Simulation(ProjectNode parent, Xml.Node* element)
+    private Simulation(PixbufCache pixbufs, ProjectNode parent, Xml.Node* element)
 
         requires(element != null)
 
     {
-        base(parent);
+        base(pixbufs, parent);
         this.element = element;
     }
 
@@ -237,7 +237,7 @@ public class Simulation : ProjectNode
      *
      * param subdir The basename to use for the path to this simulation
      */
-    public static Simulation create(ProjectNode parent, string subdir)
+    public static Simulation create(PixbufCache pixbufs, ProjectNode parent, string subdir)
     {
         Xml.Node* element = new Xml.Node(null, ELEMENT_NAME);
 
@@ -251,7 +251,7 @@ public class Simulation : ProjectNode
 
         element->set_prop(PROP_BACKEND, DEFAULT_BACKEND);
 
-        return new Simulation(parent, element);
+        return new Simulation(pixbufs, parent, element);
     }
 
 
@@ -261,12 +261,12 @@ public class Simulation : ProjectNode
      *
      *
      */
-    public static Simulation load(ProjectNode parent, Xml.Node* element)
+    public static Simulation load(PixbufCache pixbufs, ProjectNode parent, Xml.Node* element)
 
         requires(element != null)
 
     {
-        return new Simulation(parent, element);
+        return new Simulation(pixbufs, parent, element);
     }
 
 

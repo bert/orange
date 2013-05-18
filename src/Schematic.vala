@@ -58,6 +58,14 @@ public class Schematic : ProjectNode
     }
 
 
+    public override unowned Gdk.Pixbuf icon
+    {
+        get
+        {
+            return pixbufs.fetch("schematic.svg");
+        }
+    }
+
 
     /**
      * The name of the node
@@ -123,12 +131,12 @@ public class Schematic : ProjectNode
      * param parent The parent node in the project tree
      * param element The XML node for the schematic
      */
-    private Schematic(ProjectNode parent, Xml.Node* element)
+    private Schematic(PixbufCache pixbufs, ProjectNode parent, Xml.Node* element)
 
         requires(element != null)
 
     {
-        base(parent);
+        base(pixbufs, parent);
         this.element = element;
     }
 
@@ -166,12 +174,12 @@ public class Schematic : ProjectNode
      * param parent The parent node in the project tree
      * param element The XML node for the schematic
      */
-    public static Schematic load(ProjectNode parent, Xml.Node* element)
+    public static Schematic load(PixbufCache pixbufs, ProjectNode parent, Xml.Node* element)
 
         requires(element != null)
 
     {
-        return new Schematic(parent, element);
+        return new Schematic(pixbufs, parent, element);
     }
 
 

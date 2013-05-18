@@ -110,10 +110,6 @@ public class Program
      */
     public Program() throws Error
     {
-        m_project_list = new ProjectList();
-        m_project_list.notify.connect(on_notify);
-        m_project_list.notify["current"].connect(on_notify_current);
-
         Gtk.Builder builder = new Gtk.Builder();
         builder.add_from_file(Path.build_filename(
             DialogFactory.PKGDATADIR,
@@ -122,6 +118,10 @@ public class Program
             ));
 
         m_window = builder.get_object("main") as Gtk.Window;
+
+        m_project_list = new ProjectList(m_window);
+        m_project_list.notify.connect(on_notify);
+        m_project_list.notify["current"].connect(on_notify_current);
 
         (builder.get_object("file-quit") as Gtk.Action).activate.connect(this.on_action_quit);
 

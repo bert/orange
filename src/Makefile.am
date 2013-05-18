@@ -1,5 +1,8 @@
 
-AM_CPPFLAGS = $(DEPS_CFLAGS) -DPKGDATADIR=\"$(pkgdatadir)\" -include config.h
+imgdir = $(pkgdatadir)/img
+xmldir = $(pkgdatadir)/xml
+
+AM_CPPFLAGS = $(DEPS_CFLAGS) -DIMAGE_DIR=\"$(imgdir)\" -DPKGDATADIR=\"$(pkgdatadir)\" -include config.h
 AM_VALAFLAGS = --pkg gee-1.0 --pkg gtk+-2.0 --pkg libxml-2.0
 
 bin_PROGRAMS = orange
@@ -28,6 +31,7 @@ orange_SOURCES = \
 	NewDesignDialog.vala \
 	NewProjectDialog.vala \
 	OpenDirectory.vala \
+	PixbufCache.vala \
 	Project.vala \
 	ProjectController.vala \
 	ProjectError.vala \
@@ -45,9 +49,13 @@ orange_SOURCES = \
 
 orange_LDADD = $(DEPS_LIBS)
 
+# Image files for the GUI
+
+img_DATA = \
+	img/schematic.svg
+
 # GtkBuilder XML Files used for the user interface
 
-xmldir = $(pkgdatadir)/xml
 
 xml_DATA = \
 	AboutDialog.xml \

@@ -108,9 +108,9 @@ public class ProjectList : ProjectNode
     /**
      * Create a new, empty project list.
      */
-    public ProjectList()
+    public ProjectList(Gtk.Widget top)
     {
-        base(null);
+        base(new PixbufCache(top, Gtk.IconSize.LARGE_TOOLBAR), null);
         current = null;
         has_changes = false;
     }
@@ -163,7 +163,7 @@ public class ProjectList : ProjectNode
             throw new ProjectError.UNABLE_TO_CREATE(message);
         }
 
-        current = Project.create(this, filename);
+        current = Project.create(pixbufs, this, filename);
 
         current.save();
     }
@@ -187,7 +187,7 @@ public class ProjectList : ProjectNode
             throw new ProjectError.UNABLE_TO_CREATE(message);
         }
 
-        current = Project.load(this, filename);
+        current = Project.load(pixbufs, this, filename);
         has_changes = false;
     }
 

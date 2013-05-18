@@ -113,9 +113,9 @@ public class Project : ProjectNode
 
 
     // needed for some reason
-    private Project(ProjectNode parent)
+    private Project(PixbufCache pixbufs, ProjectNode parent)
     {
-        base(parent);
+        base(pixbufs, parent);
     }
 
 
@@ -124,12 +124,12 @@ public class Project : ProjectNode
      *
      *
      */
-    private Project.with_document(ProjectNode parent, string filename, Xml.Doc* document)
+    private Project.with_document(PixbufCache pixbufs, ProjectNode parent, string filename, Xml.Doc* document)
 
         requires(document != null)
 
     {
-        base(parent);
+        base(pixbufs, parent);
 
         this.document = document;
         this.filename = filename;
@@ -144,7 +144,7 @@ public class Project : ProjectNode
      *
      *
      */
-    public static Project create(ProjectNode parent, string filename)
+    public static Project create(PixbufCache pixbufs, ProjectNode parent, string filename)
     {
         Xml.Doc* document = new Xml.Doc("1.0");
 
@@ -152,7 +152,7 @@ public class Project : ProjectNode
 
         document->set_root_element(root);
 
-        return new Project.with_document(parent, filename, document);
+        return new Project.with_document(pixbufs, parent, filename, document);
     }
 
 
@@ -162,7 +162,7 @@ public class Project : ProjectNode
      *
      *
      */
-    public static Project load(ProjectNode parent, string filename) throws Error
+    public static Project load(PixbufCache pixbufs, ProjectNode parent, string filename) throws Error
     {
         Xml.Doc* document = Xml.Parser.read_file(filename);
 
@@ -183,7 +183,7 @@ public class Project : ProjectNode
             throw new ProjectError.UNABLE_TO_LOAD(filename);
         }
 
-        Project project = new Project.with_document(parent, filename, document);
+        Project project = new Project.with_document(pixbufs, parent, filename, document);
 
         Xml.Node* child = root->children;
 
@@ -197,7 +197,7 @@ public class Project : ProjectNode
 
             if (child->name == "Design")
             {
-                Design design = Design.load(project, child);
+                Design design = Design.load(pixbufs, project, child);
                 project.add_design(design);
             }
 
@@ -293,7 +293,7 @@ public class Project : ProjectNode
             throw new ProjectError.UNABLE_TO_CREATE(message);
         }
 
-        Design design = Design.create(this, name, subdir);
+        Design design = Design.create(pixbufs, this, name, subdir);
 
         element->add_child(design.element);
 

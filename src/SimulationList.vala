@@ -69,9 +69,9 @@ public class SimulationList : ProjectNode
      *
      * param parent The parent node for this container.
      */
-    private SimulationList(ProjectNode parent)
+    private SimulationList(PixbufCache pixbufs, ProjectNode parent)
     {
-        base(parent);
+        base(pixbufs, parent);
         m_simulations = new Gee.ArrayList<Simulation>();
     }
 
@@ -82,9 +82,9 @@ public class SimulationList : ProjectNode
      *
      * param parent The parent node for this container.
      */
-    public static SimulationList create(ProjectNode parent)
+    public static SimulationList create(PixbufCache pixbufs, ProjectNode parent)
     {
-        return new SimulationList(parent);
+        return new SimulationList(pixbufs, parent);
     }
 
 
@@ -122,7 +122,7 @@ public class SimulationList : ProjectNode
         requires(node->parent != null)
 
     {
-        Simulation simulation = Simulation.load(this, node);
+        Simulation simulation = Simulation.load(pixbufs, this, node);
 
         add_simulation(simulation);
     }
@@ -185,7 +185,7 @@ public class SimulationList : ProjectNode
             throw new ProjectError.UNABLE_TO_CREATE(message);
         }
 
-        Simulation simulation = Simulation.create(this, subdir);
+        Simulation simulation = Simulation.create(pixbufs, this, subdir);
 
         add_simulation(simulation);
 

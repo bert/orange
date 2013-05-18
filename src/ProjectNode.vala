@@ -65,6 +65,19 @@ public abstract class ProjectNode : GLib.Object
 
 
 
+    /**
+     * The icon to use for this project node.
+     */
+    public virtual Gdk.Pixbuf icon
+    {
+        get
+        {
+            return pixbufs.missing;
+        }
+    }
+
+
+
     /*
      *
      *
@@ -84,6 +97,17 @@ public abstract class ProjectNode : GLib.Object
        {
            return "Unknown";
        }
+    }
+
+
+
+    /**
+     * The cache of images used by ProjectNode children
+     */
+    public PixbufCache pixbufs
+    {
+        get;
+        private set;
     }
 
 
@@ -147,9 +171,10 @@ public abstract class ProjectNode : GLib.Object
      *
      *  param parent The parent of the node under construction.
      */
-    public ProjectNode(ProjectNode? parent)
+    public ProjectNode(PixbufCache pixbufs, ProjectNode? parent)
     {
         this.parent = parent;
+        this.pixbufs = pixbufs;
     }
 
 

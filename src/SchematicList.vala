@@ -74,9 +74,9 @@ public class SchematicList : ProjectNode
      *
      * param parent The parent node for this container.
      */
-    private SchematicList(ProjectNode parent)
+    private SchematicList(PixbufCache pixbufs, ProjectNode parent)
     {
-        base(parent);
+        base(pixbufs, parent);
         m_schematics = new Gee.ArrayList<Schematic>();
     }
 
@@ -106,9 +106,9 @@ public class SchematicList : ProjectNode
      *
      * param parent The parent node for this container.
      */
-    public static SchematicList create(ProjectNode parent)
+    public static SchematicList create(PixbufCache pixbufs, ProjectNode parent)
     {
-        return new SchematicList(parent);
+        return new SchematicList(pixbufs, parent);
     }
 
 
@@ -126,7 +126,7 @@ public class SchematicList : ProjectNode
         requires(node->parent != null)
 
     {
-        Schematic schematic = Schematic.load(this, node);
+        Schematic schematic = Schematic.load(pixbufs, this, node);
 
         m_schematics.add(schematic);
 
