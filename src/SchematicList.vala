@@ -31,7 +31,7 @@ public class SchematicList : ProjectNode
     {
         get
         {
-            return pixbufs.fetch("folder.svg");
+            return pixbufs.fetch("schematic-folder.svg");
         }
     }
 

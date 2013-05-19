@@ -53,7 +53,8 @@ orange_LDADD = $(DEPS_LIBS)
 
 img_DATA = \
 	img/schematic.svg \
-	img/folder.svg
+	img/schematic-folder.svg \
+	img/simulation-folder.svg
 
 # GtkBuilder XML Files used for the user interface
 

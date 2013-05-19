@@ -27,6 +27,16 @@ public class SimulationList : ProjectNode
 
 
 
+    public override unowned Gdk.Pixbuf icon
+    {
+        get
+        {
+            return pixbufs.fetch("simulation-folder.svg");
+        }
+    }
+
+
+
     /**
      * A name, visible to the user, for this node in the project tree.
      */
