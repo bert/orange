@@ -283,24 +283,28 @@
                     </packing>
                 </child>
                 <child>
-                    <object class="GtkTreeView" id="main-project-tree">
-                        <property name="model">test-data</property>
+                    <object class="GtkScrolledWindow" id="main-project-tree-scrolled">
                         <child>
-                            <object class="GtkTreeViewColumn" id="column-1">
-                                <property name="title">Name</property>
+                            <object class="GtkTreeView" id="main-project-tree">
+                                <property name="model">test-data</property>
                                 <child>
-                                    <object class="GtkCellRendererPixbuf" id="column-1-renderer-1">
+                                    <object class="GtkTreeViewColumn" id="column-1">
+                                        <property name="title">Name</property>
+                                        <child>
+                                            <object class="GtkCellRendererPixbuf" id="column-1-renderer-1">
+                                            </object>
+                                            <attributes>
+                                                <attribute name="pixbuf">0</attribute>
+                                            </attributes>
+                                        </child>
+                                        <child>
+                                            <object class="GtkCellRendererText" id="column-1-renderer-2">
+                                            </object>
+                                            <attributes>
+                                                <attribute name="text">1</attribute>
+                                            </attributes>
+                                        </child>
                                     </object>
-                                    <attributes>
-                                        <attribute name="pixbuf">0</attribute>
-                                    </attributes>
-                                </child>
-                                <child>
-                                    <object class="GtkCellRendererText" id="column-1-renderer-2">
-                                    </object>
-                                    <attributes>
-                                        <attribute name="text">1</attribute>
-                                    </attributes>
                                 </child>
                             </object>
                         </child>
