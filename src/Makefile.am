@@ -41,6 +41,8 @@ orange_SOURCES = \
 	Program.vala \
 	RenumberRefdes.vala \
 	RenumberRefdesDialog.vala \
+	ResetRefdes.vala \
+	ResetRefdesDialog.vala \
 	RunSimulation.vala \
 	Schematic.vala \
 	SchematicList.vala \
@@ -69,7 +71,8 @@ xml_DATA = \
 	NewDesignDialog.xml \
 	NewProjectDialog.xml \
 	Program.xml \
-	RenumberRefdesDialog.xml
+	RenumberRefdesDialog.xml \
+	ResetRefdesDialog.xml
 
 # Needs improvement
 

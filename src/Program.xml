@@ -172,6 +172,12 @@
                     </object>
                 </child>
                 <child>
+                    <object class="GtkAction" id="design-reset-refdes">
+                        <property name="name">design-reset-refdes</property>
+                        <property name="label">Reset REFDES...</property>
+                    </object>
+                </child>
+                <child>
                     <object class="GtkAction" id="design-run-simulation">
                         <property name="name">design-run-simulation</property>
                         <property name="label">Run Simulation</property>
@@ -222,6 +228,7 @@
                         <menuitem action="design-add-simulation"/>
                     </menu>
                     <separator/>
+                    <menuitem action="design-reset-refdes"/>
                     <menuitem action="design-renumber-refdes"/>
                     <menuitem action="design-backannotate-refdes"/>
                     <separator/>

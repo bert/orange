@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+  <object class="ResetRefdesDialog" id="dialog">
+    <property name="title">Renumber REFDES</property>
+    <property name="border-width">15</property>
+    <property name="width-request">640</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="content">
+        <property name="spacing">10</property>
+        <property name="visible">TRUE</property>
+        <child>
+          <object class="GtkLabel" id="reset-label">
+            <property name="label">This operation will reset all REFDES in all schematics for this project.</property>
+            <property name="visible">TRUE</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child internal-child="action_area">
+      <object class="GtkHButtonBox" id="buttons">
+        <property name="visible">TRUE</property>
+        <child>
+          <object class="GtkButton" id="button-cancel">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-cancel</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button-ok">
+            <property name="visible">TRUE</property>
+            <property name="label">gtk-ok</property>
+            <property name="use-stock">TRUE</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button-cancel</action-widget>
+      <action-widget response="-5">button-ok</action-widget>
+    </action-widgets>
+  </object>
+</interface>
+
