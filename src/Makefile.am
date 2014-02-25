@@ -49,7 +49,7 @@ orange_SOURCES = \
 	Simulation.vala \
 	SimulationList.vala
 
-orange_LDADD = $(DEPS_LIBS)
+orange_LDADD = -lm $(DEPS_LIBS)
 
 # Image files for the GUI
 
