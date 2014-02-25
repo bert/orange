@@ -264,7 +264,7 @@ public class Program
      * return true Abort the destruction process
      * return false Continue with the destruction process
      */
-    private bool on_delete_event(Gdk.Event event)
+    private bool on_delete_event(Gdk.EventAny event)
 
         requires(m_project_controller != null)
 

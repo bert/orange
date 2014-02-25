@@ -3,7 +3,7 @@ imgdir = $(pkgdatadir)/img
 xmldir = $(pkgdatadir)/xml
 
 AM_CPPFLAGS = $(DEPS_CFLAGS) -DIMAGE_DIR=\"$(imgdir)\" -DPKGDATADIR=\"$(pkgdatadir)\" -include config.h
-AM_VALAFLAGS = --pkg gee-1.0 --pkg gtk+-2.0 --pkg libxml-2.0
+AM_VALAFLAGS = --target-glib=2.38 --pkg gee-1.0 --pkg gtk+-3.0 --pkg libxml-2.0
 
 bin_PROGRAMS = orange
 
