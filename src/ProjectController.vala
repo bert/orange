@@ -29,7 +29,6 @@ namespace Orange
 
 
 
-        private Gtk.Action action_project_close;
         private Gtk.Action action_project_new;
         private Gtk.Action action_project_open;
         private Gtk.Action action_project_save;
@@ -83,7 +82,6 @@ namespace Orange
         public ProjectController(DialogFactory factory, Gtk.Builder builder)
 
             ensures(action_design_add != null)
-            ensures(action_project_close != null)
             ensures(action_project_new != null)
             ensures(action_project_open != null)
             ensures(action_project_save != null)
@@ -91,9 +89,6 @@ namespace Orange
         {
             action_design_add = builder.get_object("project-add-design") as Gtk.Action;
             action_design_add.activate.connect(on_design_add);
-
-            action_project_close = builder.get_object("file-close") as Gtk.Action;
-            action_project_close.activate.connect(on_project_close);
 
             action_project_new = builder.get_object("file-new-project") as Gtk.Action;
             action_project_new.activate.connect(on_project_new);
@@ -237,7 +232,6 @@ namespace Orange
          */
         private void on_notify(GLib.ParamSpec parameter)
 
-            requires(action_project_close != null)
             requires(action_project_save != null)
 
         {
@@ -249,64 +243,7 @@ namespace Orange
             }
 
             action_design_add.set_sensitive(available);
-            action_project_close.set_sensitive(available);
             action_project_save.set_sensitive(available);
-        }
-
-
-
-        /**
-         * Closes the current project
-         */
-        private void on_project_close(Gtk.Action sender)
-
-            requires(m_factory != null)
-            requires(project_list != null)
-
-        {
-            try
-            {
-                Project? project = project_list.current;
-
-                if ((project != null) && project_list.has_changes)
-                {
-                    Gtk.MessageDialog dialog = m_factory.create_confirm_save_dialog(project.filename);
-
-                    try
-                    {
-                        switch (dialog.run())
-                        {
-                            case Gtk.ResponseType.OK:
-                                project_list.save();
-                                break;
-
-                            case Gtk.ResponseType.REJECT:
-                                break;
-
-                            case Gtk.ResponseType.CANCEL:
-                            case Gtk.ResponseType.DELETE_EVENT:
-                                return;
-
-                            default:
-                                assert_not_reached();
-                                break;
-                        }
-                    }
-                    finally
-                    {
-                        dialog.destroy();
-                    }
-                }
-
-                project_list.close();
-            }
-            catch (Error error)
-            {
-                Gtk.Dialog dialog = m_factory.create_unknown_error_dialog(error);
-
-                dialog.run();
-                dialog.destroy();
-            }
         }
 
 

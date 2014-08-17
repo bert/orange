@@ -127,6 +127,7 @@ namespace Orange
                 window.m_project_list.notify.connect(window.on_notify);
                 window.m_project_list.notify["current"].connect(window.on_notify_current);
 
+                (builder.get_object("file-close") as Gtk.Action).activate.connect(window.on_action_close);
                 (builder.get_object("file-quit") as Gtk.Action).activate.connect(window.on_action_quit);
 
                 DialogFactory factory = new DialogFactory(window);
@@ -172,12 +173,33 @@ namespace Orange
         }
 
 
+
         /**
-         * @brief An event handler when the user selects quit from the menu.
+         * @brief An event handler when the user closes the window
+         */
+        private void on_action_close(Gtk.Action sender)
+        {
+            this.close();
+        }
+
+
+
+        /**
+         * @brief An event handler when the user quits the application
          */
         private void on_action_quit(Gtk.Action sender)
         {
-            this.close();
+            /** @todo figure out how to close all windows
+             *
+             *  The save confirmation dialog aborts closing the app, but it
+             *  behaves the same way as the Gnome version from the application
+             *  menu.
+             */
+
+            foreach (var window in application.get_windows())
+            {
+                window.close();
+            }
         }
 
 
