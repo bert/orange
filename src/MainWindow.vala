@@ -155,7 +155,6 @@ namespace Orange
                 (builder.get_object("help-about") as Gtk.Action).activate.connect(window.on_help_about);
 
                 window.delete_event.connect(window.on_delete_event);
-                window.destroy.connect(Gtk.main_quit);
 
                 if (file != null)
                 {
@@ -174,17 +173,11 @@ namespace Orange
 
 
         /**
-         * An event handler when the user selects quit from the menu.
+         * @brief An event handler when the user selects quit from the menu.
          */
         private void on_action_quit(Gtk.Action sender)
-
-            requires(m_project_controller != null)
-
         {
-            if (m_project_controller.allow_program_exit())
-            {
-                this.destroy();
-            }
+            this.close();
         }
 
 
@@ -212,10 +205,10 @@ namespace Orange
 
 
         /**
-         * An event handler when the user selects the delete button.
+         * @brief An event handler when the user selects the delete button.
          *
-         * return true Abort the destruction process
-         * return false Continue with the destruction process
+         * @retval true Abort the destruction process
+         * @retval false Continue with the destruction process
          */
         private bool on_delete_event(Gdk.EventAny event)
 
