@@ -15,453 +15,453 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/*
- *
- *
- *
- *
- */
-public class Project : ProjectNode
+namespace Orange
 {
-    private const string PROJECT_NAME = "Project";
-
-
-
-    /**
-     * The filename for the gafrc file.
-     */
-    private const string GAFRC_FILENAME = "gafrc";
-
-
-
-    /**
-     * The filename for the gschemrc file.
-     */
-    private const string GSCHEMRC_FILENAME = "gschemrc";
-
-
-
-    private string m_name;
-    private string m_path;
-    private string m_filename;
-
-    private Xml.Doc* document;
-
-    public Xml.Node* element
-    {
-        get;
-        set;
-    }
-
-
-
-    public override Project? project
-    {
-        get
-        {
-            return this;
-        }
-    }
-
-
-
-    public override string name
-    {
-        get
-        {
-            return m_name;
-        }
-    }
-
-
-    public override string path
-    {
-        get
-        {
-            return m_path;
-        }
-    }
-
-
-
-    public string filename
-    {
-        get
-        {
-            return m_filename;
-        }
-        private set
-        {
-            string basename = null;
-            string path = null;
-
-            m_filename = value;
-
-            if (m_filename != null)
-            {
-                basename = Path.get_basename(m_filename);
-                path = Path.get_dirname(m_filename);
-            }
-
-            m_name = (basename == null) ? PROJECT_NAME : basename;
-            m_path = (path == null) ? "Unknown" : path;
-
-            changed(this);
-        }
-    }
-
-
-
-    // needed for some reason
-    private Project(PixbufCache pixbufs, ProjectNode parent)
-    {
-        base(pixbufs, parent);
-    }
-
-
-
-    /*
-     *
-     *
-     */
-    private Project.with_document(PixbufCache pixbufs, ProjectNode parent, string filename, Xml.Doc* document)
-
-        requires(document != null)
-
-    {
-        base(pixbufs, parent);
-
-        this.document = document;
-        this.filename = filename;
-
-        this.element = document->get_root_element();
-    }
-
-
-
     /*
      *
      *
      *
-     */
-    public static Project create(PixbufCache pixbufs, ProjectNode parent, string filename)
-    {
-        Xml.Doc* document = new Xml.Doc("1.0");
-
-        Xml.Node* root = new Xml.Node(null, PROJECT_NAME);
-
-        document->set_root_element(root);
-
-        return new Project.with_document(pixbufs, parent, filename, document);
-    }
-
-
-
-    /*
-     *
-     *
      *
      */
-    public static Project load(PixbufCache pixbufs, ProjectNode parent, string filename) throws Error
+    public class Project : ProjectNode
     {
-        Xml.Doc* document = Xml.Parser.read_file(filename);
-
-        if (document == null)
-        {
-            throw new ProjectError.UNABLE_TO_LOAD(filename);
-        }
-
-        Xml.Node* root = document->get_root_element();
-
-        if (root == null)
-        {
-            throw new ProjectError.MISSING_ROOT_ELEMENT(filename);
-        }
-
-        if (root->name != PROJECT_NAME)
-        {
-            throw new ProjectError.UNABLE_TO_LOAD(filename);
-        }
-
-        Project project = new Project.with_document(pixbufs, parent, filename, document);
-
-        Xml.Node* child = root->children;
-
-        while (child != null)
-        {
-            if (child->type != Xml.ElementType.ELEMENT_NODE)
-            {
-                child = child->next;
-                continue;
-            }
-
-            if (child->name == "Design")
-            {
-                Design design = Design.load(pixbufs, project, child);
-                project.add_design(design);
-            }
-
-            child = child->next;
-        }
-
-        return project;
-    }
+        private const string PROJECT_NAME = "Project";
 
 
 
-    /**
-     * Create a new design and add it to this project.
-     *
-     * param name The name of the design as it appears to the user.
-     * param subdir The basename of the design directory.
-     */
-    public void create_design(string name, string subdir) throws Error
-
-        requires(element != null)
-
-    {
-        string design_dir = Path.build_filename(path, subdir, null);
-
-        if (FileUtils.test(design_dir, FileTest.EXISTS))
-        {
-            string message = "Directory '%s' already exists".printf(design_dir);
-
-            throw new ProjectError.UNABLE_TO_CREATE(message);
-        }
-
-        if (DirUtils.create(design_dir, 0775) != 0)
-        {
-            string message = "Cannot create directory '%s'".printf(design_dir);
-
-            throw new ProjectError.UNABLE_TO_CREATE(message);
-        }
-
-        /* Copy a default gafrc to the design directory */
-
-        string gafrc_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", GAFRC_FILENAME, null);
-
-        File gafrc_file = File.new_for_path(gafrc_path);
-
-        try
-        {
-            string destinaion_path = Path.build_filename(design_dir, GAFRC_FILENAME, null);
-
-            File destination_file = File.new_for_path(destinaion_path);
-
-            gafrc_file.copy(destination_file, 0, null, null);
-        }
-        catch
-        {
-            string message = "Cannot copy file '%s'".printf(gafrc_path);
-
-            throw new ProjectError.UNABLE_TO_COPY(message);
-        }
-
-        /* Copy a default gschemrc to the design directory */
-
-        string gschemrc_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", GSCHEMRC_FILENAME, null);
-
-        File gschemrc_file = File.new_for_path(gschemrc_path);
-
-        try
-        {
-            string destinaion_path = Path.build_filename(design_dir, GSCHEMRC_FILENAME, null);
-
-            File destination_file = File.new_for_path(destinaion_path);
-
-            gschemrc_file.copy(destination_file, 0, null, null);
-        }
-        catch
-        {
-            string message = "Cannot copy file '%s'".printf(gschemrc_path);
-
-            throw new ProjectError.UNABLE_TO_COPY(message);
-        }
-
-        /* Create the symbol subdirectory
-         *
-         * The symbol subdirectory is created upfront rather than on demand, like other subdirectories.
-         * The gafrc file references the symbol subdirectory, so other tools require its presence.
+        /**
+         * The filename for the gafrc file.
          */
+        private const string GAFRC_FILENAME = "gafrc";
 
-        string symbol_dirname = Path.build_filename(path, subdir, Design.SYMBOL_SUBDIR);
 
-        if (DirUtils.create(symbol_dirname, 0775) != 0)
+
+        /**
+         * The filename for the gschemrc file.
+         */
+        private const string GSCHEMRC_FILENAME = "gschemrc";
+
+
+
+        private string m_name;
+        private string m_path;
+        private string m_filename;
+
+        private Xml.Doc* document;
+
+        public Xml.Node* element
         {
-            string message = "Cannot create directory '%s'".printf(symbol_dirname);
-
-            throw new ProjectError.UNABLE_TO_CREATE(message);
+            get;
+            set;
         }
 
-        Design design = Design.create(pixbufs, this, name, subdir);
-
-        element->add_child(design.element);
-
-        add_design(design);
-    }
 
 
-
-    /**
-     * Save the project
-     *
-     *
-     *
-     */
-    public void save() throws ProjectError
-    {
-        int bytes = document->save_format_file(filename, 1);
-
-        if (bytes < 0)
+        public override Project? project
         {
-            throw new ProjectError.UNABLE_TO_SAVE(filename);
-        }
-    }
-
-
-
-    private Gee.ArrayList<Design> m_designs;
-
-
-    public string get_project_subdir(string basename)
-    {
-        return Path.build_filename(
-            path,
-            basename,
-            null
-            );
-    }
-
-
-    private void add_design(Design design)
-    {
-        if (m_designs == null)
-        {
-            m_designs = new Gee.ArrayList<Design>();
-        }
-
-        element->add_child(design.element);
-
-        if (m_designs.size > 0)
-        {
-            m_designs.add(design);
-
-            design.changed.connect(on_changed);
-            design.inserted.connect(on_inserted);
-            design.deleted.connect(on_deleted);
-            design.toggled.connect(on_toggled);
-
-            inserted(design);
-            toggled(design);
-            changed(this);
-        }
-        else
-        {
-            m_designs.add(design);
-
-            design.changed.connect(on_changed);
-            design.inserted.connect(on_inserted);
-            design.deleted.connect(on_deleted);
-            design.toggled.connect(on_toggled);
-
-            inserted(design);
-            toggled(design);
-            toggled(this);
-            changed(this);
-        }
-    }
-
-
-
-    public Design? get_design(string name)
-    {
-        if (m_designs != null)
-        {
-            foreach (var design in m_designs)
+            get
             {
-                if (design.name == name)
+                return this;
+            }
+        }
+
+
+
+        public override string name
+        {
+            get
+            {
+                return m_name;
+            }
+        }
+
+
+        public override string path
+        {
+            get
+            {
+                return m_path;
+            }
+        }
+
+
+
+        public string filename
+        {
+            get
+            {
+                return m_filename;
+            }
+            private set
+            {
+                string basename = null;
+                string path = null;
+
+                m_filename = value;
+
+                if (m_filename != null)
                 {
-                    return design;
+                    basename = Path.get_basename(m_filename);
+                    path = Path.get_dirname(m_filename);
+                }
+
+                m_name = (basename == null) ? PROJECT_NAME : basename;
+                m_path = (path == null) ? "Unknown" : path;
+
+                changed(this);
+            }
+        }
+
+
+
+        // needed for some reason
+        private Project(PixbufCache pixbufs, ProjectNode parent)
+        {
+            base(pixbufs, parent);
+        }
+
+
+
+        /*
+         *
+         *
+         */
+        private Project.with_document(PixbufCache pixbufs, ProjectNode parent, string filename, Xml.Doc* document)
+
+            requires(document != null)
+
+        {
+            base(pixbufs, parent);
+
+            this.document = document;
+            this.filename = filename;
+
+            this.element = document->get_root_element();
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public static Project create(PixbufCache pixbufs, ProjectNode parent, string filename)
+        {
+            Xml.Doc* document = new Xml.Doc("1.0");
+
+            Xml.Node* root = new Xml.Node(null, PROJECT_NAME);
+
+            document->set_root_element(root);
+
+            return new Project.with_document(pixbufs, parent, filename, document);
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public static Project load(PixbufCache pixbufs, ProjectNode parent, string filename) throws Error
+        {
+            Xml.Doc* document = Xml.Parser.read_file(filename);
+
+            if (document == null)
+            {
+                throw new ProjectError.UNABLE_TO_LOAD(filename);
+            }
+
+            Xml.Node* root = document->get_root_element();
+
+            if (root == null)
+            {
+                throw new ProjectError.MISSING_ROOT_ELEMENT(filename);
+            }
+
+            if (root->name != PROJECT_NAME)
+            {
+                throw new ProjectError.UNABLE_TO_LOAD(filename);
+            }
+
+            Project project = new Project.with_document(pixbufs, parent, filename, document);
+
+            Xml.Node* child = root->children;
+
+            while (child != null)
+            {
+                if (child->type != Xml.ElementType.ELEMENT_NODE)
+                {
+                    child = child->next;
+                    continue;
+                }
+
+                if (child->name == "Design")
+                {
+                    Design design = Design.load(pixbufs, project, child);
+                    project.add_design(design);
+                }
+
+                child = child->next;
+            }
+
+            return project;
+        }
+
+
+
+        /**
+         * Create a new design and add it to this project.
+         *
+         * param name The name of the design as it appears to the user.
+         * param subdir The basename of the design directory.
+         */
+        public void create_design(string name, string subdir) throws Error
+
+            requires(element != null)
+
+        {
+            string design_dir = Path.build_filename(path, subdir, null);
+
+            if (FileUtils.test(design_dir, FileTest.EXISTS))
+            {
+                string message = "Directory '%s' already exists".printf(design_dir);
+
+                throw new ProjectError.UNABLE_TO_CREATE(message);
+            }
+
+            if (DirUtils.create(design_dir, 0775) != 0)
+            {
+                string message = "Cannot create directory '%s'".printf(design_dir);
+
+                throw new ProjectError.UNABLE_TO_CREATE(message);
+            }
+
+            /* Copy a default gafrc to the design directory */
+
+            string gafrc_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", GAFRC_FILENAME, null);
+
+            File gafrc_file = File.new_for_path(gafrc_path);
+
+            try
+            {
+                string destinaion_path = Path.build_filename(design_dir, GAFRC_FILENAME, null);
+
+                File destination_file = File.new_for_path(destinaion_path);
+
+                gafrc_file.copy(destination_file, 0, null, null);
+            }
+            catch
+            {
+                string message = "Cannot copy file '%s'".printf(gafrc_path);
+
+                throw new ProjectError.UNABLE_TO_COPY(message);
+            }
+
+            /* Copy a default gschemrc to the design directory */
+
+            string gschemrc_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", GSCHEMRC_FILENAME, null);
+
+            File gschemrc_file = File.new_for_path(gschemrc_path);
+
+            try
+            {
+                string destinaion_path = Path.build_filename(design_dir, GSCHEMRC_FILENAME, null);
+
+                File destination_file = File.new_for_path(destinaion_path);
+
+                gschemrc_file.copy(destination_file, 0, null, null);
+            }
+            catch
+            {
+                string message = "Cannot copy file '%s'".printf(gschemrc_path);
+
+                throw new ProjectError.UNABLE_TO_COPY(message);
+            }
+
+            /* Create the symbol subdirectory
+             *
+             * The symbol subdirectory is created upfront rather than on demand, like other subdirectories.
+             * The gafrc file references the symbol subdirectory, so other tools require its presence.
+             */
+
+            string symbol_dirname = Path.build_filename(path, subdir, Design.SYMBOL_SUBDIR);
+
+            if (DirUtils.create(symbol_dirname, 0775) != 0)
+            {
+                string message = "Cannot create directory '%s'".printf(symbol_dirname);
+
+                throw new ProjectError.UNABLE_TO_CREATE(message);
+            }
+
+            Design design = Design.create(pixbufs, this, name, subdir);
+
+            element->add_child(design.element);
+
+            add_design(design);
+        }
+
+
+
+        /**
+         * Save the project
+         *
+         *
+         *
+         */
+        public void save() throws ProjectError
+        {
+            int bytes = document->save_format_file(filename, 1);
+
+            if (bytes < 0)
+            {
+                throw new ProjectError.UNABLE_TO_SAVE(filename);
+            }
+        }
+
+
+
+        private Gee.ArrayList<Design> m_designs;
+
+
+        public string get_project_subdir(string basename)
+        {
+            return Path.build_filename(
+                path,
+                basename,
+                null
+                );
+        }
+
+
+        private void add_design(Design design)
+        {
+            if (m_designs == null)
+            {
+                m_designs = new Gee.ArrayList<Design>();
+            }
+
+            element->add_child(design.element);
+
+            if (m_designs.size > 0)
+            {
+                m_designs.add(design);
+
+                design.changed.connect(on_changed);
+                design.inserted.connect(on_inserted);
+                design.deleted.connect(on_deleted);
+                design.toggled.connect(on_toggled);
+
+                inserted(design);
+                toggled(design);
+                changed(this);
+            }
+            else
+            {
+                m_designs.add(design);
+
+                design.changed.connect(on_changed);
+                design.inserted.connect(on_inserted);
+                design.deleted.connect(on_deleted);
+                design.toggled.connect(on_toggled);
+
+                inserted(design);
+                toggled(design);
+                toggled(this);
+                changed(this);
+            }
+        }
+
+
+
+        public Design? get_design(string name)
+        {
+            if (m_designs != null)
+            {
+                foreach (var design in m_designs)
+                {
+                    if (design.name == name)
+                    {
+                        return design;
+                    }
                 }
             }
+
+            return null;
         }
 
-        return null;
-    }
 
-
-    /*
-     *
-     *
-     *
-     */
-    public override ProjectNode? get_child(int index)
-    {
-        //stdout.printf("    Project.get_child()\n");
-        //stdout.flush();
-
-        ProjectNode? child = null;
-
-        if (m_designs != null)
+        /*
+         *
+         *
+         *
+         */
+        public override ProjectNode? get_child(int index)
         {
-            child = m_designs.get(index);
-        }
+            //stdout.printf("    Project.get_child()\n");
+            //stdout.flush();
 
-        //stdout.printf("    Project.get_child() = %p\n", child);
+            ProjectNode? child = null;
 
-        return child;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public override int get_child_count()
-    {
-        //stdout.printf("    Project.get_child_count()\n");
-        //stdout.flush();
-
-        int count = 0;
-
-        if (m_designs != null)
-        {
-            count = m_designs.size;
-        }
-
-        //stdout.printf("    Project.get_child_count() = %d\n", count);
-
-        return count;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public override bool get_child_index(ProjectNode node, out int index)
-    {
-        bool success = false;
-
-        index = 0;
-
-        if (m_designs != null)
-        {
-            success = m_designs.contains(node as Design);
-
-            if (success)
+            if (m_designs != null)
             {
-                index = m_designs.index_of(node as Design);
+                child = m_designs.get(index);
             }
+
+            //stdout.printf("    Project.get_child() = %p\n", child);
+
+            return child;
         }
 
-        return success;
-     }
+
+
+        /*
+         *
+         *
+         *
+         */
+        public override int get_child_count()
+        {
+            //stdout.printf("    Project.get_child_count()\n");
+            //stdout.flush();
+
+            int count = 0;
+
+            if (m_designs != null)
+            {
+                count = m_designs.size;
+            }
+
+            //stdout.printf("    Project.get_child_count() = %d\n", count);
+
+            return count;
+        }
 
 
 
+        /*
+         *
+         *
+         *
+         */
+        public override bool get_child_index(ProjectNode node, out int index)
+        {
+            bool success = false;
+
+            index = 0;
+
+            if (m_designs != null)
+            {
+                success = m_designs.contains(node as Design);
+
+                if (success)
+                {
+                    index = m_designs.index_of(node as Design);
+                }
+            }
+
+            return success;
+         }
+    }
 }

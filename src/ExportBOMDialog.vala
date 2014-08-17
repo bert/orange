@@ -15,61 +15,64 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A dialog box allowing the user to export a bill of material.
- *
- * Instances of this class must be constructed with Gtk.Builder.
- */
-public class ExportBOMDialog : Gtk.FileChooserDialog
+namespace Orange
 {
     /**
-     * The filename of the XML file containing the UI design.
+     * A dialog box allowing the user to export a bill of material.
+     *
+     * Instances of this class must be constructed with Gtk.Builder.
      */
-    public const string BUILDER_FILENAME = "ExportBOMDialog.xml";
-
-
-
-    /**
-     * The combo box containing the BOM format.
-     */
-    private Gtk.ComboBox m_combo;
-
-
-    private Gtk.ListStore m_formats;
-
-
-
-    /**
-     * Extract references to the dialog from Gtk.Builder
-     */
-    public static ExportBOMDialog extract(Gtk.Builder builder)
+    public class ExportBOMDialog : Gtk.FileChooserDialog
     {
-        ExportBOMDialog dialog = builder.get_object("dialog") as ExportBOMDialog;
-
-        dialog.m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
-        dialog.m_formats = builder.get_object("bom-formats") as Gtk.ListStore;
-
-        return dialog;
-    }
+        /**
+         * The filename of the XML file containing the UI design.
+         */
+        public const string BUILDER_FILENAME = "ExportBOMDialog.xml";
 
 
 
-    /**
-     * Gets the name of the BOM format
-     */
-    public string? get_bom_format()
-    {
-        Gtk.TreeIter iter;
+        /**
+         * The combo box containing the BOM format.
+         */
+        private Gtk.ComboBox m_combo;
 
-        if (m_combo.get_active_iter(out iter))
+
+        private Gtk.ListStore m_formats;
+
+
+
+        /**
+         * Extract references to the dialog from Gtk.Builder
+         */
+        public static ExportBOMDialog extract(Gtk.Builder builder)
         {
-            GLib.Value value;
+            ExportBOMDialog dialog = builder.get_object("dialog") as ExportBOMDialog;
 
-            m_formats.get_value(iter, 0, out value);
+            dialog.m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
+            dialog.m_formats = builder.get_object("bom-formats") as Gtk.ListStore;
 
-            return value.get_string();
+            return dialog;
         }
 
-        return null;
+
+
+        /**
+         * Gets the name of the BOM format
+         */
+        public string? get_bom_format()
+        {
+            Gtk.TreeIter iter;
+
+            if (m_combo.get_active_iter(out iter))
+            {
+                GLib.Value value;
+
+                m_formats.get_value(iter, 0, out value);
+
+                return value.get_string();
+            }
+
+            return null;
+        }
     }
 }

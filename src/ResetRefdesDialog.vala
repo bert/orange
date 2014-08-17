@@ -15,27 +15,30 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A dialog box allowing the user to reset the REFDES on a design.
- *
- * Instances of this class must be constructed with Gtk.Builder.
- */
-public class ResetRefdesDialog : Gtk.Dialog
+namespace Orange
 {
     /**
-     * The filename of the XML file containing the UI design.
+     * A dialog box allowing the user to reset the REFDES on a design.
+     *
+     * Instances of this class must be constructed with Gtk.Builder.
      */
-    public const string BUILDER_FILENAME = "ResetRefdesDialog.xml";
-
-
-
-    /**
-     * Extract references to the dialog from Gtk.Builder
-     */
-    public static ResetRefdesDialog extract(Gtk.Builder builder)
+    public class ResetRefdesDialog : Gtk.Dialog
     {
-        ResetRefdesDialog dialog = builder.get_object("dialog") as ResetRefdesDialog;
+        /**
+         * The filename of the XML file containing the UI design.
+         */
+        public const string BUILDER_FILENAME = "ResetRefdesDialog.xml";
 
-        return dialog;
+
+
+        /**
+         * Extract references to the dialog from Gtk.Builder
+         */
+        public static ResetRefdesDialog extract(Gtk.Builder builder)
+        {
+            ResetRefdesDialog dialog = builder.get_object("dialog") as ResetRefdesDialog;
+
+            return dialog;
+        }
     }
 }

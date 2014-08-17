@@ -15,114 +15,117 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/*
- *
- *
- *
- */
-public class BatchController
+namespace Orange
 {
-    private Gee.ArrayList<Batch> m_batches;
-
-
-    public BatchController(DialogFactory factory, Gtk.Builder builder)
+    /*
+     *
+     *
+     *
+     */
+    public class BatchController
     {
-        m_batches = new Gee.ArrayList<Batch>();
-
-        m_batches.add(new DesignAddNewBatch(
-            factory,
-            builder.get_object("design-add-schematic-new") as Gtk.Action
-            ));
-
-        m_batches.add(new DesignAddExistingBatch(
-            factory,
-            builder.get_object("design-add-schematic-existing") as Gtk.Action
-            ));
-
-        m_batches.add(new DeleteBatch(
-            factory,
-            builder.get_object("edit-delete") as Gtk.Action
-            ));
-
-        m_batches.add(new EditBatch(
-            factory,
-            builder.get_object("edit-edit") as Gtk.Action
-            ));
-
-        m_batches.add(new OpenDirectory(
-            factory,
-            builder.get_object("edit-open-directory") as Gtk.Action
-            ));
-
-        m_batches.add(new ExportBOMBatch(
-            factory,
-            builder.get_object("file-export-bom") as Gtk.Action
-            ));
-
-        m_batches.add(new ExportNetlistBatch(
-            factory,
-            builder.get_object("file-export-netlist") as Gtk.Action
-            ));
-
-        m_batches.add(new ExportPrintBatch(
-            factory,
-            builder.get_object("file-export-pdf") as Gtk.Action
-            ));
-
-        m_batches.add(new RenumberRefdes(
-            factory,
-            builder.get_object("design-renumber-refdes") as Gtk.Action
-            ));
-
-        m_batches.add(new ResetRefdes(
-            factory,
-            builder.get_object("design-reset-refdes") as Gtk.Action
-            ));
-
-        m_batches.add(new ArchiveSchematics(
-            factory,
-            builder.get_object("design-archive-schematics") as Gtk.Action
-            ));
-
-        m_batches.add(new BackannotateRefdes(
-            factory,
-            builder.get_object("design-backannotate-refdes") as Gtk.Action
-            ));
-
-        m_batches.add(new AddSimulation(
-            factory,
-            builder.get_object("design-add-simulation") as Gtk.Action
-            ));
-
-        m_batches.add(new RunSimulation(
-            factory,
-            builder.get_object("design-run-simulation") as Gtk.Action
-            ));
-    }
+        private Gee.ArrayList<Batch> m_batches;
 
 
-
-    public void set_selection(List<ProjectNode> selection)
-
-        requires(m_batches != null)
-
-    {
-        foreach (Batch batch in m_batches)
+        public BatchController(DialogFactory factory, Gtk.Builder builder)
         {
-            batch.clear();
+            m_batches = new Gee.ArrayList<Batch>();
+
+            m_batches.add(new DesignAddNewBatch(
+                factory,
+                builder.get_object("design-add-schematic-new") as Gtk.Action
+                ));
+
+            m_batches.add(new DesignAddExistingBatch(
+                factory,
+                builder.get_object("design-add-schematic-existing") as Gtk.Action
+                ));
+
+            m_batches.add(new DeleteBatch(
+                factory,
+                builder.get_object("edit-delete") as Gtk.Action
+                ));
+
+            m_batches.add(new EditBatch(
+                factory,
+                builder.get_object("edit-edit") as Gtk.Action
+                ));
+
+            m_batches.add(new OpenDirectory(
+                factory,
+                builder.get_object("edit-open-directory") as Gtk.Action
+                ));
+
+            m_batches.add(new ExportBOMBatch(
+                factory,
+                builder.get_object("file-export-bom") as Gtk.Action
+                ));
+
+            m_batches.add(new ExportNetlistBatch(
+                factory,
+                builder.get_object("file-export-netlist") as Gtk.Action
+                ));
+
+            m_batches.add(new ExportPrintBatch(
+                factory,
+                builder.get_object("file-export-pdf") as Gtk.Action
+                ));
+
+            m_batches.add(new RenumberRefdes(
+                factory,
+                builder.get_object("design-renumber-refdes") as Gtk.Action
+                ));
+
+            m_batches.add(new ResetRefdes(
+                factory,
+                builder.get_object("design-reset-refdes") as Gtk.Action
+                ));
+
+            m_batches.add(new ArchiveSchematics(
+                factory,
+                builder.get_object("design-archive-schematics") as Gtk.Action
+                ));
+
+            m_batches.add(new BackannotateRefdes(
+                factory,
+                builder.get_object("design-backannotate-refdes") as Gtk.Action
+                ));
+
+            m_batches.add(new AddSimulation(
+                factory,
+                builder.get_object("design-add-simulation") as Gtk.Action
+                ));
+
+            m_batches.add(new RunSimulation(
+                factory,
+                builder.get_object("design-run-simulation") as Gtk.Action
+                ));
         }
 
-        foreach (var node in selection)
+
+
+        public void set_selection(List<ProjectNode> selection)
+
+            requires(m_batches != null)
+
         {
             foreach (Batch batch in m_batches)
             {
-                node.add_to_batch(batch);
+                batch.clear();
             }
-        }
 
-        foreach (Batch batch in m_batches)
-        {
-            batch.update();
+            foreach (var node in selection)
+            {
+                foreach (Batch batch in m_batches)
+                {
+                    node.add_to_batch(batch);
+                }
+            }
+
+            foreach (Batch batch in m_batches)
+            {
+                batch.update();
+            }
         }
     }
 }

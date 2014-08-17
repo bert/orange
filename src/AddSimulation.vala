@@ -15,82 +15,85 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A batch operation to add a simulation to an existing design.
- */
-public class AddSimulation : Batch
+namespace Orange
 {
     /**
-     * A set of all the designs in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
+     * A batch operation to add a simulation to an existing design.
      */
-    private Gee.HashSet<Design> m_designs;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public AddSimulation(DialogFactory factory, Gtk.Action action)
+    public class AddSimulation : Batch
     {
-        base(factory, action);
-
-        m_designs = new Gee.HashSet<Design>();
-
-        update();
-    }
-
-
-
-    /**
-     * Add a design to the batch operation.
-     */
-    public override void add_design(Design design)
-    {
-        m_designs.add(design);
-    }
+        /**
+         * A set of all the designs in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<Design> m_designs;
 
 
 
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-    {
-        m_designs.clear();
-    }
-
-
-
-    /**
-     * Determines if the current batch is editable.
-     */
-    public override bool enabled()
-    {
-        return (m_designs.size == 1);
-    }
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-    {
-        foreach (var design in m_designs)
+        /**
+         * Create a new, empty batch operation.
+         */
+        public AddSimulation(DialogFactory factory, Gtk.Action action)
         {
-            var dialog = m_factory.create_add_simulation_dialog(design);
+            base(factory, action);
 
-            int status = dialog.run();
-            dialog.hide();
+            m_designs = new Gee.HashSet<Design>();
 
-            if (status == Gtk.ResponseType.OK)
+            update();
+        }
+
+
+
+        /**
+         * Add a design to the batch operation.
+         */
+        public override void add_design(Design design)
+        {
+            m_designs.add(design);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+        {
+            m_designs.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public override bool enabled()
+        {
+            return (m_designs.size == 1);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+        {
+            foreach (var design in m_designs)
             {
-                Simulation simulation = design.create_simulation(dialog.get_simulation_name());
+                var dialog = m_factory.create_add_simulation_dialog(design);
 
-                simulation.engine = dialog.get_simulation_engine();
-                simulation.backend = dialog.get_simulation_backend();
+                int status = dialog.run();
+                dialog.hide();
+
+                if (status == Gtk.ResponseType.OK)
+                {
+                    Simulation simulation = design.create_simulation(dialog.get_simulation_name());
+
+                    simulation.engine = dialog.get_simulation_engine();
+                    simulation.backend = dialog.get_simulation_backend();
+                }
             }
         }
     }

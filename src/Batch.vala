@@ -15,116 +15,119 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A base class for batch operations.
- */
-public abstract class Batch
+namespace Orange
 {
     /**
-     * The action that triggers this operation.
+     * A base class for batch operations.
      */
-    private Gtk.Action m_action;
-
-
-
-    /**
-     * The factory used to create dialog boxes.
-     */
-    protected DialogFactory m_factory;
-
-
-
-    /**
-     * Construct the base class
-     */
-    public Batch(DialogFactory factory, Gtk.Action action)
+    public abstract class Batch
     {
-        m_action = action;
-        m_factory = factory;
-
-        m_action.activate.connect(on_activate);
-    }
-
-
-
-    /**
-     * Add a design to this batch operation.
-     */
-    public virtual void add_design(Design design)
-    {
-    }
+        /**
+         * The action that triggers this operation.
+         */
+        private Gtk.Action m_action;
 
 
 
-    /**
-     * Add a schematic to this batch operation.
-     */
-    public virtual void add_schematic(Schematic schematic)
-    {
-    }
+        /**
+         * The factory used to create dialog boxes.
+         */
+        protected DialogFactory m_factory;
 
 
 
-    /**
-     * Add a schematic to this batch operation.
-     */
-    public virtual void add_simulation(Simulation simulation)
-    {
-    }
-
-
-
-    /**
-     * Clear all nodes from this batch operation.
-     */
-    public abstract void clear();
-
-
-
-    /**
-     * Determines if the current batch is editable.
-     */
-    public abstract bool enabled();
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public abstract void run() throws Error;
-
-
-
-    /**
-     * Update the sensitivity of the action.
-     */
-    public void update()
-
-        requires(m_action != null)
-
-    {
-        m_action.set_sensitive(enabled());
-    }
-
-
-    /**
-     * Called when this operation is triggered.
-     */
-    private void on_activate(Gtk.Action sender)
-
-        requires(m_factory != null)
-
-    {
-        try
+        /**
+         * Construct the base class
+         */
+        public Batch(DialogFactory factory, Gtk.Action action)
         {
-            run();
+            m_action = action;
+            m_factory = factory;
+
+            m_action.activate.connect(on_activate);
         }
-        catch (Error error)
-        {
-            Gtk.Dialog dialog = m_factory.create_unknown_error_dialog(error);
 
-            dialog.run();
-            dialog.destroy();
+
+
+        /**
+         * Add a design to this batch operation.
+         */
+        public virtual void add_design(Design design)
+        {
+        }
+
+
+
+        /**
+         * Add a schematic to this batch operation.
+         */
+        public virtual void add_schematic(Schematic schematic)
+        {
+        }
+
+
+
+        /**
+         * Add a schematic to this batch operation.
+         */
+        public virtual void add_simulation(Simulation simulation)
+        {
+        }
+
+
+
+        /**
+         * Clear all nodes from this batch operation.
+         */
+        public abstract void clear();
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public abstract bool enabled();
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public abstract void run() throws Error;
+
+
+
+        /**
+         * Update the sensitivity of the action.
+         */
+        public void update()
+
+            requires(m_action != null)
+
+        {
+            m_action.set_sensitive(enabled());
+        }
+
+
+        /**
+         * Called when this operation is triggered.
+         */
+        private void on_activate(Gtk.Action sender)
+
+            requires(m_factory != null)
+
+        {
+            try
+            {
+                run();
+            }
+            catch (Error error)
+            {
+                Gtk.Dialog dialog = m_factory.create_unknown_error_dialog(error);
+
+                dialog.run();
+                dialog.destroy();
+            }
         }
     }
 }

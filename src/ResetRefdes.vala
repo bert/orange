@@ -15,129 +15,132 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A batch operation to reset the REFDES in a design.
- */
-public class ResetRefdes : Batch
+namespace Orange
 {
     /**
-     * The command line application to reset REFDES.
+     * A batch operation to reset the REFDES in a design.
      */
-    private const string RESET_COMMAND = "sed";
-
-
-
-    /**
-     * The sed substitute argument to replace refdes numbers with a question mark.
-     */
-    private const string SUBSTITUE_ARG = "s/^\\(refdes=[A-Z][A-Z]*\\)[0-9][0-9]*/\\1\\?/I";
-
-
-
-    /**
-     * An argument to operate on the file inplace.
-     */
-    private const string INPLACE_ARG = "-i.bak";
-
-
-
-    /**
-     * A set of all the designs in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
-     */
-    private Gee.HashSet<Design> m_designs;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public ResetRefdes(DialogFactory factory, Gtk.Action action)
+    public class ResetRefdes : Batch
     {
-        base(factory, action);
-
-        m_designs = new Gee.HashSet<Design>();
-
-        update();
-    }
+        /**
+         * The command line application to reset REFDES.
+         */
+        private const string RESET_COMMAND = "sed";
 
 
 
-    /**
-     * Add a schematic to the batch operation.
-     */
-    public override void add_design(Design design)
-    {
-        m_designs.add(design);
-    }
+        /**
+         * The sed substitute argument to replace refdes numbers with a question mark.
+         */
+        private const string SUBSTITUE_ARG = "s/^\\(refdes=[A-Z][A-Z]*\\)[0-9][0-9]*/\\1\\?/I";
 
 
 
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-    {
-        m_designs.clear();
-    }
+        /**
+         * An argument to operate on the file inplace.
+         */
+        private const string INPLACE_ARG = "-i.bak";
 
 
 
-    /**
-     * Determines if the current batch is editable.
-     */
-    public override bool enabled()
-    {
-        return (m_designs.size >= 1);
-    }
+        /**
+         * A set of all the designs in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<Design> m_designs;
 
 
 
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-    {
-        foreach (var design in m_designs)
+        /**
+         * Create a new, empty batch operation.
+         */
+        public ResetRefdes(DialogFactory factory, Gtk.Action action)
         {
-            var dialog = m_factory.create_reset_refdes_dialog();
+            base(factory, action);
 
-            int status = dialog.run();
-            dialog.hide();
+            m_designs = new Gee.HashSet<Design>();
 
-            if (status == Gtk.ResponseType.OK)
+            update();
+        }
+
+
+
+        /**
+         * Add a schematic to the batch operation.
+         */
+        public override void add_design(Design design)
+        {
+            m_designs.add(design);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+        {
+            m_designs.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public override bool enabled()
+        {
+            return (m_designs.size >= 1);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+        {
+            foreach (var design in m_designs)
             {
-                foreach (Schematic schematic in design.schematics)
+                var dialog = m_factory.create_reset_refdes_dialog();
+
+                int status = dialog.run();
+                dialog.hide();
+
+                if (status == Gtk.ResponseType.OK)
                 {
-                    var arguments = new Gee.ArrayList<string?>();
-
-                    arguments.add(RESET_COMMAND);
-
-                    arguments.add(SUBSTITUE_ARG);
-
-                    arguments.add(INPLACE_ARG);
-
-                    arguments.add(schematic.basename);
-
-                    arguments.add(null);
-
-                    int exit_code;
-
-                    Process.spawn_sync(
-                        design.path,
-                        arguments.to_array(),
-                        null,
-                        SpawnFlags.SEARCH_PATH,
-                        null,
-                        null,
-                        null,
-                        out exit_code
-                        );
-
-                    if (exit_code != 0)
+                    foreach (Schematic schematic in design.schematics)
                     {
-                        // throw something
+                        var arguments = new Gee.ArrayList<string?>();
+
+                        arguments.add(RESET_COMMAND);
+
+                        arguments.add(SUBSTITUE_ARG);
+
+                        arguments.add(INPLACE_ARG);
+
+                        arguments.add(schematic.basename);
+
+                        arguments.add(null);
+
+                        int exit_code;
+
+                        Process.spawn_sync(
+                            design.path,
+                            arguments.to_array(),
+                            null,
+                            SpawnFlags.SEARCH_PATH,
+                            null,
+                            null,
+                            null,
+                            out exit_code
+                            );
+
+                        if (exit_code != 0)
+                        {
+                            // throw something
+                        }
                     }
                 }
             }

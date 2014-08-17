@@ -15,30 +15,33 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * The classic about dialog.
- *
- * Instances of this class must be constructed with Gtk.Builder. See
- * the extract() method.
- */
-public class AboutDialog : Gtk.Dialog
+namespace Orange
 {
     /**
-     * The filename of the XML file containing the UI design.
+     * The classic about dialog.
+     *
+     * Instances of this class must be constructed with Gtk.Builder. See
+     * the extract() method.
      */
-    public const string BUILDER_FILENAME = "AboutDialog.xml";
-
-
-
-    /*
-     * param builder
-     * param project
-     */
-    public static AboutDialog extract(Gtk.Builder builder)
-
-        ensures(result != null)
-
+    public class AboutDialog : Gtk.Dialog
     {
-        return builder.get_object("dialog") as AboutDialog;
+        /**
+         * The filename of the XML file containing the UI design.
+         */
+        public const string BUILDER_FILENAME = "AboutDialog.xml";
+
+
+
+        /*
+         * param builder
+         * param project
+         */
+        public static AboutDialog extract(Gtk.Builder builder)
+
+            ensures(result != null)
+
+        {
+            return builder.get_object("dialog") as AboutDialog;
+        }
     }
 }

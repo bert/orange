@@ -8,7 +8,7 @@
     <property name="visible">TRUE</property>
   </object>
 
-  <object class="BackannotateRefdesDialog" id="dialog">
+  <object class="OrangeBackannotateRefdesDialog" id="dialog">
     <property name="title">Backannotate REFDES (Open ECO file)</property>
     <property name="action">GTK_FILE_CHOOSER_ACTION_OPEN</property>
     <property name="border-width">15</property>

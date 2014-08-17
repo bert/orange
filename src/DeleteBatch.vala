@@ -18,86 +18,89 @@
 
 using GLib;
 
-/**
- * A batch operation to delete nodes in the project tree.
- */
-public class DeleteBatch : Batch
+namespace Orange
 {
     /**
-     * A set of all the schematics in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
+     * A batch operation to delete nodes in the project tree.
      */
-    private Gee.HashSet<Schematic> m_schematics;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public DeleteBatch(DialogFactory factory, Gtk.Action action)
+    public class DeleteBatch : Batch
     {
-        base(factory, action);
-
-        m_schematics = new Gee.HashSet<Schematic>();
-
-        update();
-    }
-
-
-
-    /**
-     * Add a schematic to the batch operation.
-     */
-    public override void add_schematic(Schematic schematic)
-
-        requires(m_schematics != null)
-
-    {
-        m_schematics.add(schematic);
-    }
+        /**
+         * A set of all the schematics in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<Schematic> m_schematics;
 
 
 
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-
-        requires(m_schematics != null)
-
-    {
-        m_schematics.clear();
-    }
-
-
-
-    /**
-     * Determines if the current batch is editable.
-     */
-    public override bool enabled()
-
-        requires(m_schematics != null)
-
-    {
-        return (m_schematics.size > 0);
-    }
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-
-        requires(m_schematics != null)
-
-    {
-        foreach (Schematic schematic in m_schematics)
+        /**
+         * Create a new, empty batch operation.
+         */
+        public DeleteBatch(DialogFactory factory, Gtk.Action action)
         {
-            Design design = schematic.design;
+            base(factory, action);
 
-            design.delete_schematic(schematic);
+            m_schematics = new Gee.HashSet<Schematic>();
+
+            update();
+        }
+
+
+
+        /**
+         * Add a schematic to the batch operation.
+         */
+        public override void add_schematic(Schematic schematic)
+
+            requires(m_schematics != null)
+
+        {
+            m_schematics.add(schematic);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+
+            requires(m_schematics != null)
+
+        {
+            m_schematics.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public override bool enabled()
+
+            requires(m_schematics != null)
+
+        {
+            return (m_schematics.size > 0);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+
+            requires(m_schematics != null)
+
+        {
+            foreach (Schematic schematic in m_schematics)
+            {
+                Design design = schematic.design;
+
+                design.delete_schematic(schematic);
+            }
         }
     }
 }

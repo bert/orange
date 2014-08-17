@@ -15,127 +15,130 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A batch operation to add a new schematic to a design.
- */
-public class DesignAddNewBatch : Batch
+namespace Orange
 {
     /**
-     * The file to use as a template for newly created schematics.
+     * A batch operation to add a new schematic to a design.
      */
-     private static const string TEMPLATE_FILENAME = "template.sch";
-
-
-
-    /**
-     * A set of all the designs in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
-     */
-    private Gee.HashSet<Design> m_designs;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public DesignAddNewBatch(DialogFactory factory, Gtk.Action action)
+    public class DesignAddNewBatch : Batch
     {
-        base(factory, action);
-
-        m_designs = new Gee.HashSet<Design>();
-
-        update();
-    }
+        /**
+         * The file to use as a template for newly created schematics.
+         */
+         private static const string TEMPLATE_FILENAME = "template.sch";
 
 
 
-    /**
-     * Add a schematic to the batch operation.
-     */
-    public override void add_design(Design design)
-    {
-        m_designs.add(design);
-    }
+        /**
+         * A set of all the designs in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<Design> m_designs;
 
 
 
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-    {
-        m_designs.clear();
-    }
-
-
-
-    /**
-     * Determines if the current batch is editable.
-     */
-    public override bool enabled()
-    {
-        return (m_designs.size == 1);
-    }
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-    {
-        foreach (var design in m_designs)
+        /**
+         * Create a new, empty batch operation.
+         */
+        public DesignAddNewBatch(DialogFactory factory, Gtk.Action action)
         {
-            string dirname = design.path;
+            base(factory, action);
 
-            var dialog = create_open_dialog(dirname);
+            m_designs = new Gee.HashSet<Design>();
 
-            int status = dialog.run();
-            dialog.hide();
+            update();
+        }
 
-            if (status == Gtk.ResponseType.OK)
+
+
+        /**
+         * Add a schematic to the batch operation.
+         */
+        public override void add_design(Design design)
+        {
+            m_designs.add(design);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+        {
+            m_designs.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public override bool enabled()
+        {
+            return (m_designs.size == 1);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+        {
+            foreach (var design in m_designs)
             {
-                string template_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", TEMPLATE_FILENAME, null);
+                string dirname = design.path;
 
-                File template_file = File.new_for_path(template_path);
+                var dialog = create_open_dialog(dirname);
 
-                try
+                int status = dialog.run();
+                dialog.hide();
+
+                if (status == Gtk.ResponseType.OK)
                 {
-                    string filename = dialog.get_filename();
+                    string template_path = Path.build_filename(DialogFactory.PKGDATADIR, "data", TEMPLATE_FILENAME, null);
 
-                    File destination_file = File.new_for_path(filename);
+                    File template_file = File.new_for_path(template_path);
 
-                    template_file.copy(destination_file, 0, null, null);
+                    try
+                    {
+                        string filename = dialog.get_filename();
 
-                    design.add_existing_schematic(filename);
-                }
-                catch
-                {
-                    string message = "Cannot copy file '%s'".printf(template_path);
+                        File destination_file = File.new_for_path(filename);
 
-                    throw new ProjectError.UNABLE_TO_COPY(message);
+                        template_file.copy(destination_file, 0, null, null);
+
+                        design.add_existing_schematic(filename);
+                    }
+                    catch
+                    {
+                        string message = "Cannot copy file '%s'".printf(template_path);
+
+                        throw new ProjectError.UNABLE_TO_COPY(message);
+                    }
                 }
             }
         }
+
+
+
+        private Gtk.FileChooserDialog create_open_dialog(string dirname)
+        {
+            var dialog = new Gtk.FileChooserDialog(
+                "Add New Schematic",
+                m_factory.Parent,
+                Gtk.FileChooserAction.SAVE,
+                Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+                Gtk.Stock.OK,     Gtk.ResponseType.OK,
+                null
+                );
+
+            dialog.set_current_folder(dirname);
+
+            return dialog;
+        }
+
     }
-
-
-
-    private Gtk.FileChooserDialog create_open_dialog(string dirname)
-    {
-        var dialog = new Gtk.FileChooserDialog(
-            "Add New Schematic",
-            m_factory.Parent,
-            Gtk.FileChooserAction.SAVE,
-            Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
-            Gtk.Stock.OK,     Gtk.ResponseType.OK,
-            null
-            );
-
-        dialog.set_current_folder(dirname);
-
-        return dialog;
-    }
-
 }

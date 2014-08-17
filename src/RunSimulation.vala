@@ -15,84 +15,87 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A batch operation to run design simulations in the project tree.
- */
-public class RunSimulation : Batch
+namespace Orange
 {
     /**
-     * A set of all the simulations in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
+     * A batch operation to run design simulations in the project tree.
      */
-    private Gee.HashSet<Simulation> m_simulations;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public RunSimulation(DialogFactory factory, Gtk.Action action)
+    public class RunSimulation : Batch
     {
-        base(factory, action);
-
-        m_simulations = new Gee.HashSet<Simulation>();
-
-        update();
-    }
-
-
-
-    /**
-     * Add a simulation to the batch operation.
-     */
-    public override void add_simulation(Simulation simulation)
-
-        requires(m_simulations != null)
-
-    {
-        m_simulations.add(simulation);
-    }
+        /**
+         * A set of all the simulations in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<Simulation> m_simulations;
 
 
 
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-
-        requires(m_simulations != null)
-
-    {
-        m_simulations.clear();
-    }
-
-
-
-    /**
-     * Determines if the current batch can be simulated.
-     */
-    public override bool enabled()
-
-        requires(m_simulations != null)
-
-    {
-        return (m_simulations.size > 0);
-    }
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-
-        requires(m_simulations != null)
-
-    {
-        foreach (var simulation in m_simulations)
+        /**
+         * Create a new, empty batch operation.
+         */
+        public RunSimulation(DialogFactory factory, Gtk.Action action)
         {
-            simulation.run();
+            base(factory, action);
+
+            m_simulations = new Gee.HashSet<Simulation>();
+
+            update();
+        }
+
+
+
+        /**
+         * Add a simulation to the batch operation.
+         */
+        public override void add_simulation(Simulation simulation)
+
+            requires(m_simulations != null)
+
+        {
+            m_simulations.add(simulation);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+
+            requires(m_simulations != null)
+
+        {
+            m_simulations.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch can be simulated.
+         */
+        public override bool enabled()
+
+            requires(m_simulations != null)
+
+        {
+            return (m_simulations.size > 0);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+
+            requires(m_simulations != null)
+
+        {
+            foreach (var simulation in m_simulations)
+            {
+                simulation.run();
+            }
         }
     }
 }

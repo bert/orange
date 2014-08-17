@@ -15,198 +15,201 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A container for schematics in the project tree
- */
-public class SchematicList : ProjectNode
+namespace Orange
 {
     /**
-     * A continer to store the list of schematics.
+     * A container for schematics in the project tree
      */
-    private Gee.ArrayList<Schematic> m_schematics;
-
-
-
-    public override unowned Gdk.Pixbuf icon
+    public class SchematicList : ProjectNode
     {
-        get
+        /**
+         * A continer to store the list of schematics.
+         */
+        private Gee.ArrayList<Schematic> m_schematics;
+
+
+
+        public override unowned Gdk.Pixbuf icon
         {
-            return pixbufs.fetch("schematic-folder.svg");
+            get
+            {
+                return pixbufs.fetch("schematic-folder.svg");
+            }
         }
-    }
 
 
 
-    /**
-     * A name, visible to the user, for this node in the project tree.
-     */
-    public override string name
-    {
-        get
+        /**
+         * A name, visible to the user, for this node in the project tree.
+         */
+        public override string name
         {
-            return "sch";
+            get
+            {
+                return "sch";
+            }
         }
-    }
 
 
 
-    /**
-     * The path to the directory storing the schematics. Schematics
-     * are stored in the design directory, so they are in the same
-     * directory as the gafrc and gschemrc. So, the SchematicList path
-     * used the design (parent) path.
-     */
-    public override string path
-    {
-        get
+        /**
+         * The path to the directory storing the schematics. Schematics
+         * are stored in the design directory, so they are in the same
+         * directory as the gafrc and gschemrc. So, the SchematicList path
+         * used the design (parent) path.
+         */
+        public override string path
         {
-            return parent.path;
+            get
+            {
+                return parent.path;
+            }
         }
-    }
 
 
 
-    /**
-     * A read ony view of the schematics in this container.
-     */
-    public Gee.List<Schematic> schematics
-    {
-        owned get
+        /**
+         * A read ony view of the schematics in this container.
+         */
+        public Gee.List<Schematic> schematics
         {
-            return m_schematics.read_only_view;
+            owned get
+            {
+                return m_schematics.read_only_view;
+            }
         }
-    }
 
 
 
-    /**
-     * Create a container for schematics
-     *
-     * param parent The parent node for this container.
-     */
-    private SchematicList(PixbufCache pixbufs, ProjectNode parent)
-    {
-        base(pixbufs, parent);
-        m_schematics = new Gee.ArrayList<Schematic>();
-    }
-
-
-
-    /**
-     * Add the schematic list to the batch operation.
-     *
-     * Selecting the schematic list in the project tree is the
-     * same as selecting all the schematics within.
-     */
-    public override void add_to_batch(Batch batch)
-
-        requires(m_schematics != null)
-
-    {
-        foreach (var schematic in m_schematics)
+        /**
+         * Create a container for schematics
+         *
+         * param parent The parent node for this container.
+         */
+        private SchematicList(PixbufCache pixbufs, ProjectNode parent)
         {
-            batch.add_schematic(schematic);
+            base(pixbufs, parent);
+            m_schematics = new Gee.ArrayList<Schematic>();
         }
-    }
 
 
 
-    /**
-     * Create a container for schematics
-     *
-     * param parent The parent node for this container.
-     */
-    public static SchematicList create(PixbufCache pixbufs, ProjectNode parent)
-    {
-        return new SchematicList(pixbufs, parent);
-    }
+        /**
+         * Add the schematic list to the batch operation.
+         *
+         * Selecting the schematic list in the project tree is the
+         * same as selecting all the schematics within.
+         */
+        public override void add_to_batch(Batch batch)
 
+            requires(m_schematics != null)
 
-
-    /**
-     * Add a schematic to the list
-     *
-     * param node The XML node representing the schematic. This node must
-     * be attached to the XML tree.
-     */
-    public void add_with_node(Xml.Node* node)
-
-        requires(node != null)
-        requires(node->name == Schematic.ELEMENT_NAME)
-        requires(node->parent != null)
-
-    {
-        Schematic schematic = Schematic.load(pixbufs, this, node);
-
-        m_schematics.add(schematic);
-
-        schematic.changed.connect(on_changed);
-        schematic.deleted.connect(on_deleted);
-        schematic.inserted.connect(on_inserted);
-        schematic.toggled.connect(on_toggled);
-
-        inserted(schematic);
-        changed(this);
-    }
-
-
-
-    /**
-     * Remove a schematic from the list
-     *
-     * param schematic The schematic to remove from the list. The XML node
-     * must be disconnected from the XML tree.
-     */
-    public void remove(Schematic schematic)
-    {
-        int index = m_schematics.index_of(schematic);
-
-        if (index >= 0)
         {
-            schematic.changed.disconnect(on_changed);
-            schematic.deleted.disconnect(on_deleted);
-            schematic.inserted.disconnect(on_inserted);
-            schematic.toggled.disconnect(on_toggled);
+            foreach (var schematic in m_schematics)
+            {
+                batch.add_schematic(schematic);
+            }
+        }
 
-            m_schematics.remove_at(index);
 
-            deleted(this, index);
+
+        /**
+         * Create a container for schematics
+         *
+         * param parent The parent node for this container.
+         */
+        public static SchematicList create(PixbufCache pixbufs, ProjectNode parent)
+        {
+            return new SchematicList(pixbufs, parent);
+        }
+
+
+
+        /**
+         * Add a schematic to the list
+         *
+         * param node The XML node representing the schematic. This node must
+         * be attached to the XML tree.
+         */
+        public void add_with_node(Xml.Node* node)
+
+            requires(node != null)
+            requires(node->name == Schematic.ELEMENT_NAME)
+            requires(node->parent != null)
+
+        {
+            Schematic schematic = Schematic.load(pixbufs, this, node);
+
+            m_schematics.add(schematic);
+
+            schematic.changed.connect(on_changed);
+            schematic.deleted.connect(on_deleted);
+            schematic.inserted.connect(on_inserted);
+            schematic.toggled.connect(on_toggled);
+
+            inserted(schematic);
             changed(this);
         }
-    }
 
 
 
-    /**
-     * Get the number of schematics in this container.
-     */
-    public override int get_child_count()
-    {
-        return m_schematics.size;
-    }
+        /**
+         * Remove a schematic from the list
+         *
+         * param schematic The schematic to remove from the list. The XML node
+         * must be disconnected from the XML tree.
+         */
+        public void remove(Schematic schematic)
+        {
+            int index = m_schematics.index_of(schematic);
+
+            if (index >= 0)
+            {
+                schematic.changed.disconnect(on_changed);
+                schematic.deleted.disconnect(on_deleted);
+                schematic.inserted.disconnect(on_inserted);
+                schematic.toggled.disconnect(on_toggled);
+
+                m_schematics.remove_at(index);
+
+                deleted(this, index);
+                changed(this);
+            }
+        }
 
 
 
-    /*
-     *
-     *
-     */
-    public override ProjectNode? get_child(int index)
-
-        requires(index >= 0)
-
-    {
-        return m_schematics.get(index);
-    }
+        /**
+         * Get the number of schematics in this container.
+         */
+        public override int get_child_count()
+        {
+            return m_schematics.size;
+        }
 
 
 
-    public override bool get_child_index(ProjectNode child, out int index)
-    {
-        // needs work
+        /*
+         *
+         *
+         */
+        public override ProjectNode? get_child(int index)
 
-        index = m_schematics.index_of(child as Schematic);
+            requires(index >= 0)
 
-        return false;
+        {
+            return m_schematics.get(index);
+        }
+
+
+
+        public override bool get_child_index(ProjectNode child, out int index)
+        {
+            // needs work
+
+            index = m_schematics.index_of(child as Schematic);
+
+            return false;
+        }
     }
 }

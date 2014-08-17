@@ -15,149 +15,152 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A batch operation to renumber the REFDES in a design.
- */
-public class RenumberRefdes : Batch
+namespace Orange
 {
     /**
-     * The command line application to renumber REFDES.
+     * A batch operation to renumber the REFDES in a design.
      */
-    private const string RENUMBER_COMMAND = "refdes_renum";
-
-
-
-    /**
-     * A set of all the designs in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
-     */
-    private Gee.HashSet<Design> m_designs;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public RenumberRefdes(DialogFactory factory, Gtk.Action action)
+    public class RenumberRefdes : Batch
     {
-        base(factory, action);
-
-        m_designs = new Gee.HashSet<Design>();
-
-        update();
-    }
+        /**
+         * The command line application to renumber REFDES.
+         */
+        private const string RENUMBER_COMMAND = "refdes_renum";
 
 
 
-    /**
-     * Add a schematic to the batch operation.
-     */
-    public override void add_design(Design design)
-    {
-        m_designs.add(design);
-    }
+        /**
+         * A set of all the designs in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<Design> m_designs;
 
 
 
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-    {
-        m_designs.clear();
-    }
-
-
-
-    /**
-     * Determines if the current batch is editable.
-     */
-    public override bool enabled()
-    {
-        return (m_designs.size == 1);
-    }
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-    {
-        foreach (var design in m_designs)
+        /**
+         * Create a new, empty batch operation.
+         */
+        public RenumberRefdes(DialogFactory factory, Gtk.Action action)
         {
-            var dialog = m_factory.create_renumber_refdes_dialog();
+            base(factory, action);
 
-            int status = dialog.run();
-            dialog.hide();
+            m_designs = new Gee.HashSet<Design>();
 
-            if (status == Gtk.ResponseType.OK)
+            update();
+        }
+
+
+
+        /**
+         * Add a schematic to the batch operation.
+         */
+        public override void add_design(Design design)
+        {
+            m_designs.add(design);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+        {
+            m_designs.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public override bool enabled()
+        {
+            return (m_designs.size == 1);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+        {
+            foreach (var design in m_designs)
             {
-                var arguments = new Gee.ArrayList<string?>();
+                var dialog = m_factory.create_renumber_refdes_dialog();
 
-                arguments.add(RENUMBER_COMMAND);
+                int status = dialog.run();
+                dialog.hide();
 
-                if (dialog.get_force_renumber())
+                if (status == Gtk.ResponseType.OK)
                 {
-                    arguments.add("--force");
-                }
+                    var arguments = new Gee.ArrayList<string?>();
 
-                if (dialog.get_include_page_numbers())
-                {
-                    arguments.add("--pgskip");
-                    arguments.add(dialog.get_page_number_param());
-                }
+                    arguments.add(RENUMBER_COMMAND);
 
-                foreach (Schematic schematic in design.schematics)
-                {
-                    arguments.add(schematic.basename);
-                }
-
-                arguments.add(null);
-
-                /*  Ensure the environment variables OLDPWD and PWD match the
-                 *  working directory passed into Process.spawn_async(). Some
-                 *  Scheme scripts use getenv() to determine the current
-                 *  working directory.
-                 */
-
-                var environment = new Gee.ArrayList<string?>();
-
-                foreach (string variable in Environment.list_variables())
-                {
-                    if (variable == "OLDPWD")
+                    if (dialog.get_force_renumber())
                     {
-                        environment.add("%s=%s".printf(variable, Environment.get_current_dir()));
+                        arguments.add("--force");
                     }
-                    else if (variable == "PWD")
+
+                    if (dialog.get_include_page_numbers())
                     {
-                        environment.add("%s=%s".printf(variable, design.path));
+                        arguments.add("--pgskip");
+                        arguments.add(dialog.get_page_number_param());
                     }
-                    else
+
+                    foreach (Schematic schematic in design.schematics)
                     {
-                        environment.add("%s=%s".printf(variable, Environment.get_variable(variable)));
+                        arguments.add(schematic.basename);
                     }
-                }
 
-                environment.add(null);
+                    arguments.add(null);
 
-                int exit_code;
+                    /*  Ensure the environment variables OLDPWD and PWD match the
+                     *  working directory passed into Process.spawn_async(). Some
+                     *  Scheme scripts use getenv() to determine the current
+                     *  working directory.
+                     */
 
-                Process.spawn_sync(
-                    design.path,
-                    arguments.to_array(),
-                    null,
-                    SpawnFlags.SEARCH_PATH,
-                    null,
-                    null,
-                    null,
-                    out exit_code
-                    );
+                    var environment = new Gee.ArrayList<string?>();
 
-                if (exit_code != 0)
-                {
-                    // throw something
+                    foreach (string variable in Environment.list_variables())
+                    {
+                        if (variable == "OLDPWD")
+                        {
+                            environment.add("%s=%s".printf(variable, Environment.get_current_dir()));
+                        }
+                        else if (variable == "PWD")
+                        {
+                            environment.add("%s=%s".printf(variable, design.path));
+                        }
+                        else
+                        {
+                            environment.add("%s=%s".printf(variable, Environment.get_variable(variable)));
+                        }
+                    }
+
+                    environment.add(null);
+
+                    int exit_code;
+
+                    Process.spawn_sync(
+                        design.path,
+                        arguments.to_array(),
+                        null,
+                        SpawnFlags.SEARCH_PATH,
+                        null,
+                        null,
+                        null,
+                        out exit_code
+                        );
+
+                    if (exit_code != 0)
+                    {
+                        // throw something
+                    }
                 }
             }
         }

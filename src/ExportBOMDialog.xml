@@ -72,7 +72,7 @@
     </child>
   </object>
 
-  <object class="ExportBOMDialog" id="dialog">
+  <object class="OrangeExportBOMDialog" id="dialog">
     <property name="title">Export BOM</property>
     <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <property name="border-width">15</property>

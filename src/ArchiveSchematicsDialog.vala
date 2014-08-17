@@ -15,30 +15,33 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A dialog box allowing the user to archive the schematics in the design.
- *
- * Instances of this class must be constructed with Gtk.Builder.
- */
-public class ArchiveSchematicsDialog : Gtk.FileChooserDialog
+namespace Orange
 {
     /**
-     * The filename of the XML file containing the UI design.
+     * A dialog box allowing the user to archive the schematics in the design.
+     *
+     * Instances of this class must be constructed with Gtk.Builder.
      */
-    public const string BUILDER_FILENAME = "ArchiveSchematicsDialog.xml";
-
-
-
-    /**
-     * Extract references to the dialog from Gtk.Builder
-     */
-    public static ArchiveSchematicsDialog extract(Gtk.Builder builder)
-
-        ensures(result != null)
-
+    public class ArchiveSchematicsDialog : Gtk.FileChooserDialog
     {
-        ArchiveSchematicsDialog dialog = builder.get_object("dialog") as ArchiveSchematicsDialog;
+        /**
+         * The filename of the XML file containing the UI design.
+         */
+        public const string BUILDER_FILENAME = "ArchiveSchematicsDialog.xml";
 
-        return dialog;
+
+
+        /**
+         * Extract references to the dialog from Gtk.Builder
+         */
+        public static ArchiveSchematicsDialog extract(Gtk.Builder builder)
+
+            ensures(result != null)
+
+        {
+            ArchiveSchematicsDialog dialog = builder.get_object("dialog") as ArchiveSchematicsDialog;
+
+            return dialog;
+        }
     }
 }

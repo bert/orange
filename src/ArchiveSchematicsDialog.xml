@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-  <object class="ArchiveSchematicsDialog" id="dialog">
+  <object class="OrangeArchiveSchematicsDialog" id="dialog">
     <property name="title">Archive Schematics</property>
     <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <property name="border-width">15</property>

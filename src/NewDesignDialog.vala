@@ -15,182 +15,185 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A dialog box allowing the user to create a new design.
- *
- * Instances of this class must be constructed with Gtk.Builder. See
- * the extract() method.
- */
-public class NewDesignDialog : Gtk.Dialog
+namespace Orange
 {
     /**
-     * The filename of the XML file containing the UI design.
-     */
-    public const string BUILDER_FILENAME = "NewDesignDialog.xml";
-
-
-
-    /**
-     * The entry widget containing the design name.
-     */
-    private Gtk.Entry m_design_name;
-
-
-
-    /**
-     * The entry widget containing the design folder name.
-     */
-    private Gtk.Entry m_folder_name;
-
-
-    private Project m_project;
-
-    private Gtk.ListStore m_type_list;
-
-    private Gtk.TreeSelection m_type_selection;
-
-
-    private Gtk.Widget m_error_design_exists;
-    private Gtk.Widget m_error_folder_exists;
-
-    private bool m_design_type_valid;
-    private bool m_design_name_valid;
-    private bool m_folder_name_valid;
-
-    /*
+     * A dialog box allowing the user to create a new design.
      *
+     * Instances of this class must be constructed with Gtk.Builder. See
+     * the extract() method.
      */
-    public static NewDesignDialog extract(Gtk.Builder builder, Project project)
-
-        ensures(result.m_type_selection != null)
-
+    public class NewDesignDialog : Gtk.Dialog
     {
-        NewDesignDialog dialog = builder.get_object("dialog") as NewDesignDialog;
-
-        dialog.m_project = project;
-
-        dialog.m_design_name = builder.get_object("name-entry") as Gtk.Entry;
-        dialog.m_design_name.notify["text"].connect(dialog.on_notify_design);
-
-        dialog.m_folder_name = builder.get_object("folder-entry") as Gtk.Entry;
-        dialog.m_folder_name.notify["text"].connect(dialog.on_notify_folder);
-
-        dialog.m_type_list = builder.get_object("types-list") as Gtk.ListStore;
-
-        Gtk.TreeView types_tree = builder.get_object("types-tree") as Gtk.TreeView;
-        assert(types_tree != null);
-
-        dialog.m_error_design_exists = builder.get_object("hbox-error-design-exists") as Gtk.Widget;
-        dialog.m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
-
-        dialog.m_type_selection = types_tree.get_selection();
-        dialog.m_type_selection.changed.connect(dialog.on_change);
-        dialog.m_type_selection.set_mode(Gtk.SelectionMode.BROWSE);
-
-
-        dialog.m_design_name.text = "Untitled";
-        dialog.m_folder_name.text = dialog.m_design_name.text;
-
-
-        return dialog;
-    }
+        /**
+         * The filename of the XML file containing the UI design.
+         */
+        public const string BUILDER_FILENAME = "NewDesignDialog.xml";
 
 
 
-    public string get_design_name()
-
-        requires(m_design_name != null)
-
-    {
-        return m_design_name.text;
-    }
+        /**
+         * The entry widget containing the design name.
+         */
+        private Gtk.Entry m_design_name;
 
 
 
-    public string get_folder_name()
-
-        requires(m_folder_name != null)
-
-    {
-        return m_folder_name.text;
-    }
+        /**
+         * The entry widget containing the design folder name.
+         */
+        private Gtk.Entry m_folder_name;
 
 
+        private Project m_project;
 
-    private void on_change()
-    {
-        update();
-    }
+        private Gtk.ListStore m_type_list;
 
-
+        private Gtk.TreeSelection m_type_selection;
 
 
-    private void on_notify_design(ParamSpec parameter)
+        private Gtk.Widget m_error_design_exists;
+        private Gtk.Widget m_error_folder_exists;
 
-        requires(m_design_name != null)
-        requires(m_project != null)
+        private bool m_design_type_valid;
+        private bool m_design_name_valid;
+        private bool m_folder_name_valid;
 
-    {
-        if (m_design_name.text.length > 0)
+        /*
+         *
+         */
+        public static NewDesignDialog extract(Gtk.Builder builder, Project project)
+
+            ensures(result.m_type_selection != null)
+
         {
-            bool design_exists = m_project.get_design(m_design_name.text) != null;
+            NewDesignDialog dialog = builder.get_object("dialog") as NewDesignDialog;
 
-            m_error_design_exists.set_visible(design_exists);
+            dialog.m_project = project;
 
-            m_design_name_valid = !design_exists;
-        }
-        else
-        {
-            m_error_design_exists.set_visible(false);
+            dialog.m_design_name = builder.get_object("name-entry") as Gtk.Entry;
+            dialog.m_design_name.notify["text"].connect(dialog.on_notify_design);
 
-            m_design_name_valid = false;
+            dialog.m_folder_name = builder.get_object("folder-entry") as Gtk.Entry;
+            dialog.m_folder_name.notify["text"].connect(dialog.on_notify_folder);
+
+            dialog.m_type_list = builder.get_object("types-list") as Gtk.ListStore;
+
+            Gtk.TreeView types_tree = builder.get_object("types-tree") as Gtk.TreeView;
+            assert(types_tree != null);
+
+            dialog.m_error_design_exists = builder.get_object("hbox-error-design-exists") as Gtk.Widget;
+            dialog.m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
+
+            dialog.m_type_selection = types_tree.get_selection();
+            dialog.m_type_selection.changed.connect(dialog.on_change);
+            dialog.m_type_selection.set_mode(Gtk.SelectionMode.BROWSE);
+
+
+            dialog.m_design_name.text = "Untitled";
+            dialog.m_folder_name.text = dialog.m_design_name.text;
+
+
+            return dialog;
         }
 
-        update();
-    }
 
 
+        public string get_design_name()
 
-    private void on_notify_folder(ParamSpec parameter)
+            requires(m_design_name != null)
 
-        requires(m_folder_name != null)
-        requires(m_project != null)
-
-    {
-        if (m_folder_name.text.length > 0)
         {
-            string filename = m_project.get_project_subdir(m_folder_name.text);
-
-            bool folder_exists = FileUtils.test(filename, FileTest.EXISTS);
-
-            m_error_folder_exists.set_visible(folder_exists);
-
-            m_folder_name_valid = !folder_exists;
-        }
-        else
-        {
-            m_error_folder_exists.set_visible(false);
-
-            m_folder_name_valid = false;
+            return m_design_name.text;
         }
 
-        update();
-    }
+
+
+        public string get_folder_name()
+
+            requires(m_folder_name != null)
+
+        {
+            return m_folder_name.text;
+        }
 
 
 
-    private void update()
+        private void on_change()
+        {
+            update();
+        }
 
-        requires(m_design_name != null)
-        requires(m_folder_name != null)
-        requires(m_type_selection != null)
 
-    {
-        bool sensitive =
-            (m_type_selection.count_selected_rows() == 1) &&
-            (m_design_name_valid) &&
-            (m_folder_name_valid);
 
-        set_response_sensitive(Gtk.ResponseType.OK, sensitive);
+
+        private void on_notify_design(ParamSpec parameter)
+
+            requires(m_design_name != null)
+            requires(m_project != null)
+
+        {
+            if (m_design_name.text.length > 0)
+            {
+                bool design_exists = m_project.get_design(m_design_name.text) != null;
+
+                m_error_design_exists.set_visible(design_exists);
+
+                m_design_name_valid = !design_exists;
+            }
+            else
+            {
+                m_error_design_exists.set_visible(false);
+
+                m_design_name_valid = false;
+            }
+
+            update();
+        }
+
+
+
+        private void on_notify_folder(ParamSpec parameter)
+
+            requires(m_folder_name != null)
+            requires(m_project != null)
+
+        {
+            if (m_folder_name.text.length > 0)
+            {
+                string filename = m_project.get_project_subdir(m_folder_name.text);
+
+                bool folder_exists = FileUtils.test(filename, FileTest.EXISTS);
+
+                m_error_folder_exists.set_visible(folder_exists);
+
+                m_folder_name_valid = !folder_exists;
+            }
+            else
+            {
+                m_error_folder_exists.set_visible(false);
+
+                m_folder_name_valid = false;
+            }
+
+            update();
+        }
+
+
+
+        private void update()
+
+            requires(m_design_name != null)
+            requires(m_folder_name != null)
+            requires(m_type_selection != null)
+
+        {
+            bool sensitive =
+                (m_type_selection.count_selected_rows() == 1) &&
+                (m_design_name_valid) &&
+                (m_folder_name_valid);
+
+            set_response_sensitive(Gtk.ResponseType.OK, sensitive);
+        }
     }
 }

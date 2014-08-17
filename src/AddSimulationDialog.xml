@@ -26,11 +26,11 @@
     </data>
   </object>
 
-  <object class="AddSimulationDialog" id="dialog">
+  <object class="OrangeAddSimulationDialog" id="dialog">
     <property name="title">New Simulation</property>
     <property name="border-width">15</property>
     <property name="width-request">640</property>
-    <property name="height-request">480</property>    
+    <property name="height-request">480</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="content">
         <property name="visible">TRUE</property>

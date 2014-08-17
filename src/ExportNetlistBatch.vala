@@ -15,171 +15,174 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * A batch operation to export netlists in the project tree.
- */
-public class ExportNetlistBatch : Batch
+namespace Orange
 {
     /**
-     * The default output filename.
+     * A batch operation to export netlists in the project tree.
      */
-    private const string DEFAULT_NETLIST_FILENAME = "output.net";
-
-
-
-    /**
-     * The command line application to generate netlists.
-     */
-    private const string NETLIST_COMMAND = "gnetlist";
-
-
-
-    /**
-     * A set of all the designs in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
-     */
-    private Gee.HashSet<Design> m_designs;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public ExportNetlistBatch(DialogFactory factory, Gtk.Action action)
+    public class ExportNetlistBatch : Batch
     {
-        base(factory, action);
-
-        m_designs = new Gee.HashSet<Design>();
-
-        update();
-    }
-
-
-
-    /**
-     * Add a schematic to the batch operation.
-     */
-    public override void add_design(Design design)
-    {
-        m_designs.add(design);
-    }
-
-
-
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-    {
-        m_designs.clear();
-    }
-
-
-
-    /**
-     * Determines if the current batch is editable.
-     */
-    public override bool enabled()
-    {
-        return (m_designs.size > 0);
-    }
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-    {
-        foreach (var design in m_designs)
-        {
-            string dirname = design.create_netlist_subdir();
-
-            var dialog = m_factory.create_export_netlist_dialog();
-
-            dialog.set_current_folder(dirname);
-            dialog.set_current_name(DEFAULT_NETLIST_FILENAME);
-
-            int status = dialog.run();
-            dialog.hide();
-
-            if (status == Gtk.ResponseType.CANCEL)
-            {
-                continue;
-            }
-
-            create_netlist_file(
-                design,
-                dialog.get_filename(),
-                dialog.get_netlist_format()
-                );
-        }
-    }
-
-
-
-    private void create_netlist_file(Design design, string filename, string format) throws Error
-    {
-        var arguments = new Gee.ArrayList<string?>();
-
-        arguments.add(NETLIST_COMMAND);
-
-        arguments.add("-o");
-        arguments.add(filename);
-
-        arguments.add("-g");
-        arguments.add(format);
-
-        foreach (Schematic schematic in design.schematics)
-        {
-            arguments.add(schematic.basename);
-        }
-
-        arguments.add(null);
-
-        /*  Ensure the environment variables OLDPWD and PWD match the
-         *  working directory passed into Process.spawn_async(). Some
-         *  Scheme scripts use getenv() to determine the current
-         *  working directory.
+        /**
+         * The default output filename.
          */
+        private const string DEFAULT_NETLIST_FILENAME = "output.net";
 
-        var environment = new Gee.ArrayList<string?>();
 
-        foreach (string variable in Environment.list_variables())
+
+        /**
+         * The command line application to generate netlists.
+         */
+        private const string NETLIST_COMMAND = "gnetlist";
+
+
+
+        /**
+         * A set of all the designs in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<Design> m_designs;
+
+
+
+        /**
+         * Create a new, empty batch operation.
+         */
+        public ExportNetlistBatch(DialogFactory factory, Gtk.Action action)
         {
-            if (variable == "OLDPWD")
+            base(factory, action);
+
+            m_designs = new Gee.HashSet<Design>();
+
+            update();
+        }
+
+
+
+        /**
+         * Add a schematic to the batch operation.
+         */
+        public override void add_design(Design design)
+        {
+            m_designs.add(design);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+        {
+            m_designs.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public override bool enabled()
+        {
+            return (m_designs.size > 0);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+        {
+            foreach (var design in m_designs)
             {
-                environment.add("%s=%s".printf(variable, Environment.get_current_dir()));
-            }
-            else if (variable == "PWD")
-            {
-                environment.add("%s=%s".printf(variable, design.path));
-            }
-            else
-            {
-                environment.add("%s=%s".printf(variable, Environment.get_variable(variable)));
+                string dirname = design.create_netlist_subdir();
+
+                var dialog = m_factory.create_export_netlist_dialog();
+
+                dialog.set_current_folder(dirname);
+                dialog.set_current_name(DEFAULT_NETLIST_FILENAME);
+
+                int status = dialog.run();
+                dialog.hide();
+
+                if (status == Gtk.ResponseType.CANCEL)
+                {
+                    continue;
+                }
+
+                create_netlist_file(
+                    design,
+                    dialog.get_filename(),
+                    dialog.get_netlist_format()
+                    );
             }
         }
 
-        environment.add(null);
 
-        int status;
 
-        Process.spawn_sync(
-            design.path,
-            arguments.to_array(),
-            environment.to_array(),
-            SpawnFlags.SEARCH_PATH,
-            null,
-            null,
-            null,
-            out status
-            );
-
-        if (status != 0)
+        private void create_netlist_file(Design design, string filename, string format) throws Error
         {
-            // throw something
+            var arguments = new Gee.ArrayList<string?>();
+
+            arguments.add(NETLIST_COMMAND);
+
+            arguments.add("-o");
+            arguments.add(filename);
+
+            arguments.add("-g");
+            arguments.add(format);
+
+            foreach (Schematic schematic in design.schematics)
+            {
+                arguments.add(schematic.basename);
+            }
+
+            arguments.add(null);
+
+            /*  Ensure the environment variables OLDPWD and PWD match the
+             *  working directory passed into Process.spawn_async(). Some
+             *  Scheme scripts use getenv() to determine the current
+             *  working directory.
+             */
+
+            var environment = new Gee.ArrayList<string?>();
+
+            foreach (string variable in Environment.list_variables())
+            {
+                if (variable == "OLDPWD")
+                {
+                    environment.add("%s=%s".printf(variable, Environment.get_current_dir()));
+                }
+                else if (variable == "PWD")
+                {
+                    environment.add("%s=%s".printf(variable, design.path));
+                }
+                else
+                {
+                    environment.add("%s=%s".printf(variable, Environment.get_variable(variable)));
+                }
+            }
+
+            environment.add(null);
+
+            int status;
+
+            Process.spawn_sync(
+                design.path,
+                arguments.to_array(),
+                environment.to_array(),
+                SpawnFlags.SEARCH_PATH,
+                null,
+                null,
+                null,
+                out status
+                );
+
+            if (status != 0)
+            {
+                // throw something
+            }
         }
     }
 }

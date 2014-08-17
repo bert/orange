@@ -18,129 +18,132 @@
 
 using GLib;
 
-/**
- * A cache for storing similar size pixbufs loaded from files.
- */
-public class PixbufCache : GLib.Object
+namespace Orange
 {
     /**
-     * The directory containing the pixbufs.
+     * A cache for storing similar size pixbufs loaded from files.
      */
-    [CCode(cname = "IMAGE_DIR")]
-    private extern static const string IMAGE_DIR;
-
-
-
-    /**
-     * A cache to store loaded pixbufs
-     */
-    private Gee.HashMap<string,Gdk.Pixbuf> cache
+    public class PixbufCache : GLib.Object
     {
-        get;
-        private set;
-    }
+        /**
+         * The directory containing the pixbufs.
+         */
+        [CCode(cname = "IMAGE_DIR")]
+        private extern static const string IMAGE_DIR;
 
 
 
-    /**
-     * A pixbuf representing a missing icon
-     */
-    public Gdk.Pixbuf missing
-    {
-        get;
-        private set;
-    }
-
-
-
-    /**
-     * The height to scale loaded pixbufs to
-     */
-    public int height
-    {
-        get;
-        private set;
-    }
-
-
-
-    /**
-     * The toplevel widget for this application
-     */
-    public Gtk.Widget top
-    {
-        get;
-        private set;
-    }
-
-
-
-    /**
-     * The width to scale loaded pixbufs to
-     */
-    public int width
-    {
-        get;
-        private set;
-    }
-
-
-
-    /**
-     * Create a new cache for storing similar size pixbufs
-     *
-     * param width The width to scale loaded pixbufs to
-     * param height The height to scale loaded pixbufs to
-     */
-    public PixbufCache(Gtk.Widget top, Gtk.IconSize size)
-    {
-        cache = new Gee.HashMap<string,Gdk.Pixbuf>();
-
-        this.top = top;
-
-        missing = top.render_icon(Gtk.Stock.MISSING_IMAGE, size, null);
-
-        width = missing.width;
-        height = missing.height;
-    }
-
-
-
-    /**
-     * Load a pixbuf from a file
-     *
-     * Either loads the pixbuf from a file, or returns an existing pixbuf
-     * if already loaded.
-     *
-     * param basename The basename of the pixbuf file.
-     */
-    public unowned Gdk.Pixbuf fetch(string basename)
-
-        requires(cache != null)
-
-    {
-        Gdk.Pixbuf* pixbuf;
-
-        if (cache.has_key(basename))
+        /**
+         * A cache to store loaded pixbufs
+         */
+        private Gee.HashMap<string,Gdk.Pixbuf> cache
         {
-            pixbuf = cache[basename];
-        }
-        else
-        {
-            try
-            {
-                string filename = Path.build_filename(IMAGE_DIR, basename, null);
-
-                pixbuf = new Gdk.Pixbuf.from_file_at_size(filename, width, height);
-
-                cache.set(basename, pixbuf);
-            }
-            catch
-            {
-                pixbuf = missing;
-            }
+            get;
+            private set;
         }
 
-        return pixbuf;
+
+
+        /**
+         * A pixbuf representing a missing icon
+         */
+        public Gdk.Pixbuf missing
+        {
+            get;
+            private set;
+        }
+
+
+
+        /**
+         * The height to scale loaded pixbufs to
+         */
+        public int height
+        {
+            get;
+            private set;
+        }
+
+
+
+        /**
+         * The toplevel widget for this application
+         */
+        public Gtk.Widget top
+        {
+            get;
+            private set;
+        }
+
+
+
+        /**
+         * The width to scale loaded pixbufs to
+         */
+        public int width
+        {
+            get;
+            private set;
+        }
+
+
+
+        /**
+         * Create a new cache for storing similar size pixbufs
+         *
+         * param width The width to scale loaded pixbufs to
+         * param height The height to scale loaded pixbufs to
+         */
+        public PixbufCache(Gtk.Widget top, Gtk.IconSize size)
+        {
+            cache = new Gee.HashMap<string,Gdk.Pixbuf>();
+
+            this.top = top;
+
+            missing = top.render_icon(Gtk.Stock.MISSING_IMAGE, size, null);
+
+            width = missing.width;
+            height = missing.height;
+        }
+
+
+
+        /**
+         * Load a pixbuf from a file
+         *
+         * Either loads the pixbuf from a file, or returns an existing pixbuf
+         * if already loaded.
+         *
+         * param basename The basename of the pixbuf file.
+         */
+        public unowned Gdk.Pixbuf fetch(string basename)
+
+            requires(cache != null)
+
+        {
+            Gdk.Pixbuf* pixbuf;
+
+            if (cache.has_key(basename))
+            {
+                pixbuf = cache[basename];
+            }
+            else
+            {
+                try
+                {
+                    string filename = Path.build_filename(IMAGE_DIR, basename, null);
+
+                    pixbuf = new Gdk.Pixbuf.from_file_at_size(filename, width, height);
+
+                    cache.set(basename, pixbuf);
+                }
+                catch
+                {
+                    pixbuf = missing;
+                }
+            }
+
+            return pixbuf;
+        }
     }
 }

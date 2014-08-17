@@ -164,7 +164,7 @@
     </child>
   </object>
 
-  <object class="ExportNetlistDialog" id="dialog">
+  <object class="OrangeExportNetlistDialog" id="dialog">
     <property name="title">Export Netlist</property>
     <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <property name="border-width">15</property>

@@ -18,130 +18,132 @@
 
 using GLib;
 
-/**
- * A batch operation to delete nodes in the project tree.
- */
-public class OpenDirectory : Batch
+namespace Orange
 {
     /**
-     * The program to open directories with
-     *
-     * This program will need to become a config item in the future.
+     * A batch operation to delete nodes in the project tree.
      */
-    private static const string PROGRAM = "nautilus";
-
-
-
-    /**
-     * A set of all the schematics in the batch operation.
-     *
-     * The operation uses a set to eliminate duplicates.
-     */
-    private Gee.HashSet<ProjectNode> m_nodes;
-
-
-
-    /**
-     * Create a new, empty batch operation.
-     */
-    public OpenDirectory(DialogFactory factory, Gtk.Action action)
+    public class OpenDirectory : Batch
     {
-        base(factory, action);
-
-        m_nodes = new Gee.HashSet<ProjectNode>();
-
-        update();
-    }
-
-
-
-    /**
-     * Add a design to the batch operation.
-     */
-    public override void add_design(Design design)
-
-        requires(m_nodes != null)
-
-    {
-        m_nodes.add(design);
-    }
+        /**
+         * The program to open directories with
+         *
+         * This program will need to become a config item in the future.
+         */
+        private static const string PROGRAM = "nautilus";
 
 
 
-    /**
-     * Add a schematic to the batch operation.
-     */
-    public override void add_schematic(Schematic schematic)
-
-        requires(m_nodes != null)
-
-    {
-        m_nodes.add(schematic);
-    }
+        /**
+         * A set of all the schematics in the batch operation.
+         *
+         * The operation uses a set to eliminate duplicates.
+         */
+        private Gee.HashSet<ProjectNode> m_nodes;
 
 
 
-    /**
-     * Clear all nodes from the batch operation.
-     */
-    public override void clear()
-
-        requires(m_nodes != null)
-
-    {
-        m_nodes.clear();
-    }
-
-
-
-    /**
-     * Determines if the current batch is editable.
-     */
-    public override bool enabled()
-
-        requires(m_nodes != null)
-
-    {
-        return (m_nodes.size == 1);
-    }
-
-
-
-    /**
-     * Run the batch operation.
-     */
-    public override void run() throws Error
-
-        requires(m_nodes != null)
-        requires(m_nodes.size == 1)
-
-    {
-        /* This loop is intended to execute once, HashSet lacks a .first() method */
-
-        foreach (ProjectNode node in m_nodes)
+        /**
+         * Create a new, empty batch operation.
+         */
+        public OpenDirectory(DialogFactory factory, Gtk.Action action)
         {
-            string directory = node.path;
+            base(factory, action);
 
-            if (!FileUtils.test(directory, FileTest.IS_DIR))
+            m_nodes = new Gee.HashSet<ProjectNode>();
+
+            update();
+        }
+
+
+
+        /**
+         * Add a design to the batch operation.
+         */
+        public override void add_design(Design design)
+
+            requires(m_nodes != null)
+
+        {
+            m_nodes.add(design);
+        }
+
+
+
+        /**
+         * Add a schematic to the batch operation.
+         */
+        public override void add_schematic(Schematic schematic)
+
+            requires(m_nodes != null)
+
+        {
+            m_nodes.add(schematic);
+        }
+
+
+
+        /**
+         * Clear all nodes from the batch operation.
+         */
+        public override void clear()
+
+            requires(m_nodes != null)
+
+        {
+            m_nodes.clear();
+        }
+
+
+
+        /**
+         * Determines if the current batch is editable.
+         */
+        public override bool enabled()
+
+            requires(m_nodes != null)
+
+        {
+            return (m_nodes.size == 1);
+        }
+
+
+
+        /**
+         * Run the batch operation.
+         */
+        public override void run() throws Error
+
+            requires(m_nodes != null)
+            requires(m_nodes.size == 1)
+
+        {
+            /* This loop is intended to execute once, HashSet lacks a .first() method */
+
+            foreach (ProjectNode node in m_nodes)
             {
-                // throw something
+                string directory = node.path;
+
+                if (!FileUtils.test(directory, FileTest.IS_DIR))
+                {
+                    // throw something
+                }
+
+                var arguments = new Gee.ArrayList<string?>();
+
+                arguments.add(PROGRAM);
+                arguments.add(directory);
+                arguments.add(null);
+
+                Process.spawn_async(
+                    directory,
+                    arguments.to_array(),
+                    null,
+                    SpawnFlags.SEARCH_PATH,
+                    null,
+                    null
+                    );
             }
-
-            var arguments = new Gee.ArrayList<string?>();
-
-            arguments.add(PROGRAM);
-            arguments.add(directory);
-            arguments.add(null);
-
-            Process.spawn_async(
-                directory,
-                arguments.to_array(),
-                null,
-                SpawnFlags.SEARCH_PATH,
-                null,
-                null
-                );
         }
     }
 }
-

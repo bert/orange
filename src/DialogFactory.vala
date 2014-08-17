@@ -1,418 +1,421 @@
 using Gtk;
 
-public class DialogFactory
+namespace Orange
 {
-    public enum ConfirmSaveResponseType
+    public class DialogFactory
     {
-        DISCARD = ResponseType.REJECT,
-        CANCEL = ResponseType.CANCEL,
-        SAVE = ResponseType.OK
-    }
-
-
-
-    /**
-     * The package data directory from the GNU autotools.
-     *
-     * This string contains the installation directory of the data
-     * files.
-     */
-    [CCode(cname = "PKGDATADIR")]
-    public static extern const string PKGDATADIR;
-
-
-
-    /**
-     * The subdirectory for the XML GtkBuilder files.
-     *
-     * This subdir is relative to the PKGDATADIR.
-     */
-    public static const string XML_SUBDIR = "xml";
-
-
-
-    /**
-     * The parent window
-     *
-     * Use as the parent for creating dialog boxes.
-     */
-    public Gtk.Window Parent
-    {
-        get;
-        private set;
-    }
-
-
-
-    /**
-     * Create a new DialogFactory
-     *
-     * param parent The parent for creating dialog boxes.
-     */
-    public DialogFactory(Gtk.Window parent)
-    {
-        Parent = parent;
-        
-        /* Need to register types with the glib type system for dynamic
-         * construction with gtkbuilder. Need to figure out a better way
-         * to ensure the calls to typeof() are not optimized out.
-         */
-
-        stdout.printf("Registering %s\n", typeof(AboutDialog).name());
-        stdout.printf("Registering %s\n", typeof(AddSimulationDialog).name());
-        stdout.printf("Registering %s\n", typeof(ArchiveSchematicsDialog).name());
-        stdout.printf("Registering %s\n", typeof(ExportBOMDialog).name());
-        stdout.printf("Registering %s\n", typeof(ExportNetlistDialog).name());
-        stdout.printf("Registering %s\n", typeof(NewDesignDialog).name());
-        stdout.printf("Registering %s\n", typeof(NewProjectDialog).name());
-        stdout.printf("Registering %s\n", typeof(RenumberRefdesDialog).name());
-        stdout.printf("Registering %s\n", typeof(ResetRefdesDialog).name());
-        stdout.printf("Registering %s\n", typeof(BackannotateRefdesDialog).name());
-    }
-
-
-
-    // todo: Add a better enumeration for the responses
-
-    public MessageDialog create_confirm_save_dialog(string? filename)
-    {
-        MessageDialog dialog;
-
-        if (filename == null)
+        public enum ConfirmSaveResponseType
         {
-            dialog = new MessageDialog.with_markup(
-                Parent,
-                DialogFlags.DESTROY_WITH_PARENT,
-                MessageType.QUESTION,
-                ButtonsType.NONE,
-                "<big>Save changes to <b>Untitled</b>?</big>\n\nThis file has not been saved. Unsaved changes will be lost."
-                );
+            DISCARD = ResponseType.REJECT,
+            CANCEL = ResponseType.CANCEL,
+            SAVE = ResponseType.OK
         }
-        else
+
+
+
+        /**
+         * The package data directory from the GNU autotools.
+         *
+         * This string contains the installation directory of the data
+         * files.
+         */
+        [CCode(cname = "PKGDATADIR")]
+        public static extern const string PKGDATADIR;
+
+
+
+        /**
+         * The subdirectory for the XML GtkBuilder files.
+         *
+         * This subdir is relative to the PKGDATADIR.
+         */
+        public static const string XML_SUBDIR = "xml";
+
+
+
+        /**
+         * The parent window
+         *
+         * Use as the parent for creating dialog boxes.
+         */
+        public Gtk.Window Parent
         {
-            dialog = new MessageDialog.with_markup(
+            get;
+            private set;
+        }
+
+
+
+        /**
+         * Create a new DialogFactory
+         *
+         * param parent The parent for creating dialog boxes.
+         */
+        public DialogFactory(Gtk.Window parent)
+        {
+            Parent = parent;
+
+            /* Need to register types with the glib type system for dynamic
+             * construction with gtkbuilder. Need to figure out a better way
+             * to ensure the calls to typeof() are not optimized out.
+             */
+
+            stdout.printf("Registering %s\n", typeof(AboutDialog).name());
+            stdout.printf("Registering %s\n", typeof(AddSimulationDialog).name());
+            stdout.printf("Registering %s\n", typeof(ArchiveSchematicsDialog).name());
+            stdout.printf("Registering %s\n", typeof(ExportBOMDialog).name());
+            stdout.printf("Registering %s\n", typeof(ExportNetlistDialog).name());
+            stdout.printf("Registering %s\n", typeof(NewDesignDialog).name());
+            stdout.printf("Registering %s\n", typeof(NewProjectDialog).name());
+            stdout.printf("Registering %s\n", typeof(RenumberRefdesDialog).name());
+            stdout.printf("Registering %s\n", typeof(ResetRefdesDialog).name());
+            stdout.printf("Registering %s\n", typeof(BackannotateRefdesDialog).name());
+        }
+
+
+
+        // todo: Add a better enumeration for the responses
+
+        public MessageDialog create_confirm_save_dialog(string? filename)
+        {
+            MessageDialog dialog;
+
+            if (filename == null)
+            {
+                dialog = new MessageDialog.with_markup(
+                    Parent,
+                    DialogFlags.DESTROY_WITH_PARENT,
+                    MessageType.QUESTION,
+                    ButtonsType.NONE,
+                    "<big>Save changes to <b>Untitled</b>?</big>\n\nThis file has not been saved. Unsaved changes will be lost."
+                    );
+            }
+            else
+            {
+                dialog = new MessageDialog.with_markup(
+                    Parent,
+                    DialogFlags.DESTROY_WITH_PARENT,
+                    MessageType.QUESTION,
+                    ButtonsType.NONE,
+                    "<big>Save changes to <b>%s</b>?</big>\n\nThe following file has been modified since last saved. Unsaved changes will be lost.\n\n<i>%s </i>",
+                    Path.get_basename(filename),
+                    filename
+                    );
+            }
+
+            dialog.add_buttons(
+                Stock.DISCARD, ConfirmSaveResponseType.DISCARD,
+                Stock.CANCEL,  ConfirmSaveResponseType.CANCEL,
+                Stock.SAVE,    ConfirmSaveResponseType.SAVE,
+                null
+                );
+
+            dialog.set_default_response(ResponseType.OK);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public AboutDialog create_about_dialog() throws Error
+
+            ensures(result != null)
+
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                AboutDialog.BUILDER_FILENAME
+                ));
+
+            AboutDialog dialog = AboutDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+        /*
+         *
+         *
+         *
+         */
+        public AddSimulationDialog create_add_simulation_dialog(Design design) throws Error
+
+            ensures(result != null)
+
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                AddSimulationDialog.BUILDER_FILENAME
+                ));
+
+            AddSimulationDialog dialog = AddSimulationDialog.extract(builder, design);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+        /*
+         *
+         *
+         *
+         */
+        public ArchiveSchematicsDialog create_archive_schematics_dialog() throws Error
+
+            ensures(result != null)
+
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                ArchiveSchematicsDialog.BUILDER_FILENAME
+                ));
+
+            ArchiveSchematicsDialog dialog = ArchiveSchematicsDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public BackannotateRefdesDialog create_backannotate_refdes_dialog() throws Error
+
+            ensures(result != null)
+
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                BackannotateRefdesDialog.BUILDER_FILENAME
+                ));
+
+            BackannotateRefdesDialog dialog = BackannotateRefdesDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public ResetRefdesDialog create_reset_refdes_dialog() throws Error
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                ResetRefdesDialog.BUILDER_FILENAME
+                ));
+
+            ResetRefdesDialog dialog = ResetRefdesDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public RenumberRefdesDialog create_renumber_refdes_dialog() throws Error
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                RenumberRefdesDialog.BUILDER_FILENAME
+                ));
+
+            RenumberRefdesDialog dialog = RenumberRefdesDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public ExportBOMDialog create_export_bom_dialog() throws Error
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                ExportBOMDialog.BUILDER_FILENAME
+                ));
+
+            ExportBOMDialog dialog = ExportBOMDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public ExportNetlistDialog create_export_netlist_dialog() throws Error
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                ExportNetlistDialog.BUILDER_FILENAME
+                ));
+
+            ExportNetlistDialog dialog = ExportNetlistDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public NewDesignDialog create_new_design_dialog(Project project) throws Error
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                NewDesignDialog.BUILDER_FILENAME
+                ));
+
+            NewDesignDialog dialog = NewDesignDialog.extract(builder, project);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public NewProjectDialog create_new_project_dialog() throws Error
+        {
+            Gtk.Builder builder = new Gtk.Builder();
+
+            builder.add_from_file(Path.build_filename(
+                DialogFactory.PKGDATADIR,
+                DialogFactory.XML_SUBDIR,
+                NewProjectDialog.BUILDER_FILENAME
+                ));
+
+            NewProjectDialog dialog = NewProjectDialog.extract(builder);
+
+            dialog.set_transient_for(Parent);
+
+            return dialog;
+        }
+
+
+
+        /*
+         *
+         *
+         *
+         */
+        public MessageDialog create_file_not_found_dialog(string filename)
+        {
+            MessageDialog dialog = new MessageDialog.with_markup(
                 Parent,
                 DialogFlags.DESTROY_WITH_PARENT,
-                MessageType.QUESTION,
-                ButtonsType.NONE,
-                "<big>Save changes to <b>%s</b>?</big>\n\nThe following file has been modified since last saved. Unsaved changes will be lost.\n\n<i>%s </i>",
+                MessageType.ERROR,
+                ButtonsType.OK,
+                "<big>File not found: <b>%s</b>.</big>\n\nThe following file was not found.\n\n<i>%s </i>",
                 Path.get_basename(filename),
                 filename
                 );
+
+            return dialog;
         }
 
-        dialog.add_buttons(
-            Stock.DISCARD, ConfirmSaveResponseType.DISCARD,
-            Stock.CANCEL,  ConfirmSaveResponseType.CANCEL,
-            Stock.SAVE,    ConfirmSaveResponseType.SAVE,
-            null
-            );
 
-        dialog.set_default_response(ResponseType.OK);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public AboutDialog create_about_dialog() throws Error
-
-        ensures(result != null)
-
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            AboutDialog.BUILDER_FILENAME
-            ));
-
-        AboutDialog dialog = AboutDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-    /*
-     *
-     *
-     *
-     */
-    public AddSimulationDialog create_add_simulation_dialog(Design design) throws Error
-
-        ensures(result != null)
-
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            AddSimulationDialog.BUILDER_FILENAME
-            ));
-
-        AddSimulationDialog dialog = AddSimulationDialog.extract(builder, design);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-    /*
-     *
-     *
-     *
-     */
-    public ArchiveSchematicsDialog create_archive_schematics_dialog() throws Error
-
-        ensures(result != null)
-
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            ArchiveSchematicsDialog.BUILDER_FILENAME
-            ));
-
-        ArchiveSchematicsDialog dialog = ArchiveSchematicsDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public BackannotateRefdesDialog create_backannotate_refdes_dialog() throws Error
-
-        ensures(result != null)
-
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            BackannotateRefdesDialog.BUILDER_FILENAME
-            ));
-
-        BackannotateRefdesDialog dialog = BackannotateRefdesDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public ResetRefdesDialog create_reset_refdes_dialog() throws Error
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            ResetRefdesDialog.BUILDER_FILENAME
-            ));
-
-        ResetRefdesDialog dialog = ResetRefdesDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public RenumberRefdesDialog create_renumber_refdes_dialog() throws Error
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            RenumberRefdesDialog.BUILDER_FILENAME
-            ));
-
-        RenumberRefdesDialog dialog = RenumberRefdesDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public ExportBOMDialog create_export_bom_dialog() throws Error
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            ExportBOMDialog.BUILDER_FILENAME
-            ));
-
-        ExportBOMDialog dialog = ExportBOMDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public ExportNetlistDialog create_export_netlist_dialog() throws Error
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            ExportNetlistDialog.BUILDER_FILENAME
-            ));
-
-        ExportNetlistDialog dialog = ExportNetlistDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public NewDesignDialog create_new_design_dialog(Project project) throws Error
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            NewDesignDialog.BUILDER_FILENAME
-            ));
-
-        NewDesignDialog dialog = NewDesignDialog.extract(builder, project);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public NewProjectDialog create_new_project_dialog() throws Error
-    {
-        Gtk.Builder builder = new Gtk.Builder();
-
-        builder.add_from_file(Path.build_filename(
-            DialogFactory.PKGDATADIR,
-            DialogFactory.XML_SUBDIR,
-            NewProjectDialog.BUILDER_FILENAME
-            ));
-
-        NewProjectDialog dialog = NewProjectDialog.extract(builder);
-
-        dialog.set_transient_for(Parent);
-
-        return dialog;
-    }
-
-
-
-    /*
-     *
-     *
-     *
-     */
-    public MessageDialog create_file_not_found_dialog(string filename)
-    {
-        MessageDialog dialog = new MessageDialog.with_markup(
-            Parent,
-            DialogFlags.DESTROY_WITH_PARENT,
-            MessageType.ERROR,
-            ButtonsType.OK,
-            "<big>File not found: <b>%s</b>.</big>\n\nThe following file was not found.\n\n<i>%s </i>",
-            Path.get_basename(filename),
-            filename
-            );
-
-        return dialog;
-    }
-
-
-    public MessageDialog create_unable_to_open_dialog(string? filename)
-    {
-        MessageDialog dialog = new MessageDialog.with_markup(
-            Parent,
-            DialogFlags.DESTROY_WITH_PARENT,
-            MessageType.ERROR,
-            ButtonsType.OK,
-            "<big>Unable to open: <b>%s</b>.</big>\n\nThe following file could not be opened.\n\n<i>%s </i>",
-            Path.get_basename(filename),
-            filename
-            );
-
-        return dialog;
-    }
-
-
-
-    public MessageDialog create_unknown_error_dialog(Error error)
-    {
-        MessageDialog dialog = new MessageDialog.with_markup(
-            Parent,
-            DialogFlags.DESTROY_WITH_PARENT,
-            MessageType.ERROR,
-            ButtonsType.OK,
-            "<big>An error occured.</big>\n\nThe program threw the following error.\n\n<i>%s </i>",
-            error.message
-            );
-
-        return dialog;
+        public MessageDialog create_unable_to_open_dialog(string? filename)
+        {
+            MessageDialog dialog = new MessageDialog.with_markup(
+                Parent,
+                DialogFlags.DESTROY_WITH_PARENT,
+                MessageType.ERROR,
+                ButtonsType.OK,
+                "<big>Unable to open: <b>%s</b>.</big>\n\nThe following file could not be opened.\n\n<i>%s </i>",
+                Path.get_basename(filename),
+                filename
+                );
+
+            return dialog;
+        }
+
+
+
+        public MessageDialog create_unknown_error_dialog(Error error)
+        {
+            MessageDialog dialog = new MessageDialog.with_markup(
+                Parent,
+                DialogFlags.DESTROY_WITH_PARENT,
+                MessageType.ERROR,
+                ButtonsType.OK,
+                "<big>An error occured.</big>\n\nThe program threw the following error.\n\n<i>%s </i>",
+                error.message
+                );
+
+            return dialog;
+        }
     }
 }
