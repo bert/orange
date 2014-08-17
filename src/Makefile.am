@@ -28,6 +28,7 @@ orange_SOURCES = \
 	ExportNetlistBatch.vala \
 	ExportNetlistDialog.vala \
 	ExportPrintBatch.vala \
+	MainWindow.vala \
 	NewDesignDialog.vala \
 	NewProjectDialog.vala \
 	OpenDirectory.vala \
@@ -68,6 +69,7 @@ xml_DATA = \
 	BackannotateRefdesDialog.xml \
 	ExportBOMDialog.xml \
 	ExportNetlistDialog.xml \
+	MainWindow.xml \
 	NewDesignDialog.xml \
 	NewProjectDialog.xml \
 	Program.xml \
