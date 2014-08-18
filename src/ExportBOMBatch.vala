@@ -98,10 +98,11 @@ namespace Orange
             {
                 string dirname = design.create_bom_subdir();
 
-                var dialog = m_factory.create_export_bom_dialog();
+                var dialog = new ExportBOMDialog();
 
                 dialog.set_current_folder(dirname);
                 dialog.set_current_name(DEFAULT_BOM_FILENAME);
+                dialog.set_transient_for(m_factory.Parent);
 
                 int status = dialog.run();
                 dialog.hide();

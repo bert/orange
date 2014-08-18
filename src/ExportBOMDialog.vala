@@ -19,47 +19,53 @@ namespace Orange
 {
     /**
      * A dialog box allowing the user to export a bill of material.
-     *
-     * Instances of this class must be constructed with Gtk.Builder.
      */
-    public class ExportBOMDialog : Gtk.FileChooserDialog
+    public class ExportBOMDialog : Gtk.FileChooserDialog, Gtk.Buildable
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "ExportBOMDialog.xml";
-
+        public const string RESOURCE_NAME = "/org/geda-project/orange/ExportBOMDialog.xml";
 
 
         /**
-         * The combo box containing the BOM format.
+         * The combo box containing the selected BOM format.
          */
         private Gtk.ComboBox m_combo;
 
 
+        /**
+         * The list store containing the BOM formats.
+         */
         private Gtk.ListStore m_formats;
 
 
-
         /**
-         * Extract references to the dialog from Gtk.Builder
+         * Initialize the class.
          */
-        public static ExportBOMDialog extract(Gtk.Builder builder)
+        class construct
         {
-            ExportBOMDialog dialog = builder.get_object("dialog") as ExportBOMDialog;
-
-            dialog.m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
-            dialog.m_formats = builder.get_object("bom-formats") as Gtk.ListStore;
-
-            return dialog;
+            set_template_from_resource(RESOURCE_NAME);
         }
 
+
+        /**
+         * Create the export netlist dialog.
+         */
+        public ExportBOMDialog()
+        {
+            init_template();
+        }
 
 
         /**
          * Gets the name of the BOM format
          */
         public string? get_bom_format()
+
+            requires(m_combo != null)
+            requires(m_formats != null)
+
         {
             Gtk.TreeIter iter;
 
@@ -73,6 +79,17 @@ namespace Orange
             }
 
             return null;
+        }
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
+            m_formats = builder.get_object("bom-formats") as Gtk.ListStore;
         }
     }
 }
