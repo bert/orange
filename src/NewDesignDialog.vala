@@ -18,17 +18,14 @@
 namespace Orange
 {
     /**
-     * A dialog box allowing the user to create a new design.
-     *
-     * Instances of this class must be constructed with Gtk.Builder. See
-     * the extract() method.
+     * A dialog box for creating a new design.
      */
-    public class NewDesignDialog : Gtk.Dialog
+    public class NewDesignDialog : Gtk.Dialog, Gtk.Buildable
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "NewDesignDialog.xml";
+        public const string RESOURCE_NAME = "/org/geda-project/orange/NewDesignDialog.xml";
 
 
 
@@ -51,6 +48,7 @@ namespace Orange
 
         private Gtk.TreeSelection m_type_selection;
 
+        private Gtk.TreeView types_tree;
 
         private Gtk.Widget m_error_design_exists;
         private Gtk.Widget m_error_folder_exists;
@@ -59,42 +57,35 @@ namespace Orange
         private bool m_design_name_valid;
         private bool m_folder_name_valid;
 
-        /*
-         *
+
+        /**
+         * Initialize the class.
          */
-        public static NewDesignDialog extract(Gtk.Builder builder, Project project)
-
-            ensures(result.m_type_selection != null)
-
+        class construct
         {
-            NewDesignDialog dialog = builder.get_object("dialog") as NewDesignDialog;
-
-            dialog.m_project = project;
-
-            dialog.m_design_name = builder.get_object("name-entry") as Gtk.Entry;
-            dialog.m_design_name.notify["text"].connect(dialog.on_notify_design);
-
-            dialog.m_folder_name = builder.get_object("folder-entry") as Gtk.Entry;
-            dialog.m_folder_name.notify["text"].connect(dialog.on_notify_folder);
-
-            dialog.m_type_list = builder.get_object("types-list") as Gtk.ListStore;
-
-            Gtk.TreeView types_tree = builder.get_object("types-tree") as Gtk.TreeView;
-            assert(types_tree != null);
-
-            dialog.m_error_design_exists = builder.get_object("hbox-error-design-exists") as Gtk.Widget;
-            dialog.m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
-
-            dialog.m_type_selection = types_tree.get_selection();
-            dialog.m_type_selection.changed.connect(dialog.on_change);
-            dialog.m_type_selection.set_mode(Gtk.SelectionMode.BROWSE);
+            set_template_from_resource(RESOURCE_NAME);
+        }
 
 
-            dialog.m_design_name.text = "Untitled";
-            dialog.m_folder_name.text = dialog.m_design_name.text;
+        /**
+         * Create the new design dialog.
+         */
+        public NewDesignDialog(Project project)
+        {
+            init_template();
 
+            m_project = project;
 
-            return dialog;
+            m_design_name.notify["text"].connect(on_notify_design);
+
+            m_folder_name.notify["text"].connect(on_notify_folder);
+
+            m_type_selection = types_tree.get_selection();
+            m_type_selection.changed.connect(on_change);
+            m_type_selection.set_mode(Gtk.SelectionMode.BROWSE);
+
+            m_design_name.text = "Untitled";
+            m_folder_name.text = m_design_name.text;
         }
 
 
@@ -194,6 +185,21 @@ namespace Orange
                 (m_folder_name_valid);
 
             set_response_sensitive(Gtk.ResponseType.OK, sensitive);
+        }
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            m_design_name = builder.get_object("name-entry") as Gtk.Entry;
+            m_folder_name = builder.get_object("folder-entry") as Gtk.Entry;
+            m_type_list = builder.get_object("types-list") as Gtk.ListStore;
+            types_tree = builder.get_object("types-tree") as Gtk.TreeView;
+            m_error_design_exists = builder.get_object("hbox-error-design-exists") as Gtk.Widget;
+            m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
         }
     }
 }

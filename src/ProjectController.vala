@@ -200,7 +200,9 @@ namespace Orange
         {
             try
             {
-                NewDesignDialog dialog = m_factory.create_new_design_dialog(project_list.current);
+                var dialog = new NewDesignDialog(project_list.current);
+
+                dialog.set_transient_for(m_factory.Parent);
 
                 int status = dialog.run();
                 dialog.hide();

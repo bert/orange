@@ -24,7 +24,7 @@
     </data>
   </object>
 
-  <object class="OrangeNewDesignDialog" id="dialog">
+  <template class="OrangeNewDesignDialog">
     <property name="title">New Design</property>
     <property name="border-width">15</property>
     <property name="width-request">640</property>
@@ -207,6 +207,6 @@
       <action-widget response="-6">button-cancel</action-widget>
       <action-widget response="-5">button-ok</action-widget>
     </action-widgets>
-  </object>
+  </template>
 </interface>
 
