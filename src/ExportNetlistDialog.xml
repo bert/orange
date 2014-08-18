@@ -164,7 +164,7 @@
     </child>
   </object>
 
-  <object class="OrangeExportNetlistDialog" id="dialog">
+  <template class="OrangeExportNetlistDialog">
     <property name="title">Export Netlist</property>
     <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <property name="border-width">15</property>
@@ -195,6 +195,6 @@
       <action-widget response="-6">button-cancel</action-widget>
       <action-widget response="-5">button-ok</action-widget>
     </action-widgets>
-  </object>
+  </template>
 </interface>
 

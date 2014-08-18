@@ -274,30 +274,6 @@ namespace Orange
          *
          *
          */
-        public ExportNetlistDialog create_export_netlist_dialog() throws Error
-        {
-            Gtk.Builder builder = new Gtk.Builder();
-
-            builder.add_from_file(Path.build_filename(
-                DialogFactory.PKGDATADIR,
-                DialogFactory.XML_SUBDIR,
-                ExportNetlistDialog.BUILDER_FILENAME
-                ));
-
-            ExportNetlistDialog dialog = ExportNetlistDialog.extract(builder);
-
-            dialog.set_transient_for(Parent);
-
-            return dialog;
-        }
-
-
-
-        /*
-         *
-         *
-         *
-         */
         public NewDesignDialog create_new_design_dialog(Project project) throws Error
         {
             Gtk.Builder builder = new Gtk.Builder();

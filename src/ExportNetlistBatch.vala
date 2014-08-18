@@ -98,10 +98,11 @@ namespace Orange
             {
                 string dirname = design.create_netlist_subdir();
 
-                var dialog = m_factory.create_export_netlist_dialog();
+                var dialog = new ExportNetlistDialog();
 
                 dialog.set_current_folder(dirname);
                 dialog.set_current_name(DEFAULT_NETLIST_FILENAME);
+                dialog.set_transient_for(m_factory.Parent);
 
                 int status = dialog.run();
                 dialog.hide();

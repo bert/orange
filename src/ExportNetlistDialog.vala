@@ -18,17 +18,14 @@
 namespace Orange
 {
     /**
-     * A dialog box allowing the user to create a new design.
-     *
-     * Instances of this class must be constructed with Gtk.Builder.
+     * A dialog box for exporting a netlist
      */
-    public class ExportNetlistDialog : Gtk.FileChooserDialog
+    public class ExportNetlistDialog : Gtk.FileChooserDialog, Gtk.Buildable
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "ExportNetlistDialog.xml";
-
+        public const string RESOURCE_NAME = "/org/geda-project/orange/ExportNetlistDialog.xml";
 
 
         /**
@@ -37,20 +34,27 @@ namespace Orange
         private Gtk.ComboBox m_combo;
 
 
+        /**
+         * The combo box containing the netlist format.
+         */
         private Gtk.ListStore m_formats;
 
 
-        /*
-         *
+        /**
+         * Initialize the class.
          */
-        public static ExportNetlistDialog extract(Gtk.Builder builder)
+        class construct
         {
-            ExportNetlistDialog dialog = builder.get_object("dialog") as ExportNetlistDialog;
+            set_template_from_resource(RESOURCE_NAME);
+        }
 
-            dialog.m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
-            dialog.m_formats = builder.get_object("netlist-formats") as Gtk.ListStore;
 
-            return dialog;
+        /**
+         * Create the export netlist dialog.
+         */
+        public ExportNetlistDialog()
+        {
+            init_template();
         }
 
 
@@ -58,6 +62,10 @@ namespace Orange
          * Get the netlist format
          */
         public string? get_netlist_format()
+
+            requires(m_combo != null)
+            requires(m_formats != null)
+
         {
             Gtk.TreeIter iter;
 
@@ -71,6 +79,17 @@ namespace Orange
             }
 
             return null;
+        }
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
+            m_formats = builder.get_object("netlist-formats") as Gtk.ListStore;
         }
     }
 }
