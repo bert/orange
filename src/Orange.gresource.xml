@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/geda-project/orange">
+    <file>AboutDialog.xml</file>
+    <file>AddSimulationDialog.xml</file>
+    <file>ArchiveSchematicsDialog.xml</file>
+    <file>BackannotateRefdesDialog.xml</file>
+    <file>ExportBOMDialog.xml</file>
+    <file>ExportNetlistDialog.xml</file>
+    <file>MainWindow.xml</file>
+    <file>NewDesignDialog.xml</file>
+    <file>NewProjectDialog.xml</file>
+    <file>Program.xml</file>
+    <file>RenumberRefdesDialog.xml</file>
+    <file>ResetRefdesDialog.xml</file>
+  </gresource>
+</gresources>

@@ -19,29 +19,30 @@ namespace Orange
 {
     /**
      * The classic about dialog.
-     *
-     * Instances of this class must be constructed with Gtk.Builder. See
-     * the extract() method.
      */
     public class AboutDialog : Gtk.Dialog
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "AboutDialog.xml";
+        public const string RESOURCE_NAME = "/org/geda-project/orange/AboutDialog.xml";
 
 
-
-        /*
-         * param builder
-         * param project
+        /**
+         * Initialize the class.
          */
-        public static AboutDialog extract(Gtk.Builder builder)
-
-            ensures(result != null)
-
+        class construct
         {
-            return builder.get_object("dialog") as AboutDialog;
+            set_template_from_resource(RESOURCE_NAME);
+        }
+
+
+        /**
+         * Create the about dialog.
+         */
+        public AboutDialog()
+        {
+            init_template();
         }
     }
 }

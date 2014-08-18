@@ -61,7 +61,7 @@ namespace Orange
 
 
 
-        private Gtk.Dialog m_help_about;
+        private Gtk.Dialog about_dialog;
 
 
 
@@ -152,7 +152,6 @@ namespace Orange
                 //m_project_view.window.set_events(event_mask);
                 window.m_project_view.button_press_event.connect(window.on_button_press);
 
-                window.m_help_about = factory.create_about_dialog();
                 (builder.get_object("help-about") as Gtk.Action).activate.connect(window.on_help_about);
 
                 window.delete_event.connect(window.on_delete_event);
@@ -246,13 +245,17 @@ namespace Orange
          * An event handler for the about dialog
          */
         private void on_help_about()
-
-            requires(m_help_about != null)
-
         {
-            m_help_about.run();
-            m_help_about.hide();
+            if (about_dialog == null)
+            {
+                about_dialog = new AboutDialog();
+                about_dialog.set_transient_for(this);
+            }
+
+            about_dialog.run();
+            about_dialog.hide();
         }
+
 
         /**
          * An event handler to respond to selection changes.

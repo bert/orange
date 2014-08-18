@@ -122,31 +122,6 @@ namespace Orange
          *
          *
          */
-        public AboutDialog create_about_dialog() throws Error
-
-            ensures(result != null)
-
-        {
-            Gtk.Builder builder = new Gtk.Builder();
-
-            builder.add_from_file(Path.build_filename(
-                DialogFactory.PKGDATADIR,
-                DialogFactory.XML_SUBDIR,
-                AboutDialog.BUILDER_FILENAME
-                ));
-
-            AboutDialog dialog = AboutDialog.extract(builder);
-
-            dialog.set_transient_for(Parent);
-
-            return dialog;
-        }
-
-        /*
-         *
-         *
-         *
-         */
         public AddSimulationDialog create_add_simulation_dialog(Design design) throws Error
 
             ensures(result != null)

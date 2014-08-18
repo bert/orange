@@ -32,6 +32,7 @@ orange_SOURCES = \
 	NewDesignDialog.vala \
 	NewProjectDialog.vala \
 	OpenDirectory.vala \
+	Orange.c \
 	PixbufCache.vala \
 	Project.vala \
 	ProjectController.vala \
@@ -61,9 +62,7 @@ img_DATA = \
 
 # GtkBuilder XML Files used for the user interface
 
-
 xml_DATA = \
-	AboutDialog.xml \
 	AddSimulationDialog.xml \
 	ArchiveSchematicsDialog.xml \
 	BackannotateRefdesDialog.xml \
@@ -75,6 +74,11 @@ xml_DATA = \
 	Program.xml \
 	RenumberRefdesDialog.xml \
 	ResetRefdesDialog.xml
+
+GCR = glib-compile-resources
+
+Orange.c : Orange.gresource.xml
+	$(GCR) --target=$@ --generate-source $<
 
 # Needs improvement
 
