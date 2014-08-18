@@ -20,7 +20,7 @@ namespace Orange
     /**
      * The classic about dialog.
      */
-    public class AboutDialog : Gtk.Dialog
+    public class AboutDialog : Gtk.AboutDialog
     {
         /**
          * The resource name for the UI design.
