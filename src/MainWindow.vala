@@ -20,12 +20,12 @@ namespace Orange
     /**
      *
      */
-    public class MainWindow : Gtk.ApplicationWindow
+    public class MainWindow : Gtk.ApplicationWindow, Gtk.Buildable
     {
         /**
-         * The XML builder file used to construct the main UI.
+         * The resource name for the UI design.
          */
-        private const string BUILDER_FILENAME = "MainWindow.xml";
+        public const string RESOURCE_NAME = "/org/geda-project/orange/MainWindow.xml";
 
 
 
@@ -100,76 +100,70 @@ namespace Orange
 
 
 
+        private Gtk.Action file_close_action;
+        private Gtk.Action file_quit_action;
+        private Gtk.Action help_about_action;
+
         /**
-         * Construct the program
+         * Initialize the class.
          */
-        public MainWindow()
+        class construct
         {
+            set_template_from_resource(RESOURCE_NAME);
         }
 
 
-        public static MainWindow? create(File? file = null)
+        /**
+         * Construct the main window.
+         */
+        public MainWindow(File? file = null)
         {
-            try
+            init_template();
+
+            file_close_action.activate.connect(on_action_close);
+            file_quit_action.activate.connect(on_action_quit);
+            help_about_action.activate.connect(on_help_about);
+
+            m_project_list = new ProjectList(this);
+            m_project_list.notify.connect(on_notify);
+            m_project_list.notify["current"].connect(on_notify_current);
+
+            DialogFactory factory = new DialogFactory(this);
+
+            m_project_controller.project_list = m_project_list;
+            m_project_controller.notify.connect(on_notify);
+
+            m_project_model = new ProjectTreeModel(m_project_list);
+
+            m_project_view.set_model(m_project_model);
+            m_project_view.get_selection().changed.connect(on_selection_change);
+
+            m_project_view.button_press_event.connect(on_button_press);
+
+
+            delete_event.connect(on_delete_event);
+
+            if (file != null)
             {
-                stdout.printf("Registering %s\n", typeof(MainWindow).name());
-
-                Gtk.Builder builder = new Gtk.Builder();
-                builder.add_from_file(Path.build_filename(
-                    DialogFactory.PKGDATADIR,
-                    DialogFactory.XML_SUBDIR,
-                    BUILDER_FILENAME
-                    ));
-
-                var window = builder.get_object("main") as MainWindow;
-
-                window.m_project_list = new ProjectList(window);
-                window.m_project_list.notify.connect(window.on_notify);
-                window.m_project_list.notify["current"].connect(window.on_notify_current);
-
-                (builder.get_object("file-close") as Gtk.Action).activate.connect(window.on_action_close);
-                (builder.get_object("file-quit") as Gtk.Action).activate.connect(window.on_action_quit);
-
-                DialogFactory factory = new DialogFactory(window);
-
-                window.m_project_controller = new ProjectController(factory, builder);
-                window.m_project_controller.project_list = window.m_project_list;
-                window.m_project_controller.notify.connect(window.on_notify);
-
-                window.m_batch_controller = new BatchController(factory, builder);
-
-                window.m_project_model = new ProjectTreeModel(window.m_project_list);
-
-                window.m_project_view = builder.get_object("main-project-tree") as Gtk.TreeView;
-                window.m_project_view.set_model(window.m_project_model);
-                window.m_project_view.get_selection().changed.connect(window.on_selection_change);
-
-                /* For the context menu */
-                Gtk.UIManager uimanager = builder.get_object("uimanager") as Gtk.UIManager;
-                window.m_context_menu = uimanager.get_widget("ui/context-menu") as Gtk.Menu;
-                //Gdk.EventMask event_mask = m_project_view.window.get_events();
-                //event_mask |= Gdk.EventMask.BUTTON_PRESS_MASK;
-                //m_project_view.window.set_events(event_mask);
-                window.m_project_view.button_press_event.connect(window.on_button_press);
-
-                (builder.get_object("help-about") as Gtk.Action).activate.connect(window.on_help_about);
-
-                window.delete_event.connect(window.on_delete_event);
-
-                if (file != null)
-                {
-                    window.m_project_list.load(file.get_path());
-                }
-
-                return window;
+                m_project_list.load(file.get_path());
             }
-            catch (Error error)
-            {
-                stderr.printf("%s\n", error.message);
-            }
-
-            return null;
         }
+
+
+//        public static MainWindow? create(File? file = null)
+//        {
+//            try
+//            {
+
+//                return window;
+//            }
+//            catch (Error error)
+//            {
+//                stderr.printf("%s\n", error.message);
+//            }
+
+//            return null;
+//        }
 
 
 
@@ -333,6 +327,30 @@ namespace Orange
             {
                 m_project_view.expand_row(new Gtk.TreePath.first(), false);
             }
+        }
+
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            file_close_action = builder.get_object("file-close") as Gtk.Action;
+            file_quit_action = builder.get_object("file-quit") as Gtk.Action;
+            help_about_action = builder.get_object("help-about") as Gtk.Action;
+
+            Gtk.UIManager uimanager = builder.get_object("uimanager") as Gtk.UIManager;
+            m_context_menu = uimanager.get_widget("ui/context-menu") as Gtk.Menu;
+
+            m_project_view = builder.get_object("main-project-tree") as Gtk.TreeView;
+
+            DialogFactory factory = new DialogFactory(this);
+
+            m_project_controller = new ProjectController(factory, builder);
+
+            m_batch_controller = new BatchController(factory, builder);
         }
     }
 }

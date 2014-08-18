@@ -267,7 +267,7 @@
         </columns>
     </object>
 
-    <object class="OrangeMainWindow" id="main">
+    <template class="OrangeMainWindow">
         <property name="title">Orange</property>
         <property name="height-request">600</property>
         <property name="width-request">800</property>
@@ -319,5 +319,5 @@
                 </child>
             </object>
         </child>
-    </object>
+    </template>
 </interface>

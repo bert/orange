@@ -97,8 +97,6 @@ xml_DATA = \
 	AddSimulationDialog.xml \
 	ArchiveSchematicsDialog.xml \
 	BackannotateRefdesDialog.xml \
-	MainWindow.xml \
-	Program.xml \
 	RenumberRefdesDialog.xml \
 	ResetRefdesDialog.xml
 

@@ -57,7 +57,7 @@ namespace Orange
         {
             try
             {
-                var window = MainWindow.create();
+                var window = new MainWindow();
 
                 return_if_fail(window != null);
 
@@ -84,7 +84,7 @@ namespace Orange
             {
                 try
                 {
-                    var window = MainWindow.create(file);
+                    var window = new MainWindow(file);
 
                     return_if_fail(window != null);
 
