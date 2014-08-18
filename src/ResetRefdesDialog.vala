@@ -18,27 +18,31 @@
 namespace Orange
 {
     /**
-     * A dialog box allowing the user to reset the REFDES on a design.
-     *
-     * Instances of this class must be constructed with Gtk.Builder.
+     * A dialog box to confirm reset the REFDES in a design.
      */
     public class ResetRefdesDialog : Gtk.Dialog
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "ResetRefdesDialog.xml";
-
+        public const string RESOURCE_NAME = "/org/geda-project/orange/ResetRefdesDialog.xml";
 
 
         /**
-         * Extract references to the dialog from Gtk.Builder
+         * Initialize the class.
          */
-        public static ResetRefdesDialog extract(Gtk.Builder builder)
+        class construct
         {
-            ResetRefdesDialog dialog = builder.get_object("dialog") as ResetRefdesDialog;
+            set_template_from_resource(RESOURCE_NAME);
+        }
 
-            return dialog;
+
+        /**
+         * Create the export netlist dialog.
+         */
+        public ResetRefdesDialog()
+        {
+            init_template();
         }
     }
 }

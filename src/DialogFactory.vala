@@ -202,30 +202,6 @@ namespace Orange
          *
          *
          */
-        public ResetRefdesDialog create_reset_refdes_dialog() throws Error
-        {
-            Gtk.Builder builder = new Gtk.Builder();
-
-            builder.add_from_file(Path.build_filename(
-                DialogFactory.PKGDATADIR,
-                DialogFactory.XML_SUBDIR,
-                ResetRefdesDialog.BUILDER_FILENAME
-                ));
-
-            ResetRefdesDialog dialog = ResetRefdesDialog.extract(builder);
-
-            dialog.set_transient_for(Parent);
-
-            return dialog;
-        }
-
-
-
-        /*
-         *
-         *
-         *
-         */
         public RenumberRefdesDialog create_renumber_refdes_dialog() throws Error
         {
             Gtk.Builder builder = new Gtk.Builder();

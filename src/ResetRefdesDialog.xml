@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-  <object class="OrangeResetRefdesDialog" id="dialog">
-    <property name="title">Renumber REFDES</property>
+  <template class="OrangeResetRefdesDialog">
+    <property name="title">Reset REFDES</property>
     <property name="border-width">15</property>
     <property name="width-request">640</property>
     <child internal-child="vbox">
@@ -10,7 +10,7 @@
         <property name="visible">TRUE</property>
         <child>
           <object class="GtkLabel" id="reset-label">
-            <property name="label">This operation will reset all REFDES in all schematics for this project.</property>
+            <property name="label">This operation will reset all REFDES in all schematics for this design.</property>
             <property name="visible">TRUE</property>
           </object>
         </child>
@@ -39,6 +39,6 @@
       <action-widget response="-6">button-cancel</action-widget>
       <action-widget response="-5">button-ok</action-widget>
     </action-widgets>
-  </object>
+  </template>
 </interface>
 
