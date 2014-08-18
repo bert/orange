@@ -5,6 +5,37 @@ xmldir = $(pkgdatadir)/xml
 AM_CPPFLAGS = $(DEPS_CFLAGS) -DIMAGE_DIR=\"$(imgdir)\" -DPKGDATADIR=\"$(pkgdatadir)\" -include config.h
 AM_VALAFLAGS = --target-glib=2.38 --pkg gee-1.0 --pkg gtk+-3.0 --pkg libxml-2.0
 
+
+# additional variables and rules for compiling GTK resources
+#
+# Automatic dependencies isn't working yet
+#
+
+GCR = glib-compile-resources
+
+SUFFIXES = .xml
+
+.xml.c:
+	$(GCR) --target=$@ --generate-source $<
+#	$(GCR) --target=$@ --generate-dependencies $<
+
+Orange.gresource.c : \
+	AboutDialog.xml \
+	AboutDialog.xml \
+	AddSimulationDialog.xml \
+	ArchiveSchematicsDialog.xml \
+	BackannotateRefdesDialog.xml \
+	ExportBOMDialog.xml \
+	ExportNetlistDialog.xml \
+	MainWindow.xml \
+	NewDesignDialog.xml \
+	NewProjectDialog.xml \
+	Program.xml \
+	RenumberRefdesDialog.xml \
+	ResetRefdesDialog.xml
+
+# orange program
+
 bin_PROGRAMS = orange
 
 orange_SOURCES = \
@@ -32,7 +63,7 @@ orange_SOURCES = \
 	NewDesignDialog.vala \
 	NewProjectDialog.vala \
 	OpenDirectory.vala \
-	Orange.c \
+	Orange.gresource.xml \
 	PixbufCache.vala \
 	Project.vala \
 	ProjectController.vala \
@@ -66,19 +97,10 @@ xml_DATA = \
 	AddSimulationDialog.xml \
 	ArchiveSchematicsDialog.xml \
 	BackannotateRefdesDialog.xml \
-	ExportBOMDialog.xml \
-	ExportNetlistDialog.xml \
 	MainWindow.xml \
-	NewDesignDialog.xml \
-	NewProjectDialog.xml \
 	Program.xml \
 	RenumberRefdesDialog.xml \
 	ResetRefdesDialog.xml
-
-GCR = glib-compile-resources
-
-Orange.c : Orange.gresource.xml
-	$(GCR) --target=$@ --generate-source $<
 
 # Needs improvement
 
