@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-  <object class="OrangeRenumberRefdesDialog" id="dialog">
+  <template class="OrangeRenumberRefdesDialog">
     <property name="title">Renumber REFDES</property>
     <property name="border-width">15</property>
     <property name="width-request">640</property>
@@ -77,6 +77,6 @@
       <action-widget response="-6">button-cancel</action-widget>
       <action-widget response="-5">button-ok</action-widget>
     </action-widgets>
-  </object>
+  </template>
 </interface>
 

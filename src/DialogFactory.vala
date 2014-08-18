@@ -202,30 +202,6 @@ namespace Orange
          *
          *
          */
-        public RenumberRefdesDialog create_renumber_refdes_dialog() throws Error
-        {
-            Gtk.Builder builder = new Gtk.Builder();
-
-            builder.add_from_file(Path.build_filename(
-                DialogFactory.PKGDATADIR,
-                DialogFactory.XML_SUBDIR,
-                RenumberRefdesDialog.BUILDER_FILENAME
-                ));
-
-            RenumberRefdesDialog dialog = RenumberRefdesDialog.extract(builder);
-
-            dialog.set_transient_for(Parent);
-
-            return dialog;
-        }
-
-
-
-        /*
-         *
-         *
-         *
-         */
         public MessageDialog create_file_not_found_dialog(string filename)
         {
             MessageDialog dialog = new MessageDialog.with_markup(

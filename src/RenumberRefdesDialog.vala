@@ -19,16 +19,13 @@ namespace Orange
 {
     /**
      * A dialog box allowing the user to renumber the REFDES on a design.
-     *
-     * Instances of this class must be constructed with Gtk.Builder.
      */
-    public class RenumberRefdesDialog : Gtk.Dialog
+    public class RenumberRefdesDialog : Gtk.Dialog, Gtk.Buildable
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "RenumberRefdesDialog.xml";
-
+        public const string RESOURCE_NAME = "/org/geda-project/orange/RenumberRefdesDialog.xml";
 
 
         /**
@@ -37,12 +34,10 @@ namespace Orange
         public Gtk.CheckButton m_force_check;
 
 
-
         /**
          * The Gtk.CheckButton that includes page numbers in the REFDES
          */
         public Gtk.CheckButton m_digits_check;
-
 
 
         /**
@@ -52,31 +47,32 @@ namespace Orange
         public Gtk.SpinButton m_digits_spin;
 
 
-
         /**
-         * Extract references to the dialog from Gtk.Builder
+         * Initialize the class.
          */
-        public static RenumberRefdesDialog extract(Gtk.Builder builder)
+        class construct
         {
-            RenumberRefdesDialog dialog = builder.get_object("dialog") as RenumberRefdesDialog;
-
-            dialog.m_digits_check = builder.get_object("check-digits") as Gtk.CheckButton;
-            dialog.m_digits_spin = builder.get_object("spin-digits") as Gtk.SpinButton;
-            dialog.m_force_check = builder.get_object("check-force") as Gtk.CheckButton;
-
-            dialog.m_digits_spin.adjustment.lower = 2;
-            dialog.m_digits_spin.adjustment.upper = 5;
-            dialog.m_digits_spin.adjustment.step_increment = 1;
-            dialog.m_digits_spin.adjustment.value = 2;
-
-            dialog.m_digits_check.notify["active"].connect(dialog.on_notify_active);
-            dialog.m_digits_check.active = false;
-
-            dialog.m_digits_spin.sensitive = false;
-
-            return dialog;
+            set_template_from_resource(RESOURCE_NAME);
         }
 
+
+        /**
+         * Create the export netlist dialog.
+         */
+        public RenumberRefdesDialog()
+        {
+            init_template();
+
+            m_digits_spin.adjustment.lower = 2;
+            m_digits_spin.adjustment.upper = 5;
+            m_digits_spin.adjustment.step_increment = 1;
+            m_digits_spin.adjustment.value = 2;
+
+            m_digits_check.notify["active"].connect(on_notify_active);
+            m_digits_check.active = false;
+
+            m_digits_spin.sensitive = false;
+        }
 
 
         /**
@@ -88,7 +84,6 @@ namespace Orange
         }
 
 
-
         /**
          * The multiplier for the page number to add to the component number.
          */
@@ -96,7 +91,6 @@ namespace Orange
         {
             return "%.0f".printf(Math.exp10(m_digits_spin.get_value()));
         }
-
 
 
         /**
@@ -108,10 +102,21 @@ namespace Orange
         }
 
 
-
         private void on_notify_active()
         {
             m_digits_spin.sensitive = m_digits_check.active;
+        }
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            m_digits_check = builder.get_object("check-digits") as Gtk.CheckButton;
+            m_digits_spin = builder.get_object("spin-digits") as Gtk.SpinButton;
+            m_force_check = builder.get_object("check-force") as Gtk.CheckButton;
         }
     }
 }

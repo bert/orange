@@ -89,7 +89,8 @@ namespace Orange
         {
             foreach (var design in m_designs)
             {
-                var dialog = m_factory.create_renumber_refdes_dialog();
+                var dialog = new RenumberRefdesDialog();
+                dialog.set_transient_for(m_factory.Parent);
 
                 int status = dialog.run();
                 dialog.hide();

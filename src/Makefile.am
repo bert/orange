@@ -96,8 +96,7 @@ img_DATA = \
 xml_DATA = \
 	AddSimulationDialog.xml \
 	ArchiveSchematicsDialog.xml \
-	BackannotateRefdesDialog.xml \
-	RenumberRefdesDialog.xml
+	BackannotateRefdesDialog.xml
 
 # Needs improvement
 
