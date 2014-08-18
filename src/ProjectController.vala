@@ -291,7 +291,9 @@ namespace Orange
                     }
                 }
 
-                NewProjectDialog dialog = m_factory.create_new_project_dialog();
+                var dialog = new NewProjectDialog();
+
+                dialog.set_transient_for(m_factory.Parent);
 
                 try
                 {

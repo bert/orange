@@ -18,18 +18,14 @@
 namespace Orange
 {
     /**
-     * A dialog box allowing the user to create a new project.
-     *
-     * Instances of this class must be constructed with Gtk.Builder. To complete
-     * construction and create a vaild state, the extract() function must be used.
+     * A dialog box to create a new project.
      */
-    public class NewProjectDialog : Gtk.Dialog
+    public class NewProjectDialog : Gtk.Dialog, Gtk.Buildable
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "NewProjectDialog.xml";
-
+        public const string RESOURCE_NAME = "/org/geda-project/orange/NewProjectDialog.xml";
 
 
         /**
@@ -38,12 +34,10 @@ namespace Orange
         public const string DEFAULT_PROJECT_NAME = "untitled";
 
 
-
         /**
          * The filename extension for project files
          */
         public const string FILENAME_EXTENSION = ".xml";
-
 
 
         /**
@@ -55,7 +49,6 @@ namespace Orange
         private Gtk.Widget m_error_folder_exists;
 
 
-
         /**
          * A widget showing the project folder path is not absolute.
          *
@@ -65,12 +58,10 @@ namespace Orange
         private Gtk.Widget m_error_not_absolute;
 
 
-
         /**
          * The folder chooser widget containing the parent folder.
          */
         private Gtk.FileChooserWidget m_folder_chooser;
-
 
 
         /**
@@ -79,19 +70,16 @@ namespace Orange
         private Gtk.Entry m_project_name;
 
 
-
         /**
          * Indicates the project name is valid.
          */
         private bool m_project_name_valid;
 
 
-
         /**
          * The entry widget containing the design folder name.
          */
         private Gtk.Entry m_folder_name;
-
 
 
         /**
@@ -103,46 +91,34 @@ namespace Orange
         private bool m_folder_name_valid;
 
 
+        /**
+         * Initialize the class.
+         */
+        class construct
+        {
+            set_template_from_resource(RESOURCE_NAME);
+        }
+
 
         /**
-         * Extract and initialize the dialog from XML builder.
-         *
-         *  TODO: need to throw exceptions if the dialog does not initialize correctly.
+         * Create the export netlist dialog.
          */
-        public static NewProjectDialog extract(Gtk.Builder builder) throws Error
-
-            ensures(result.m_error_folder_exists != null)
-            ensures(result.m_error_not_absolute != null)
-            ensures(result.m_folder_chooser != null)
-            ensures(result.m_folder_name != null)
-            ensures(result.m_project_name != null)
-
+        public NewProjectDialog()
         {
-            NewProjectDialog dialog = builder.get_object("dialog") as NewProjectDialog;
+            init_template();
 
-            dialog.m_folder_chooser = builder.get_object("folder-chooser") as Gtk.FileChooserWidget;
-            dialog.m_folder_chooser.selection_changed.connect(dialog.on_selection_change);
-
-            dialog.m_folder_name = builder.get_object("folder-entry") as Gtk.Entry;
-            dialog.m_folder_name.notify["text"].connect(dialog.on_notify_folder);
-
-            dialog.m_project_name = builder.get_object("name-entry") as Gtk.Entry;
-            dialog.m_project_name.notify["text"].connect(dialog.on_notify_name);
-
-            dialog.m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
-            dialog.m_error_not_absolute = builder.get_object("hbox-error-not-absolute") as Gtk.Widget;
+            m_folder_chooser.selection_changed.connect(on_selection_change);
+            m_folder_name.notify["text"].connect(on_notify_folder);
+            m_project_name.notify["text"].connect(on_notify_name);
 
             /* set up initial values */
 
-            dialog.m_folder_chooser.set_filename(
+            m_folder_chooser.set_filename(
                 Environment.get_current_dir()
                 );
 
-            dialog.m_project_name.text = DEFAULT_PROJECT_NAME;
-
-            return dialog;
+            m_project_name.text = DEFAULT_PROJECT_NAME;
         }
-
 
 
         /**
@@ -199,7 +175,6 @@ namespace Orange
         }
 
 
-
         /**
          * Handles when the project name changes.
          */
@@ -222,7 +197,6 @@ namespace Orange
         }
 
 
-
         /**
          * Handles when the parent folder changes.
          */
@@ -243,13 +217,26 @@ namespace Orange
         }
 
 
-
         /**
          * Updates the sensitivity of the ok button.
          */
         private void update()
         {
             set_response_sensitive(Gtk.ResponseType.OK, m_project_name_valid && m_folder_name_valid);
+        }
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            m_folder_chooser = builder.get_object("folder-chooser") as Gtk.FileChooserWidget;
+            m_folder_name = builder.get_object("folder-entry") as Gtk.Entry;
+            m_project_name = builder.get_object("name-entry") as Gtk.Entry;
+            m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
+            m_error_not_absolute = builder.get_object("hbox-error-not-absolute") as Gtk.Widget;
         }
     }
 }

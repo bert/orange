@@ -274,30 +274,6 @@ namespace Orange
          *
          *
          */
-        public NewProjectDialog create_new_project_dialog() throws Error
-        {
-            Gtk.Builder builder = new Gtk.Builder();
-
-            builder.add_from_file(Path.build_filename(
-                DialogFactory.PKGDATADIR,
-                DialogFactory.XML_SUBDIR,
-                NewProjectDialog.BUILDER_FILENAME
-                ));
-
-            NewProjectDialog dialog = NewProjectDialog.extract(builder);
-
-            dialog.set_transient_for(Parent);
-
-            return dialog;
-        }
-
-
-
-        /*
-         *
-         *
-         *
-         */
         public MessageDialog create_file_not_found_dialog(string filename)
         {
             MessageDialog dialog = new MessageDialog.with_markup(
