@@ -87,7 +87,7 @@ namespace Orange
             ensures(action_project_save != null)
 
         {
-            action_design_add = builder.get_object("project-add-design") as Gtk.Action;
+            action_design_add = builder.get_object("insert-new-design") as Gtk.Action;
             action_design_add.activate.connect(on_design_add);
 
             action_project_new = builder.get_object("file-new-project") as Gtk.Action;

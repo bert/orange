@@ -105,28 +105,22 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkAction" id="project">
-                        <property name="name">project</property>
-                        <property name="label">_Project</property>
+                    <object class="GtkAction" id="insert">
+                        <property name="name">insert</property>
+                        <property name="label">_Insert</property>
                     </object>
                 </child>
                 <child>
-                    <object class="GtkAction" id="project-add">
-                        <property name="name">project-add</property>
-                        <property name="label">Add</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="project-add-design">
-                        <property name="name">project-add-design</property>
-                        <property name="label">Design...</property>
+                    <object class="GtkAction" id="insert-new-design">
+                        <property name="name">insert-new-design</property>
+                        <property name="label">New Design...</property>
                         <property name="stock-id">gtk-add</property>
                     </object>
                 </child>
                 <child>
-                    <object class="GtkAction" id="design">
-                        <property name="name">design</property>
-                        <property name="label">Design</property>
+                    <object class="GtkAction" id="tools">
+                        <property name="name">tools</property>
+                        <property name="label">Tools</property>
                     </object>
                 </child>
                 <child>
@@ -216,18 +210,14 @@
                     <menuitem action="edit-delete"/>
                     <menuitem action="edit-edit"/>
                 </menu>
-                <menu action="project">
-                    <menu action="project-add">
-                        <menuitem action="project-add-design"/>
-                    </menu>
-                </menu>
-                <menu action="design">
-                    <menu action="project-add">
-                        <menuitem action="design-add-schematic-new"/>
-                        <menuitem action="design-add-schematic-existing"/>
-                        <menuitem action="design-add-simulation"/>
-                    </menu>
+                <menu action="insert">
+                    <menuitem action="insert-new-design"/>
                     <separator/>
+                    <menuitem action="design-add-schematic-new"/>
+                    <menuitem action="design-add-schematic-existing"/>
+                    <menuitem action="design-add-simulation"/>
+                </menu>
+                <menu action="tools">
                     <menuitem action="design-reset-refdes"/>
                     <menuitem action="design-renumber-refdes"/>
                     <menuitem action="design-backannotate-refdes"/>
@@ -244,8 +234,6 @@
                 <toolitem action="file-save"/>
                 <separator/>
                 <toolitem action="edit-edit"/>
-                <separator/>
-                <toolitem action="project-add-design"/>
                 <separator/>
                 <toolitem action="design-run-simulation"/>
             </toolbar>
