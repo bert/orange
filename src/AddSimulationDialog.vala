@@ -19,23 +19,19 @@ namespace Orange
 {
     /**
      * A dialog box allowing the user add a simulation to an existing design.
-     *
-     * Instances of this class must be constructed with Gtk.Builder. See
-     * the extract() method.
      */
-    public class AddSimulationDialog : Gtk.Dialog
+    public class AddSimulationDialog : Gtk.Dialog, Gtk.Buildable
     {
+        /**
+         * The resource name for the UI design.
+         */
+        public const string RESOURCE_NAME = "/org/geda-project/orange/AddSimulationDialog.xml";
+
+
         /**
          *
          */
         private const int BACKEND_COLUMN = 3;
-
-
-        /**
-         * The filename of the XML file containing the UI design.
-         */
-        public const string BUILDER_FILENAME = "AddSimulationDialog.xml";
-
 
 
         /**
@@ -100,38 +96,36 @@ namespace Orange
         private bool m_simulation_name_valid;
 
 
+        private Gtk.TreeView types_tree;
 
-        /*
-         * param builder
-         * param project
+
+        /**
+         * Initialize the class.
          */
-        public static AddSimulationDialog extract(Gtk.Builder builder, Design design)
-
-            ensures(result.m_type_selection != null)
-
+        class construct
         {
-            AddSimulationDialog dialog = builder.get_object("dialog") as AddSimulationDialog;
+            set_template_from_resource(RESOURCE_NAME);
+        }
 
-            dialog.m_design = design;
 
-            dialog.m_simulation_name = builder.get_object("name-entry") as Gtk.Entry;
-            dialog.m_simulation_name.notify["text"].connect(dialog.on_notify_name);
+        /**
+         * Create the add simulation dialog.
+         */
+        public AddSimulationDialog(Design design)
+        {
+            init_template();
 
-            dialog.m_type_list = builder.get_object("types-list") as Gtk.ListStore;
+            m_design = design;
 
-            Gtk.TreeView types_tree = builder.get_object("types-tree") as Gtk.TreeView;
+            m_simulation_name.notify["text"].connect(on_notify_name);
+
             assert(types_tree != null);
 
-            dialog.m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
-            dialog.m_error_name_exists = builder.get_object("hbox-error-design-exists") as Gtk.Widget;
+            m_type_selection = types_tree.get_selection();
+            m_type_selection.changed.connect(on_change);
+            m_type_selection.set_mode(Gtk.SelectionMode.BROWSE);
 
-            dialog.m_type_selection = types_tree.get_selection();
-            dialog.m_type_selection.changed.connect(dialog.on_change);
-            dialog.m_type_selection.set_mode(Gtk.SelectionMode.BROWSE);
-
-            dialog.m_simulation_name.text = "Untitled";
-
-            return dialog;
+            m_simulation_name.text = "Untitled";
         }
 
 
@@ -269,6 +263,20 @@ namespace Orange
             bool sensitive = m_simulation_type_valid && m_simulation_name_valid;
 
             set_response_sensitive(Gtk.ResponseType.OK, sensitive);
+        }
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            m_simulation_name = builder.get_object("name-entry") as Gtk.Entry;
+            m_type_list = builder.get_object("types-list") as Gtk.ListStore;
+            types_tree = builder.get_object("types-tree") as Gtk.TreeView;
+            m_error_folder_exists = builder.get_object("hbox-error-folder-exists") as Gtk.Widget;
+            m_error_name_exists = builder.get_object("hbox-error-design-exists") as Gtk.Widget;
         }
     }
 }

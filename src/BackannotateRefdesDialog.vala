@@ -18,17 +18,14 @@
 namespace Orange
 {
     /**
-     * A dialog box allowing the user to create a new design.
-     *
-     * Instances of this class must be constructed with Gtk.Builder.
+     * A dialog box for backannotating the schematics
      */
-    public class BackannotateRefdesDialog : Gtk.FileChooserDialog
+    public class BackannotateRefdesDialog : Gtk.FileChooserDialog, Gtk.Buildable
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "BackannotateRefdesDialog.xml";
-
+        public const string RESOURCE_NAME = "/org/geda-project/orange/BackannotateRefdesDialog.xml";
 
 
         /**
@@ -40,19 +37,22 @@ namespace Orange
         private Gtk.ListStore m_formats;
 
 
-        /*
-         *
+        /**
+         * Initialize the class.
          */
-        public static BackannotateRefdesDialog extract(Gtk.Builder builder)
+        class construct
         {
-            BackannotateRefdesDialog dialog = builder.get_object("dialog") as BackannotateRefdesDialog;
-
-            dialog.m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
-            dialog.m_formats = builder.get_object("netlist-formats") as Gtk.ListStore;
-
-            return dialog;
+            set_template_from_resource(RESOURCE_NAME);
         }
 
+
+        /**
+         * Create the backannotate refdes dialog.
+         */
+        public BackannotateRefdesDialog()
+        {
+            init_template();
+        }
 
         /**
          * Get the netlist format
@@ -71,6 +71,17 @@ namespace Orange
             }
 
             return null;
+        }
+
+
+        /**
+         * Couldn't get the template bindings to work, so this function
+         * obtains the objects from the Gtk.Builder.
+         */
+        private void parser_finished(Gtk.Builder builder)
+        {
+            m_combo = builder.get_object("format-combo") as Gtk.ComboBox;
+            m_formats = builder.get_object("netlist-formats") as Gtk.ListStore;
         }
     }
 }

@@ -91,13 +91,6 @@ img_DATA = \
 	img/schematic-folder.svg \
 	img/simulation-folder.svg
 
-# GtkBuilder XML Files used for the user interface
-
-xml_DATA = \
-	AddSimulationDialog.xml \
-	ArchiveSchematicsDialog.xml \
-	BackannotateRefdesDialog.xml
-
 # Needs improvement
 
 documentation:

@@ -8,7 +8,7 @@
     <property name="visible">TRUE</property>
   </object>
 
-  <object class="OrangeBackannotateRefdesDialog" id="dialog">
+  <template class="OrangeBackannotateRefdesDialog">
     <property name="title">Backannotate REFDES (Open ECO file)</property>
     <property name="action">GTK_FILE_CHOOSER_ACTION_OPEN</property>
     <property name="border-width">15</property>
@@ -38,6 +38,6 @@
       <action-widget response="-6">button-cancel</action-widget>
       <action-widget response="-5">button-ok</action-widget>
     </action-widgets>
-  </object>
+  </template>
 </interface>
 

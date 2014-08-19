@@ -84,7 +84,8 @@ namespace Orange
 
             foreach (Design design in m_designs)
             {
-                var dialog = m_factory.create_archive_schematics_dialog();
+                var dialog = new ArchiveSchematicsDialog();
+                dialog.set_transient_for(m_factory.Parent);
 
                 try
                 {

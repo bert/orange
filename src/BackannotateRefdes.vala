@@ -91,7 +91,8 @@ namespace Orange
         {
             foreach (var design in m_designs)
             {
-                var dialog = m_factory.create_backannotate_refdes_dialog();
+                var dialog = new BackannotateRefdesDialog();
+                dialog.set_transient_for(m_factory.Parent);
 
                 int status = dialog.run();
                 dialog.hide();

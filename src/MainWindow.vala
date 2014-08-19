@@ -145,26 +145,16 @@ namespace Orange
 
             if (file != null)
             {
-                m_project_list.load(file.get_path());
+                try
+                {
+                    m_project_list.load(file.get_path());
+                }
+                catch (Error error)
+                {
+                    stderr.printf("%s\n", error.message);
+                }
             }
         }
-
-
-//        public static MainWindow? create(File? file = null)
-//        {
-//            try
-//            {
-
-//                return window;
-//            }
-//            catch (Error error)
-//            {
-//                stderr.printf("%s\n", error.message);
-//            }
-
-//            return null;
-//        }
-
 
 
         /**

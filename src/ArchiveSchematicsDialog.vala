@@ -19,29 +19,30 @@ namespace Orange
 {
     /**
      * A dialog box allowing the user to archive the schematics in the design.
-     *
-     * Instances of this class must be constructed with Gtk.Builder.
      */
     public class ArchiveSchematicsDialog : Gtk.FileChooserDialog
     {
         /**
-         * The filename of the XML file containing the UI design.
+         * The resource name for the UI design.
          */
-        public const string BUILDER_FILENAME = "ArchiveSchematicsDialog.xml";
-
+        public const string RESOURCE_NAME = "/org/geda-project/orange/ArchiveSchematicsDialog.xml";
 
 
         /**
-         * Extract references to the dialog from Gtk.Builder
+         * Initialize the class.
          */
-        public static ArchiveSchematicsDialog extract(Gtk.Builder builder)
-
-            ensures(result != null)
-
+        class construct
         {
-            ArchiveSchematicsDialog dialog = builder.get_object("dialog") as ArchiveSchematicsDialog;
+            set_template_from_resource(RESOURCE_NAME);
+        }
 
-            return dialog;
+
+        /**
+         * Create the archive schematics dialog.
+         */
+        public ArchiveSchematicsDialog()
+        {
+            init_template();
         }
     }
 }

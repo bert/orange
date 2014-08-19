@@ -26,7 +26,7 @@
     </data>
   </object>
 
-  <object class="OrangeAddSimulationDialog" id="dialog">
+  <template class="OrangeAddSimulationDialog">
     <property name="title">New Simulation</property>
     <property name="border-width">15</property>
     <property name="width-request">640</property>
@@ -179,6 +179,6 @@
       <action-widget response="-6">button-cancel</action-widget>
       <action-widget response="-5">button-ok</action-widget>
     </action-widgets>
-  </object>
+  </template>
 </interface>
 
