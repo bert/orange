@@ -19,14 +19,28 @@ namespace Orange
 {
     /**
      * A base class for batch operations.
+     *
+     * This class will eventaully inherit from Action
+     * Inheretince from Action is fixed in recent releases of vala
      */
     public abstract class Batch
     {
         /**
          * The action that triggers this operation.
          */
-        private Gtk.Action m_action;
+        public Action action
+        {
+            get
+            {
+                return m_action;
+            }
+        }
 
+
+        /**
+         * The backing store for the action that triggers this operation.
+         */
+        SimpleAction m_action;
 
 
         /**
@@ -39,7 +53,7 @@ namespace Orange
         /**
          * Construct the base class
          */
-        public Batch(DialogFactory factory, Gtk.Action action)
+        public Batch(DialogFactory factory, SimpleAction action)
         {
             m_action = action;
             m_factory = factory;
@@ -105,14 +119,14 @@ namespace Orange
             requires(m_action != null)
 
         {
-            m_action.set_sensitive(enabled());
+            m_action.set_enabled(enabled());
         }
 
 
         /**
          * Called when this operation is triggered.
          */
-        private void on_activate(Gtk.Action sender)
+        private void on_activate(Variant? variant)
 
             requires(m_factory != null)
 

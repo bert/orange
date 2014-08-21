@@ -23,6 +23,18 @@ namespace Orange
     public class Program : Gtk.Application
     {
         /**
+         * The the id of the menubar in the resource file
+         */
+        public const string MENUBAR_ID = "menu";
+
+
+        /**
+         * The resource name for the UI design.
+         */
+        public const string RESOURCE_NAME = "/org/geda-project/orange/Program.xml";
+
+
+        /**
          * @brief Construct the program
          */
         public Program()
@@ -109,7 +121,9 @@ namespace Orange
 
             try
             {
-                /** @todo Initialize new style menus here */
+                var builder = new Gtk.Builder.from_resource(RESOURCE_NAME);
+
+                menubar = builder.get_object(MENUBAR_ID) as MenuModel;
             }
             catch (Error error)
             {

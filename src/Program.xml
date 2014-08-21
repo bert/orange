@@ -1,323 +1,158 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-    <object class="GtkUIManager" id="uimanager">
-        <child>
-            <object class="GtkActionGroup" id="main-actions">
-                <child>
-                    <object class="GtkAction" id="edit">
-                        <property name="name">edit</property>
-                        <property name="label">_Edit</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="edit-delete">
-                        <property name="name">edit-delete</property>
-                        <property name="label">Delete</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="edit-edit">
-                        <property name="name">edit-edit</property>
-                        <property name="label">Edit</property>
-                        <property name="stock-id">gtk-edit</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="edit-open-directory">
-                        <property name="name">edit-open-directory</property>
-                        <property name="label">Open Directory</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file">
-                        <property name="name">file</property>
-                        <property name="label">_File</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-new">
-                        <property name="name">file-new</property>
-                        <property name="label">New</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-new-project">
-                        <property name="name">file-new-project</property>
-                        <property name="label">Project...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-open">
-                        <property name="name">file-open</property>
-                        <property name="label">Open...</property>
-                        <property name="stock-id">gtk-open</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-save">
-                        <property name="name">file-save</property>
-                        <property name="label">Save</property>
-                        <property name="stock-id">gtk-save</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-export">
-                        <property name="name">file-export</property>
-                        <property name="label">Export</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-export-bom">
-                        <property name="name">file-export-bom</property>
-                        <property name="label">BOM...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-export-netlist">
-                        <property name="name">file-export-netlist</property>
-                        <property name="label">Netlist...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-export-pdf">
-                        <property name="name">file-export-pdf</property>
-                        <property name="label">PDF...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-close">
-                        <property name="name">file-close</property>
-                        <property name="label">Close</property>
-                        <property name="stock-id">gtk-close</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="file-quit">
-                        <property name="name">file-quit</property>
-                        <property name="label">Quit</property>
-                        <property name="stock-id">gtk-quit</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="help">
-                        <property name="name">help</property>
-                        <property name="label">_Help</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="project">
-                        <property name="name">project</property>
-                        <property name="label">_Project</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="project-add">
-                        <property name="name">project-add</property>
-                        <property name="label">Add</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="project-add-design">
-                        <property name="name">project-add-design</property>
-                        <property name="label">Design...</property>
-                        <property name="stock-id">gtk-add</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design">
-                        <property name="name">design</property>
-                        <property name="label">Design</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-add">
-                        <property name="name">design-add</property>
-                        <property name="label">Add</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-add-schematic-new">
-                        <property name="name">design-add-schematic-new</property>
-                        <property name="label">New Schematic...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-add-schematic-existing">
-                        <property name="name">design-add-schematic-existing</property>
-                        <property name="label">Existing Schematic...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-add-simulation">
-                        <property name="name">design-add-simulation</property>
-                        <property name="label">Simulation...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-backannotate-refdes">
-                        <property name="name">design-backannotate-refdes</property>
-                        <property name="label">Backannotate REFDES...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-archive-schematics">
-                        <property name="name">design-archive-schematics</property>
-                        <property name="label">Archive Schematics...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-renumber-refdes">
-                        <property name="name">design-renumber-refdes</property>
-                        <property name="label">Renumber REFDES...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-reset-refdes">
-                        <property name="name">design-reset-refdes</property>
-                        <property name="label">Reset REFDES...</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="design-run-simulation">
-                        <property name="name">design-run-simulation</property>
-                        <property name="label">Run Simulation</property>
-                        <property name="stock-id">gtk-execute</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkAction" id="help-about">
-                        <property name="name">help-about</property>
-                        <property name="label">About...</property>
-                        <property name="stock-id">gtk-about</property>
-                    </object>
-                </child>
-            </object>
-        </child>
-        <ui>
-            <menubar name="main-menubar">
-                <menu action="file">
-                    <menu action="file-new">
-                        <menuitem action="file-new-project"/>
-                    </menu>
-                    <menuitem action="file-open"/>
-                    <separator/>
-                    <menuitem action="file-save"/>
-                    <separator/>
-                    <menu action="file-export">
-                        <menuitem action="file-export-bom"/>
-                        <menuitem action="file-export-netlist"/>
-                        <menuitem action="file-export-pdf"/>
-                    </menu>
-                    <separator/>
-                    <menuitem action="file-close"/>
-                    <menuitem action="file-quit"/>
-                </menu>
-                <menu action="edit">
-                    <menuitem action="edit-delete"/>
-                    <menuitem action="edit-edit"/>
-                </menu>
-                <menu action="project">
-                    <menu action="project-add">
-                        <menuitem action="project-add-design"/>
-                    </menu>
-                </menu>
-                <menu action="design">
-                    <menu action="project-add">
-                        <menuitem action="design-add-schematic-new"/>
-                        <menuitem action="design-add-schematic-existing"/>
-                        <menuitem action="design-add-simulation"/>
-                    </menu>
-                    <separator/>
-                    <menuitem action="design-reset-refdes"/>
-                    <menuitem action="design-renumber-refdes"/>
-                    <menuitem action="design-backannotate-refdes"/>
-                    <separator/>
-                    <menuitem action="design-archive-schematics"/>
-                    <separator/>
-                    <menuitem action="design-run-simulation"/>
-                </menu>
-                <menu action="help">
-                    <menuitem action = "help-about"/>
-                </menu>
-            </menubar>
-            <toolbar name="main-toolbar">
-                <toolitem action="file-save"/>
-                <separator/>
-                <toolitem action="edit-edit"/>
-                <separator/>
-                <toolitem action="project-add-design"/>
-                <separator/>
-                <toolitem action="design-run-simulation"/>
-            </toolbar>
-            <popup name="context-menu">
-                <menuitem action="edit-open-directory"/>
-                <separator/>
-                <menuitem action="design-add-schematic-new"/>
-                <menuitem action="design-add-schematic-existing"/>
-                <separator/>
-                <menuitem action="edit-delete"/>
-                <menuitem action="edit-edit"/>
-            </popup>
-        </ui>
-    </object>
-
-    <object class="GtkTreeStore" id="test-data">
-        <columns>
-            <column type="gchararray"/>
-        </columns>
-    </object>
-
-    <object class="GtkWindow" id="main">
-        <property name="title">Orange</property>
-        <property name="height-request">600</property>
-        <property name="width-request">800</property>
-        <child>
-            <object class="GtkVBox" id="main-vbox">
-                <child>
-                    <object class="GtkMenuBar" id="main-menubar" constructor="uimanager">
-                    </object>
-                    <packing>
-                        <property name="expand">FALSE</property>
-                        <property name="fill">FALSE</property>
-                    </packing>
-                </child>
-                <child>
-                    <object class="GtkToolbar" id="main-toolbar" constructor="uimanager">
-                    </object>
-                    <packing>
-                        <property name="expand">FALSE</property>
-                        <property name="fill">FALSE</property>
-                    </packing>
-                </child>
-                <child>
-                    <object class="GtkScrolledWindow" id="main-project-tree-scrolled">
-                        <child>
-                            <object class="GtkTreeView" id="main-project-tree">
-                                <property name="model">test-data</property>
-                                <child>
-                                    <object class="GtkTreeViewColumn" id="column-1">
-                                        <property name="title">Name</property>
-                                        <child>
-                                            <object class="GtkCellRendererPixbuf" id="column-1-renderer-1">
-                                            </object>
-                                            <attributes>
-                                                <attribute name="pixbuf">0</attribute>
-                                            </attributes>
-                                        </child>
-                                        <child>
-                                            <object class="GtkCellRendererText" id="column-1-renderer-2">
-                                            </object>
-                                            <attributes>
-                                                <attribute name="text">1</attribute>
-                                            </attributes>
-                                        </child>
-                                    </object>
-                                </child>
-                            </object>
-                        </child>
-                    </object>
-                </child>
-            </object>
-        </child>
-    </object>
+    <menu id="menu">
+        <section>
+            <submenu>
+                <attribute name="label" translatable="yes">_File</attribute>
+                <section>
+                    <item>
+                        <attribute name="icon">document-new</attribute>
+                        <attribute name="label" translatable="yes">_New Project...</attribute>
+                        <attribute name="accel">&lt;ctrl&gt;N</attribute>
+                        <attribute name="action">win.file-new-project</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="icon">document-open</attribute>
+                        <attribute name="label" translatable="yes">_Open...</attribute>
+                        <attribute name="accel">&lt;ctrl&gt;O</attribute>
+                        <attribute name="action">win.file-open</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="icon">document-save</attribute>
+                        <attribute name="label" translatable="yes">_Save</attribute>
+                        <attribute name="accel">&lt;ctrl&gt;S</attribute>
+                        <attribute name="action">win.file-save</attribute>
+                    </item>
+                    <item>
+                        <attribute name="icon">document-save-as</attribute>
+                        <attribute name="label" translatable="yes">Save _As...</attribute>
+                        <attribute name="accel">&lt;shift&gt;&lt;ctrl&gt;S</attribute>
+                        <attribute name="action">win.file-save-as</attribute>
+                    </item>
+                </section>
+                <section>
+                    <submenu>
+                        <attribute name="label" translatable="yes">Export...</attribute>
+                        <section>
+                            <item>
+                                <attribute name="label" translatable="yes">BOM...</attribute>
+                                <attribute name="action">win.file-export-bom</attribute>
+                            </item>
+                            <item>
+                                <attribute name="label" translatable="yes">Netlist...</attribute>
+                                <attribute name="action">win.file-export-netlist</attribute>
+                            </item>
+                            <item>
+                                <attribute name="label" translatable="yes">PDF...</attribute>
+                                <attribute name="action">win.file-export-pdf</attribute>
+                            </item>
+                        </section>
+                    </submenu>
+                    <item>
+                        <attribute name="icon">window-close</attribute>
+                        <attribute name="label" translatable="yes">_Close</attribute>
+                        <attribute name="accel">&lt;ctrl&gt;W</attribute>
+                        <attribute name="action">win.file-close</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="icon">application-exit</attribute>
+                        <attribute name="label">_Quit</attribute>
+                        <attribute name="accel">&lt;ctrl&gt;Q</attribute>
+                        <attribute name="action">win.file-quit</attribute>
+                    </item>
+                </section>
+            </submenu>
+            <submenu>
+                <attribute name="label" translatable="yes">_Edit</attribute>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">Delete</attribute>
+                        <attribute name="action">win.edit-delete</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">Edit</attribute>
+                        <attribute name="action">win.edit-edit</attribute>
+                    </item>
+                </section>
+            </submenu>
+            <submenu>
+                <attribute name="label" translatable="yes">_Insert</attribute>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">New Design...</attribute>
+                        <attribute name="action">win.insert-new-design</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">New Schematic...</attribute>
+                        <attribute name="action">win.design-add-schematic-new</attribute>
+                    </item>
+                    <item>
+                        <attribute name="label" translatable="yes">Existing Schematic...</attribute>
+                        <attribute name="action">win.design-add-schematic-existing</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">New Simulation...</attribute>
+                        <attribute name="action">win.design-add-simulation</attribute>
+                    </item>
+                </section>
+            </submenu>
+            <submenu>
+                <attribute name="label" translatable="yes">_Tools</attribute>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">Reset REFDES...</attribute>
+                        <attribute name="action">win.design-reset-refdes</attribute>
+                    </item>
+                    <item>
+                        <attribute name="label" translatable="yes">Renumber REFDES...</attribute>
+                        <attribute name="action">win.design-renumber-refdes</attribute>
+                    </item>
+                    <item>
+                        <attribute name="label" translatable="yes">Backannotate REFDES...</attribute>
+                        <attribute name="action">win.design-backannotate-refdes</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">Archive Schematics...</attribute>
+                        <attribute name="action">win.design-archive-schematics</attribute>
+                    </item>
+                </section>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">Run Simulation...</attribute>
+                        <attribute name="action">win.design-run-simulation</attribute>
+                    </item>
+                </section>
+            </submenu>
+            <submenu>
+                <attribute name="label" translatable="yes">_Help</attribute>
+                <section>
+                    <item>
+                        <attribute name="icon">help-browser</attribute>
+                        <attribute name="label" translatable="yes">_Help...</attribute>
+                        <attribute name="accel">F1</attribute>
+                        <attribute name="action">win.help-help</attribute>
+                    </item>
+                    <item>
+                        <attribute name="icon">help-about</attribute>
+                        <attribute name="label" translatable="yes">_About...</attribute>
+                        <attribute name="action">win.help-about</attribute>
+                    </item>
+                </section>
+            </submenu>
+        </section>
+    </menu>
 </interface>

@@ -55,7 +55,7 @@ namespace Orange
         /**
          * Create a new, empty batch operation.
          */
-        public ResetRefdes(DialogFactory factory, Gtk.Action action)
+        public ResetRefdes(DialogFactory factory, SimpleAction action)
         {
             base(factory, action);
 

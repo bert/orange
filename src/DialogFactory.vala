@@ -54,22 +54,6 @@ namespace Orange
         public DialogFactory(Gtk.Window parent)
         {
             Parent = parent;
-
-            /* Need to register types with the glib type system for dynamic
-             * construction with gtkbuilder. Need to figure out a better way
-             * to ensure the calls to typeof() are not optimized out.
-             */
-
-            stdout.printf("Registering %s\n", typeof(AboutDialog).name());
-            stdout.printf("Registering %s\n", typeof(AddSimulationDialog).name());
-            stdout.printf("Registering %s\n", typeof(ArchiveSchematicsDialog).name());
-            stdout.printf("Registering %s\n", typeof(ExportBOMDialog).name());
-            stdout.printf("Registering %s\n", typeof(ExportNetlistDialog).name());
-            stdout.printf("Registering %s\n", typeof(NewDesignDialog).name());
-            stdout.printf("Registering %s\n", typeof(NewProjectDialog).name());
-            stdout.printf("Registering %s\n", typeof(RenumberRefdesDialog).name());
-            stdout.printf("Registering %s\n", typeof(ResetRefdesDialog).name());
-            stdout.printf("Registering %s\n", typeof(BackannotateRefdesDialog).name());
         }
 
 

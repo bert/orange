@@ -29,11 +29,11 @@ namespace Orange
 
 
 
-        private Gtk.Action action_project_new;
-        private Gtk.Action action_project_open;
-        private Gtk.Action action_project_save;
+        public SimpleAction action_project_new;
+        public SimpleAction action_project_open;
+        public SimpleAction action_project_save;
 
-        private Gtk.Action action_design_add;
+        public SimpleAction action_design_add;
 
         private Gtk.FileChooserDialog open_dialog;
 
@@ -79,7 +79,7 @@ namespace Orange
          *  param factory The factory for creating dialog boxes.
          *  param builder The builder containing actions for this controller.
          */
-        public ProjectController(DialogFactory factory, Gtk.Builder builder)
+        public ProjectController(DialogFactory factory)
 
             ensures(action_design_add != null)
             ensures(action_project_new != null)
@@ -87,16 +87,16 @@ namespace Orange
             ensures(action_project_save != null)
 
         {
-            action_design_add = builder.get_object("insert-new-design") as Gtk.Action;
+            action_design_add = new SimpleAction("insert-new-design", null);
             action_design_add.activate.connect(on_design_add);
 
-            action_project_new = builder.get_object("file-new-project") as Gtk.Action;
+            action_project_new = new SimpleAction("file-new-project", null);
             action_project_new.activate.connect(on_project_new);
 
-            action_project_open = builder.get_object("file-open") as Gtk.Action;
+            action_project_open = new SimpleAction("file-open", null);
             action_project_open.activate.connect(on_project_open);
 
-            action_project_save = builder.get_object("file-save") as Gtk.Action;
+            action_project_save = new SimpleAction("file-save", null);
             action_project_save.activate.connect(on_project_save);
 
             m_factory = factory;
@@ -191,7 +191,7 @@ namespace Orange
         /**
          * Add a design to the project.
          */
-        private void on_design_add(Gtk.Action sender)
+        private void on_design_add(Variant? variant)
 
             requires(m_factory != null)
             requires(project_list != null)
@@ -244,8 +244,8 @@ namespace Orange
                 available = (project_list.current != null);
             }
 
-            action_design_add.set_sensitive(available);
-            action_project_save.set_sensitive(available);
+            action_design_add.set_enabled(available);
+            action_project_save.set_enabled(available);
         }
 
 
@@ -253,7 +253,7 @@ namespace Orange
         /**
          * Creates a new project
          */
-        private void on_project_new(Gtk.Action sender)
+        private void on_project_new(Variant? variant)
 
             requires(m_factory != null)
             requires(project_list != null)
@@ -325,7 +325,7 @@ namespace Orange
         /**
          * Opens a project
          */
-        private void on_project_open(Gtk.Action sender)
+        private void on_project_open(Variant? variant)
 
             requires(m_factory != null)
             requires(project_list != null)
@@ -393,7 +393,7 @@ namespace Orange
         /**
          * Saves the current project
          */
-        private void on_project_save(Gtk.Action sender)
+        private void on_project_save(Variant? variant)
 
             requires(m_factory != null)
             requires(project_list != null)

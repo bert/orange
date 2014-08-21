@@ -48,7 +48,7 @@ namespace Orange
         /**
          * Create a new, empty batch operation.
          */
-        public ExportBOMBatch(DialogFactory factory, Gtk.Action action)
+        public ExportBOMBatch(DialogFactory factory, SimpleAction action)
         {
             base(factory, action);
 

@@ -43,7 +43,7 @@ namespace Orange
         /**
          * Create a new, empty batch operation.
          */
-        public BackannotateRefdes(DialogFactory factory, Gtk.Action action)
+        public BackannotateRefdes(DialogFactory factory, SimpleAction action)
         {
             base(factory, action);
 

@@ -34,7 +34,7 @@ namespace Orange
         /**
          * Create a new, empty batch operation.
          */
-        public ArchiveSchematics(DialogFactory factory, Gtk.Action action)
+        public ArchiveSchematics(DialogFactory factory, SimpleAction action)
         {
             base(factory, action);
 

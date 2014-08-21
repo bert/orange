@@ -99,11 +99,6 @@ namespace Orange
         private Gtk.TreeView m_project_view;
 
 
-
-        private Gtk.Action file_close_action;
-        private Gtk.Action file_quit_action;
-        private Gtk.Action help_about_action;
-
         /**
          * Initialize the class.
          */
@@ -120,15 +115,28 @@ namespace Orange
         {
             init_template();
 
-            file_close_action.activate.connect(on_action_close);
-            file_quit_action.activate.connect(on_action_quit);
-            help_about_action.activate.connect(on_help_about);
+            SimpleAction action;
+
+            action = new SimpleAction("file-close", null);
+            action.activate.connect(on_action_close);
+            add_action(action);
+
+            action = new SimpleAction("file-quit", null);
+            action.activate.connect(on_action_quit);
+            add_action(action);
+
+            action = new SimpleAction("help-about", null);
+            action.activate.connect(on_help_about);
+            add_action(action);
+
+            DialogFactory factory = new DialogFactory(this);
+
+            m_project_controller = new ProjectController(factory);
+            m_batch_controller = new BatchController(factory);
 
             m_project_list = new ProjectList(this);
             m_project_list.notify.connect(on_notify);
             m_project_list.notify["current"].connect(on_notify_current);
-
-            DialogFactory factory = new DialogFactory(this);
 
             m_project_controller.project_list = m_project_list;
             m_project_controller.notify.connect(on_notify);
@@ -140,8 +148,19 @@ namespace Orange
 
             m_project_view.button_press_event.connect(on_button_press);
 
-
             delete_event.connect(on_delete_event);
+
+
+
+            foreach (var batch in m_batch_controller.batches)
+            {
+                add_action(batch.action);
+            }
+
+            add_action(m_project_controller.action_project_new);
+            add_action(m_project_controller.action_project_open);
+            add_action(m_project_controller.action_project_save);
+            add_action(m_project_controller.action_design_add);
 
             if (file != null)
             {
@@ -160,7 +179,7 @@ namespace Orange
         /**
          * @brief An event handler when the user closes the window
          */
-        private void on_action_close(Gtk.Action sender)
+        private void on_action_close(Variant? variant)
         {
             this.close();
         }
@@ -170,7 +189,7 @@ namespace Orange
         /**
          * @brief An event handler when the user quits the application
          */
-        private void on_action_quit(Gtk.Action sender)
+        private void on_action_quit(Variant? variant)
         {
             /** @todo figure out how to close all windows
              *
@@ -228,7 +247,7 @@ namespace Orange
         /**
          * An event handler for the about dialog
          */
-        private void on_help_about()
+        private void on_help_about(Variant? variant)
         {
             if (about_dialog == null)
             {
@@ -327,20 +346,10 @@ namespace Orange
          */
         private void parser_finished(Gtk.Builder builder)
         {
-            file_close_action = builder.get_object("file-close") as Gtk.Action;
-            file_quit_action = builder.get_object("file-quit") as Gtk.Action;
-            help_about_action = builder.get_object("help-about") as Gtk.Action;
-
-            Gtk.UIManager uimanager = builder.get_object("uimanager") as Gtk.UIManager;
-            m_context_menu = uimanager.get_widget("ui/context-menu") as Gtk.Menu;
+            var popup_model = builder.get_object("popup-menu") as MenuModel;
+            m_context_menu = new Gtk.Menu.from_model(popup_model);
 
             m_project_view = builder.get_object("main-project-tree") as Gtk.TreeView;
-
-            DialogFactory factory = new DialogFactory(this);
-
-            m_project_controller = new ProjectController(factory, builder);
-
-            m_batch_controller = new BatchController(factory, builder);
         }
     }
 }

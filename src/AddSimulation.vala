@@ -34,7 +34,7 @@ namespace Orange
         /**
          * Create a new, empty batch operation.
          */
-        public AddSimulation(DialogFactory factory, Gtk.Action action)
+        public AddSimulation(DialogFactory factory, SimpleAction action)
         {
             base(factory, action);
 

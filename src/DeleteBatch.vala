@@ -37,7 +37,7 @@ namespace Orange
         /**
          * Create a new, empty batch operation.
          */
-        public DeleteBatch(DialogFactory factory, Gtk.Action action)
+        public DeleteBatch(DialogFactory factory, SimpleAction action)
         {
             base(factory, action);
 

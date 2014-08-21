@@ -26,79 +26,87 @@ namespace Orange
     {
         private Gee.ArrayList<Batch> m_batches;
 
+        public Gee.List<Batch> batches
+        {
+            owned get
+            {
+                return m_batches.read_only_view;
+            }
+        }
 
-        public BatchController(DialogFactory factory, Gtk.Builder builder)
+
+        public BatchController(DialogFactory factory)
         {
             m_batches = new Gee.ArrayList<Batch>();
 
             m_batches.add(new DesignAddNewBatch(
                 factory,
-                builder.get_object("design-add-schematic-new") as Gtk.Action
+                new SimpleAction("design-add-schematic-new", null)
                 ));
 
             m_batches.add(new DesignAddExistingBatch(
                 factory,
-                builder.get_object("design-add-schematic-existing") as Gtk.Action
+                new SimpleAction("design-add-schematic-existing", null)
                 ));
 
             m_batches.add(new DeleteBatch(
                 factory,
-                builder.get_object("edit-delete") as Gtk.Action
+                new SimpleAction("edit-delete", null)
                 ));
 
             m_batches.add(new EditBatch(
                 factory,
-                builder.get_object("edit-edit") as Gtk.Action
+                new SimpleAction("edit-edit", null)
                 ));
 
             m_batches.add(new OpenDirectory(
                 factory,
-                builder.get_object("edit-open-directory") as Gtk.Action
+                new SimpleAction("edit-open-directory", null)
                 ));
 
             m_batches.add(new ExportBOMBatch(
                 factory,
-                builder.get_object("file-export-bom") as Gtk.Action
+                new SimpleAction("file-export-bom", null)
                 ));
 
             m_batches.add(new ExportNetlistBatch(
                 factory,
-                builder.get_object("file-export-netlist") as Gtk.Action
+                new SimpleAction("file-export-netlist", null)
                 ));
 
             m_batches.add(new ExportPrintBatch(
                 factory,
-                builder.get_object("file-export-pdf") as Gtk.Action
+                new SimpleAction("file-export-pdf", null)
                 ));
 
             m_batches.add(new RenumberRefdes(
                 factory,
-                builder.get_object("design-renumber-refdes") as Gtk.Action
+                new SimpleAction("design-renumber-refdes", null)
                 ));
 
             m_batches.add(new ResetRefdes(
                 factory,
-                builder.get_object("design-reset-refdes") as Gtk.Action
+                new SimpleAction("design-reset-refdes", null)
                 ));
 
             m_batches.add(new ArchiveSchematics(
                 factory,
-                builder.get_object("design-archive-schematics") as Gtk.Action
+                new SimpleAction("design-archive-schematics", null)
                 ));
 
             m_batches.add(new BackannotateRefdes(
                 factory,
-                builder.get_object("design-backannotate-refdes") as Gtk.Action
+                new SimpleAction("design-backannotate-refdes", null)
                 ));
 
             m_batches.add(new AddSimulation(
                 factory,
-                builder.get_object("design-add-simulation") as Gtk.Action
+                new SimpleAction("design-add-simulation", null)
                 ));
 
             m_batches.add(new RunSimulation(
                 factory,
-                builder.get_object("design-run-simulation") as Gtk.Action
+                new SimpleAction("design-run-simulation", null)
                 ));
         }
 

@@ -46,7 +46,7 @@ namespace Orange
         /**
          * Create a new, empty batch operation.
          */
-        public OpenDirectory(DialogFactory factory, Gtk.Action action)
+        public OpenDirectory(DialogFactory factory, SimpleAction action)
         {
             base(factory, action);
 
