@@ -150,8 +150,6 @@ namespace Orange
 
             delete_event.connect(on_delete_event);
 
-
-
             foreach (var batch in m_batch_controller.batches)
             {
                 add_action(batch.action);
@@ -241,7 +239,6 @@ namespace Orange
         {
             return !m_project_controller.allow_program_exit();
         }
-
 
 
         /**

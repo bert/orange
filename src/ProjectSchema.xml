@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:simpleType name="paperOrientation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="auto"/>
+            <xs:enumeration value="landscape"/>
+            <xs:enumeration value="portrait"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="Project">
+    </xs:element>
+
+    <xs:element name="Design">
+    </xs:element>
+
+    <xs:element name="ExportSchematicOptions">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="PaperName" type="xs:token" minOccurs="0"/>
+                <xs:element name="PaperWidth" type="xs:decimal"/>
+                <xs:element name="PaperHeight" type="xs:decimal"/>
+                <xs:element name="Orientation" type="paperOrientation"/>
+                <xs:element name="LeftMargin" type="xs:decimal"/>
+                <xs:element name="TopMargin" type="xs:decimal"/>
+                <xs:element name="RightMargin" type="xs:decimal"/>
+                <xs:element name="BottomMargin" type="xs:decimal"/>
+                <xs:element name="UseColor" type="xs:boolean"/>
+                <xs:element name="HorizontalAlignment" type="xs:decimal"/>
+                <xs:element name="VerticalAlignment" type="xs:decimal"/>
+                <xs:element name="Scale" type="xs:decimal"/>
+                <xs:element name="FontFamily" type="xs:normalizedString" minOccurs="0"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

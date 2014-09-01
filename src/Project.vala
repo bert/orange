@@ -173,6 +173,31 @@ namespace Orange
                 throw new ProjectError.UNABLE_TO_LOAD(filename);
             }
 
+            /*
+            var resource = resources_lookup_data(
+                "/org/geda-project/orange/ProjectSchema.xml",
+                ResourceLookupFlags.NONE
+                );
+
+            var schema_parser = new Xml.SchemaParserCtxt.from_buffer(resource.get_data());
+
+            var schema = schema_parser.parse();
+
+            var validator = new Xml.SchemaValidCtxt(schema);
+
+            if (validator == null)
+            {
+                throw new ProjectError.UNABLE_TO_LOAD(filename);
+            }
+
+            int failure = validator.validate_doc(document);
+
+            if (failure != 0)
+            {
+                throw new ProjectError.UNABLE_TO_LOAD(filename);
+            }
+            */
+
             Xml.Node* root = document->get_root_element();
 
             if (root == null)
@@ -312,7 +337,9 @@ namespace Orange
          */
         public void save() throws ProjectError
         {
-            int bytes = document->save_format_file(filename, 1);
+            int bytes = document->save_format_file(filename, 1 | 128);
+
+            document->dump(stdout);
 
             if (bytes < 0)
             {

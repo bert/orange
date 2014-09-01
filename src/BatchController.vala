@@ -39,6 +39,11 @@ namespace Orange
         {
             m_batches = new Gee.ArrayList<Batch>();
 
+            m_batches.add(new EditPdfOptionsBatch(
+                factory,
+                new SimpleAction("edit-pdf-options", null)
+                ));
+
             m_batches.add(new DesignAddNewBatch(
                 factory,
                 new SimpleAction("design-add-schematic-new", null)

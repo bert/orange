@@ -149,7 +149,6 @@ namespace Orange
         }
 
 
-
         /**
          * A read only view of the simulations in this design.
          */
@@ -220,6 +219,36 @@ namespace Orange
             add(schematic_list);
         }
 
+
+        /**
+         * Retrieve options from the XML document
+         *
+         * @param options
+         */
+        public void retrieve_export_pdf_options(ref ExportPdfOptions options) throws DocumentError
+        {
+            Xml.Node *node = XmlMisc.find_element(element, "ExportSchematicOptions");
+
+            if (node != null)
+            {
+                options.retrieve(node);
+            }
+        }
+
+
+        /**
+         * Store the options in the XML document
+         *
+         * @param options The options to store
+         */
+        public void store_export_pdf_options(ExportPdfOptions options) throws DocumentError
+        {
+            Xml.Node *node = XmlMisc.obtain_element(element, "ExportSchematicOptions");
+
+            options.store(node);
+
+            changed(this);
+        }
 
 
         /**

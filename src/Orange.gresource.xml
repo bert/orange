@@ -5,12 +5,14 @@
     <file>AddSimulationDialog.xml</file>
     <file>ArchiveSchematicsDialog.xml</file>
     <file>BackannotateRefdesDialog.xml</file>
+    <file>EditPdfOptionsDialog.xml</file>
     <file>ExportBOMDialog.xml</file>
     <file>ExportNetlistDialog.xml</file>
     <file>MainWindow.xml</file>
     <file>NewDesignDialog.xml</file>
     <file>NewProjectDialog.xml</file>
     <file>Program.xml</file>
+    <file>ProjectSchema.xml</file>
     <file>RenumberRefdesDialog.xml</file>
     <file>ResetRefdesDialog.xml</file>
   </gresource>

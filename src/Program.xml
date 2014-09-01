@@ -82,6 +82,12 @@
                         <attribute name="action">win.edit-edit</attribute>
                     </item>
                 </section>
+                <section>
+                    <item>
+                        <attribute name="label" translatable="yes">Edit PDF Export Options...</attribute>
+                        <attribute name="action">win.edit-pdf-options</attribute>
+                    </item>
+                </section>
             </submenu>
             <submenu>
                 <attribute name="label" translatable="yes">_Insert</attribute>

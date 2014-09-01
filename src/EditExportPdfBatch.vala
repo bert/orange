@@ -152,14 +152,15 @@ namespace Orange
         private void create_print_file(Design design, string filename) throws Error
         {
             var arguments = new Gee.ArrayList<string?>();
-            var options = ExportPdfOptions();
-
-            design.retrieve_export_pdf_options(ref options);
+            var options = design.export_pdf_options;
 
             arguments.add(PRINT_SCHEMATIC_COMMAND);
             arguments.add(PRINT_SCHEMATIC_SUBCOMMAND);
 
-            arguments.add_all(options.get_arguments());
+            if (options != null)
+            {
+                arguments.add_all(options.get_arguments());
+            }
 
             arguments.add("-o");
             arguments.add(filename);
@@ -173,6 +174,11 @@ namespace Orange
             }
 
             arguments.add(null);
+
+            foreach (string item in arguments)
+            {
+                stdout.printf("%s\n", item);
+            }
 
             /*  Ensure the environment variables OLDPWD and PWD match the
              *  working directory passed into Process.spawn_async(). Some
